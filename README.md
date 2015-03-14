@@ -1,9 +1,11 @@
 # Arch-Core
 
+## server
+
 Tout d'abord, voici l'arboresence du coeur applicatif.
 
 ```
-arch-core/
+server/
 ├── config
 │   └── config.json
 ├── core
@@ -70,16 +72,16 @@ arch-core/
 
 Je ne vais pas passer en détail sur tous les dossiers du coeur. Les plugins, quand à eux seront les moteurs de l'application. Il se composeront de différentes parties que je vais exposer.
 
-## Premiers pas
+### Premiers pas
 
 Avant de pouvoir utiliser Arch-Core, quelques action doivent être exécutées :
 
 1. Se rendre dans **arch-core** et exécuter la commande : ```nmp install```.
 2. Lancer MongoDB. Pour cela, il faut se rendre dans le dossier **bin** de votre installation de MongoDB et exécuter la commande : ```./mongod --dbpath <data>``` où **<data>** correspond au dossier où vous souhaitez stocker la base de données de l'application.
 
-## Plugins
+### Plugins
 
-### Middlewares
+#### Middlewares
 
 Il est a présent possible d'injecter des middlewares en donnant leur nom dans des routes ! Mais à quoi servent les middlewares ? Et bien, à vérifier les données avant de les envoyer au controller par exemple, ou authentifier un utilisateur ! Voyez les comme les filtres de JEE. Voici un exemple de middleware "consoleMessageMiddleware" :
 ```javascript
@@ -116,7 +118,7 @@ module.exports = function(aController, aRouter, consoleMessageMiddleware) {
 };
 ```
 
-### plugin
+#### plugin
 
 Un nouveau fichier fait son apparition dans l'arborescence d'un plugin : plugin.js. Ce dernier contiendra les dépendance avec d'autres plugins.
 ```javascript
@@ -128,7 +130,7 @@ module.exports = {
 ```
 De cette façon, vous pourez injecter les services du plugin "users" dans les services du plugin "events". Si un service de "users" porte le même nom qu'un service de "events", le service de events sera injecté dans le plugin events. De façon générale, les services du plugin courant seront toujours prioritaires par rapport aux services d'un autre plugin.
 
-### controllers
+#### controllers
 
 Les controllers correspondent aux actions attachées au routes sous Express. Il reçoivent donc les même paramètres, la requête http dans **req** et la réponse dans **res**.
 
@@ -150,7 +152,7 @@ module.exports = function(eventService) {
 
 Le bon service est passé au controller qui prendra comme seul argument ce dernier.
 
-### models
+#### models
 
 C'est ici que vous pourrez placer vos modèles de données. Ces derniers sont basés sur [Mongoose](http://mongoosejs.com/docs/schematypes.html). Vous n'aurez qu'à déclarer la structure du Schema comme dans l'example suivant.
 
@@ -198,7 +200,7 @@ module.exports = function(Types) {
 };
 ```
 
-### routes
+#### routes
 
 Les routes sont simplement des routes Express et reçoivent en paramètre le controller qui leur est associé et le router.
 
@@ -220,7 +222,7 @@ module.exports = function(eventController, eventRouter) {
 };
 ```
 
-### services
+#### services
 
 Probablement une des parties les plus importantes de l'application. Il est possible d'injecter d'autres services et modèles dans le service juste en donnant leur nom.
 
