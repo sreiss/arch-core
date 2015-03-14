@@ -81,7 +81,7 @@ Avant de pouvoir utiliser Arch-Core, quelques action doivent être exécutées :
 
 ### Plugins
 
-#### Middlewares
+#### middlewares
 
 Il est a présent possible d'injecter des middlewares en donnant leur nom dans des routes ! Mais à quoi servent les middlewares ? Et bien, à vérifier les données avant de les envoyer au controller par exemple, ou authentifier un utilisateur ! Voyez les comme les filtres de JEE. Voici un exemple de middleware "consoleMessageMiddleware" :
 ```javascript
