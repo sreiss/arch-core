@@ -73,7 +73,7 @@ module.exports = function(User, signuptypeService, qService) {
 
                 if (user == null)
                 {
-                    deferred.reject(new Error('No user matching [ID] : ' + userId + "."));
+                    deferred.reject(new Error('No user matching [USER_ID] : ' + userId + "."));
                 }
 
                 deferred.resolve(user);

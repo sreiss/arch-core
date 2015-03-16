@@ -15,15 +15,38 @@ module.exports = function(oauthService) {
 
             if(user)
             {
-                // Saving user.
-                oauthService.saveUser(user).then(function(user)
+                // Updating existing user.
+                if(user._id)
                 {
-                    res.status(200).json({"message" : "User saved successfully.", "data" : user});
-                },
-                function(err)
+                    oauthService.updateUser(user).then(function (user)
+                        {
+                            res.status(200).json({"message": "User updated successfully.", "data": user});
+                        },
+                        function (err)
+                        {
+                            res.status(500).json(
+                                {
+                                    "message": "An error occurred while updating user.",
+                                    "data": err.message
+                                });
+                        });
+                }
+                // Saving new user.
+                else
                 {
-                    res.status(500).json({"message" : "An error occurred while saving new user.", "data" : err.message});
-                });
+                    oauthService.saveUser(user).then(function (user)
+                        {
+                            res.status(200).json({"message": "User saved successfully.", "data": user});
+                        },
+                        function (err)
+                        {
+                            res.status(500).json(
+                                {
+                                    "message": "An error occurred while saving new user.",
+                                    "data": err.message
+                                });
+                        });
+                }
             }
             else
             {
@@ -42,13 +65,13 @@ module.exports = function(oauthService) {
             {
                 // Get user.
                 oauthService.getUser(accessToken, clientId).then(function(user)
-                {
-                    res.status(200).json({"message" : "User found successfully.", "data" : user});
-                },
-                function(err)
-                {
-                    res.status(500).json({"message" : "An error occurred while founding user.", "data" : err.message});
-                });
+                    {
+                        res.status(200).json({"message" : "User found successfully.", "data" : user});
+                    },
+                    function(err)
+                    {
+                        res.status(500).json({"message" : "An error occurred while founding user.", "data" : err.message});
+                    });
             }
             else
             {
@@ -66,13 +89,13 @@ module.exports = function(oauthService) {
             {
                 // Saving client.
                 oauthService.saveClient(client).then(function(client)
-                {
-                    res.status(200).json({"message" : "Client saved successfully.", "data" : client});
-                },
-                function(err)
-                {
-                    res.status(500).json({"message" : "An error occurred while saving new client.", "data" : err.message});
-                });
+                    {
+                        res.status(200).json({"message" : "Client saved successfully.", "data" : client});
+                    },
+                    function(err)
+                    {
+                        res.status(500).json({"message" : "An error occurred while saving new client.", "data" : err.message});
+                    });
             }
             else
             {

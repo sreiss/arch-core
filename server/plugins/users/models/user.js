@@ -8,13 +8,13 @@
 module.exports = function(Types) {
     return {
         schema: {
-            userId: {type: String, unique: true, required: true},
+            userId: {type: String, required: true},
             role: {type: String, required: true},
             signupType: {type: Types.ObjectId, ref: 'Signuptype'},
             level: {type: String},
             block: {type: Boolean, default: false},
-            created: {type: Date, required: true, default: Date.now},
-            createdBy: {type: Types.ObjectId, required: true, ref: 'User'},
+            created: {type: Date, default: Date.now},
+            createdBy: {type: Types.ObjectId, ref: 'User'},
             modified: Date,
             modifiedBy: {type: Types.ObjectId, ref: 'User'},
             archived: Date,

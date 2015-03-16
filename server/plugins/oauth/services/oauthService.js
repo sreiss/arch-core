@@ -49,6 +49,45 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
             return deferred.promise;
         },
 
+        /** Update user. */
+        updateUser: function(userData, callback)
+        {
+            var deferred = qService.defer();
+
+            OauthUser.findById(userData._id).exec(function (err, user)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+
+                if (user == null)
+                {
+                    deferred.reject(new Error('No user matching [ID] : ' + userData._id + '.'));
+                }
+                else
+                {
+                    user.username = userData.username;
+                    user.firstname = userData.firstname;
+                    user.lastname = userData.lastname;
+                    user.email = userData.email;
+                    user.password = userData.password;
+
+                    user.save(function(err, user)
+                    {
+                        if(err)
+                        {
+                            deferred.reject(err);
+                        }
+
+                        deferred.resolve(user);
+                    });
+                }
+            });
+
+            return deferred.promise;
+        },
+
         /** Get user's informations. */
         getUser: function(accessToken, clientId)
         {
@@ -67,12 +106,14 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                 }
                 else
                 {
-                    OauthUser.findOne({_id: accessToken.userId}).exec(function (err, user) {
+                    OauthUser.findOne({_id: accessToken.userId}).exec(function (err, user)
+                    {
                         if (err) {
                             deferred.reject(err);
                         }
 
-                        if (accessToken == null) {
+                        if (accessToken == null)
+                        {
                             deferred.reject(new Error('No user matching [ACCESS_TOKEN] and [CLIENT_ID].'));
                         }
 

@@ -1,43 +1,43 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     model = module.exports
-    q = require('q');
+q = require('q');
 
 // OAuth Server Schema - Access Token Schema.
 var OAuthAccessTokensSchema = new Schema(
-{
-    accessToken: { type: String },
-    clientId: { type: String },
-    userId: { type: String },
-    expires: { type: Date }
-});
+    {
+        accessToken: { type: String },
+        clientId: { type: String },
+        userId: { type: String },
+        expires: { type: Date }
+    });
 
 // OAuth Server Schema - Refresh Token Schema.
 var OAuthRefreshTokensSchema = new Schema(
-{
-    refreshToken: { type: String },
-    clientId: { type: String },
-    userId: { type: String },
-    expires: { type: Date }
-});
+    {
+        refreshToken: { type: String },
+        clientId: { type: String },
+        userId: { type: String },
+        expires: { type: Date }
+    });
 
 // OAuth Server Schema - Clients Schema.
 var OAuthClientsSchema = new Schema(
-{
-    clientId: { type: String },
-    clientSecret: { type: String },
-    redirectUri: { type: String }
-});
+    {
+        clientId: { type: String },
+        clientSecret: { type: String },
+        redirectUri: { type: String }
+    });
 
 // OAuth Server Schema - Users Schema.
 var OAuthUsersSchema = new Schema(
-{
-    username: { type: String },
-    password: { type: String },
-    firstname: { type: String },
-    lastname: { type: String },
-    email: { type: String, default: '' }
-});
+    {
+        username: { type: String },
+        password: { type: String },
+        firstname: { type: String },
+        lastname: { type: String },
+        email: { type: String, default: '' }
+    });
 
 // OAuth Server Models.
 mongoose.model('OAuthAccessTokens', OAuthAccessTokensSchema);
@@ -104,7 +104,7 @@ model.grantTypeAllowed = function (clientId, grantType, callback)
     {
         var deferred = q.defer();
 
-         OAuthRefreshTokensModel.findOne({clientId: clientId}).exec(function (err, refreshToken)
+        OAuthRefreshTokensModel.findOne({clientId: clientId}).exec(function (err, refreshToken)
         {
             if (err)
             {
@@ -133,12 +133,12 @@ model.saveAccessToken = function (token, clientId, expires, userId, callback)
     console.log('in saveAccessToken (token: ' + token + ', clientId: ' + clientId + ', userId: ' + userId + ', expires: ' + expires + ')');
 
     var accessToken = new OAuthAccessTokensModel(
-    {
-        accessToken: token,
-        clientId: clientId,
-        userId: userId,
-        expires: expires
-    });
+        {
+            accessToken: token,
+            clientId: clientId,
+            userId: userId,
+            expires: expires
+        });
 
     accessToken.save(callback);
 };
@@ -165,12 +165,12 @@ model.saveRefreshToken = function (token, clientId, expires, userId, callback)
     console.log('in saveRefreshToken (token: ' + token + ', clientId: ' + clientId +', userId: ' + userId + ', expires: ' + expires + ')');
 
     var refreshToken = new OAuthRefreshTokensModel(
-    {
-        refreshToken: token,
-        clientId: clientId,
-        userId: userId,
-        expires: expires
-    });
+        {
+            refreshToken: token,
+            clientId: clientId,
+            userId: userId,
+            expires: expires
+        });
 
     refreshToken.save(callback);
 };
@@ -182,29 +182,3 @@ model.getRefreshToken = function (refreshToken, callback)
 
     OAuthRefreshTokensModel.findOne({ refreshToken: refreshToken }, callback);
 };
-
-// OAuth Server Tests.
-var oauthClient = new OAuthClientsModel(
-{
-    clientId: "clientId123456789",
-    clientSecret: "clientSecret123456789",
-    redirectUri: "http://www.google.fr"
-});
-
-oauthClient.save(function(err)
-{
-    console.log('oauthclient saved');
-});
-
-var oauthUser = new OAuthUsersModel({
-    username: "username123",
-    password: "password123",
-    firstname: "firstname123",
-    lastname: "lastname123",
-    email: "email123"
-});
-
-oauthUser.save(function(err)
-{
-    console.log('oauthUser saved');
-});
