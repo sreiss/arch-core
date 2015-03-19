@@ -10,7 +10,7 @@ module.exports = function(Types) {
         schema: {
             clientId: { type: String },
             clientSecret: { type: String },
-            redirectUri: { type: String }
+            clientRedirectUri: { type: String }
         }
     };
 };

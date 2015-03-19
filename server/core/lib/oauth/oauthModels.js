@@ -155,7 +155,12 @@ model.getUser = function (username, password, callback)
             return callback(err);
         }
 
-        callback(null, user._id);
+        if(user)
+        {
+            callback(null, user._id);
+        }
+
+        callback(null, null);
     });
 };
 

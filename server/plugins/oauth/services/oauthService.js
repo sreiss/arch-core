@@ -150,7 +150,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                     var client = new OauthClient();
                     client.clientId = clientData.clientId;
                     client.clientSecret = crypto.createHash('sha1').update(clientData.clientSecret).digest('hex');
-                    client.redirect_uri = clientData.redirect_uri;
+                    client.clientRedirectUri = clientData.redirect_uri;
 
                     client.save(function(err, client)
                     {
