@@ -1,6 +1,6 @@
 # arch-core
 
-C'est ici que seront gérés les évènements par exemple.
+C'est ici que seront gérés les évènements.
 
 ## server
 
