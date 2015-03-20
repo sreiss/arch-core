@@ -49,7 +49,7 @@ module.exports = function(User, signuptypeService, qService) {
 
                 user.save(function(err)
                 {
-                    if(!err)
+                    if(err)
                     {
                         callback(err, null);
                     }
