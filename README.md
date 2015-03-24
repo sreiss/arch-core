@@ -1,6 +1,6 @@
 # Arch Core
 
-[Wiki](https://github.com/sreiss/arch-core/wiki) | [Arch Carto](https://github.com/sreiss/arch-carto) | [Arch Website](https://github.com/sreiss/arch-website) | [Arch Kidoikoi](https://github.com/sreiss/arch-kidoikoi) | [Arch CAS](https://github.com/sreiss/arch-cas)
+[Wiki](https://github.com/sreiss/arch-core/wiki) | [Arch Carto](https://github.com/sreiss/arch-carto) | [Arch Website](https://github.com/sreiss/arch-website) | [Arch Kidoikoiaki](https://github.com/sreiss/arch-kidoikoiaki) | [Arch CAS](https://github.com/sreiss/arch-cas)
 
 Le wiki sera également sur ce dépôt.
 
