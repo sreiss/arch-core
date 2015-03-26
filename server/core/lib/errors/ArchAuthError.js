@@ -1,13 +1,12 @@
 var path = require('path'),
     ArchError = require(path.join(__dirname, '.', '/ArchError'));
 
-var ArchErrorSuperMario = function (message, status, type, mario) {
-    this.message = message || 'An error occcured';
-    this.status = status || 400;
-    this.type = type || 'ArchError';
-    this.mario = 'Wihiiiii';
+var ArchAuthError = function (message, status, type) {
+    this.message = message || 'You must be logged in proceed to this action.';
+    this.status = status || 401;
+    this.type = type || 'ArchAuthError';
 };
-ArchErrorSuperMario.prototype = Object.create(ArchError.prototype);
-ArchErrorSuperMario.prototype.constructor = ArchErrorSuperMario;
+ArchAuthError.prototype = Object.create(ArchError.prototype);
+ArchAuthError.prototype.constructor = ArchAuthError;
 
-module.exports = ArchErrorSuperMario;
+module.exports = ArchAuthError;
