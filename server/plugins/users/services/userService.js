@@ -5,10 +5,10 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(User, signuptypeService, qService) {
+module.exports = function(User, qService) {
     return {
         /** Save user. */
-        saveUser: function(userData, callback)
+        saveUser: function(userData)
         {
             var deferred = qService.defer();
             var user = new User();
@@ -26,58 +26,17 @@ module.exports = function(User, signuptypeService, qService) {
             user.archivedBy = userData.archivedBy;
             user.published = userData.published;
 
-            // Get signup type.
-            signuptypeService.getSignupType(userData.signuptype.name, function(signupType)
-            {
-                if(signupType == null)
-                {
-                    signuptypeService.saveSignupType(userData.signuptype, function(signupType)
-                    {
-                        deferred.resolve(signupType);
-                    });
-                }
-                else
-                {
-                    deferred.resolve(signupType);
-                }
-            });
-
-            // Saving user.
-            deferred.promise.then(function(signupType)
-            {
-                user.signupType = signupType._id;
-
-                user.save(function(err)
-                {
-                    if(err)
-                    {
-                        callback(err, null);
-                    }
-
-                    callback(null, user);
-                });
-            });
-        },
-
-        /** Delete existing user. */
-        deleteUser: function(userId)
-        {
-            var deferred = qService.defer();
-
-            User.findOneAndRemove({userId: userId}, function(err, user)
+            user.save().exec(function(err, user)
             {
                 if(err)
                 {
-                    deferred.reject(err);
+                    deferred.reject(err.message)
                 }
-
-                if (user == null)
+                else
                 {
-                    deferred.reject(new Error('No user matching [USER_ID] : ' + userId + "."));
+                    deferred.resolve(user);
                 }
-
-                deferred.resolve(user);
-            });
+            })
 
             return deferred.promise;
         },
@@ -87,19 +46,16 @@ module.exports = function(User, signuptypeService, qService) {
         {
             var deferred = qService.defer();
 
-            User.findOne({userId: userId}).populate('signuptype').exec(function (err, user)
+            User.findOne({userId: userId}).exec(function(err, user)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-
-                if (user == null)
+                else
                 {
-                    deferred.reject(new Error('No user matching [USER_ID] : ' + userId + "."));
+                    deferred.resolve(user);
                 }
-
-                deferred.resolve(user);
             });
 
             return deferred.promise;
@@ -110,19 +66,16 @@ module.exports = function(User, signuptypeService, qService) {
         {
             var deferred = qService.defer();
 
-            User.find().populate('signuptype').exec(function (err, users)
+            User.find().exec(function(err, users)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-
-                if (users.length == 0)
+                else
                 {
-                    deferred.reject(new Error('No users found.'));
+                    deferred.resolve(users);
                 }
-
-                deferred.resolve(users);
             });
 
             return deferred.promise;

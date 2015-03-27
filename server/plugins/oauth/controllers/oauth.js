@@ -17,16 +17,16 @@ module.exports = function(oauthService) {
             var user = req.body;
 
             // Saving user.
-            oauthService.saveUser(user).then(function (user)
+            oauthService.saveUser(user).then(function(result)
             {
-                res.status(201).json({"count" : 1, "data" : user});
+                res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
             }).
             catch(function(err)
             {
                 throw new ArchSaveError(err.message);
             });
         },
-
+/*
         /** Get user's informations. */
         getUser: function(req, res)
         {
@@ -35,9 +35,9 @@ module.exports = function(oauthService) {
             var clientId = req.params.clientId;
 
             // Get user.
-            oauthService.getUser(accessToken, clientId).then(function(user)
+            oauthService.getUser(accessToken, clientId).then(function(result)
             {
-                res.status(201).json({"count" : 1, "data" : user});
+                res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
             },
             function(err)
             {
@@ -52,9 +52,9 @@ module.exports = function(oauthService) {
             var client = req.body;
 
             // Saving client.
-            oauthService.saveClient(client).then(function(client)
+            oauthService.saveClient(client).then(function(result)
             {
-                res.status(201).json({"count" : 1, "data" : client});
+                res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
             },
             function(err)
             {
@@ -69,9 +69,9 @@ module.exports = function(oauthService) {
             var clientId = req.params.clientId;
 
             // Get user.
-            oauthService.getClient(clientId).then(function(client)
+            oauthService.getClient(clientId).then(function(result)
             {
-                res.status(201).json({"count" : 1, "data" : client});
+                res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
             },
             function(err)
             {

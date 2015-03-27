@@ -23,14 +23,14 @@ module.exports = function() {
             }
 
             // Check user first name (length >= 3).
-            var userFirstName = userData.firstname || '';
+            var userFirstName = userData.fname || '';
             if(!validator.isLength(userFirstName, 3))
             {
                 throw new ArchParameterError("User first name must contain at least 3 chars.")
             }
 
             // Check user first name (length >= 3).
-            var userLastName = userData.lastname || '';
+            var userLastName = userData.lname || '';
             if(!validator.isLength(userLastName, 3))
             {
                 throw new ArchParameterError("User last name must contain at least 3 chars.")
@@ -48,6 +48,13 @@ module.exports = function() {
             if(!validator.isLength(userPassword, 5))
             {
                 throw new ArchParameterError("User password must contain at least 5 chars.")
+            }
+
+            // Check user signuptype.
+            var userSignupTypeName = userData.signuptype || {};
+            if(!validator.isLength(userSignupTypeName, 3))
+            {
+                throw new ArchParameterError("User signup type must contain at least 3 chars.")
             }
 
             next();

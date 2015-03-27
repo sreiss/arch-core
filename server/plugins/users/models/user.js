@@ -10,7 +10,6 @@ module.exports = function(Types) {
         schema: {
             userId: {type: String, required: true},
             role: {type: String, required: true},
-            signupType: {type: Types.ObjectId, ref: 'Signuptype'},
             level: {type: String},
             block: {type: Boolean, default: false},
             created: {type: Date, default: Date.now},

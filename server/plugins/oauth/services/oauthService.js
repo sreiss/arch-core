@@ -7,44 +7,53 @@
 
 var crypto = require('crypto');
 
-module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
+module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignuptypeService, qService) {
     return {
         /** Save user. */
         saveUser: function(userData)
         {
             var deferred = qService.defer();
 
-            OauthUser.findOne({_id: userData._id}).exec(function (err, user)
+            // Get signup type.
+            oauthSignuptypeService.getSignupType(userData.signuptype.name).then(function(signupType)
             {
-                if(err)
+                if(signupType)
                 {
-                    deferred.reject(err);
+                    return signupType;
                 }
                 else
                 {
-                    if(!user)
+                    oauthSignuptypeService.saveSignupType(userData.signuptype).then(function(signupType)
                     {
-                        user = new OauthUser();
-                    }
-
-                    user.username = userData.username;
-                    user.firstname = userData.firstname;
-                    user.lastname = userData.lastname;
-                    user.email = userData.email;
-                    user.password = userData.password;
-
-                    user.save(function(err, user)
-                    {
-                        if(err)
-                        {
-                            deferred.reject(err);
-                        }
-                        else
-                        {
-                            deferred.resolve(user);
-                        }
+                        return signupType;
                     });
                 }
+            })
+            .then(function(signupType)
+            {
+                var user = new OauthUser();
+                user.username = userData.username;
+                user.password = userData.password;
+                user.fname = userData.fname;
+                user.lname = userData.lname;
+                user.email = userData.email;
+                user.signuptype = signupType._id;
+
+                user.save(function(err, user)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err.message);
+                    }
+                    else
+                    {
+                        deferred.resolve(user);
+                    }
+                });
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err)
             });
 
             return deferred.promise;

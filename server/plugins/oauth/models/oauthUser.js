@@ -8,11 +8,12 @@
 module.exports = function(Types) {
     return {
         schema: {
-            username: { type: String },
-            password: { type: String },
-            firstname: { type: String },
-            lastname: { type: String },
-            email: { type: String, default: '' }
+            username: { type: String, required: true},
+            password: { type: String, required: true},
+            fname: { type: String, required: true},
+            lname: { type: String, required: true },
+            email: { type: String, required: true },
+            signuptype: {type: Types.ObjectId, ref: 'OauthSignuptype', required: true}
         }
     };
 };
