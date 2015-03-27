@@ -2,11 +2,8 @@
 module.exports = function(Types) {
     return {
         schema: {
-            name: String,
-            firstName: String
-        },
-        onSchemaReady: function(schema) {
-
+            usr_id: { type: Types.ObjectId, ref: 'User' },
+            evt_id: { type: Types.ObjectId, ref: 'Event' }
         }
     };
 };
