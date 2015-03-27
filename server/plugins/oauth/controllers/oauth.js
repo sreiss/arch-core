@@ -5,6 +5,9 @@
  * @copyright ArchTailors 2015
  */
 
+var ArchSaveError = GLOBAL.ArchSaveError;
+var ArchFindError = GLOBAL.ArchFindError;
+
 module.exports = function(oauthService) {
     return {
         /** Save user.*/
@@ -13,45 +16,15 @@ module.exports = function(oauthService) {
             // Get posted user.
             var user = req.body;
 
-            if(user)
+            // Saving user.
+            oauthService.saveUser(user).then(function (user)
             {
-                // Updating existing user.
-                if(user._id)
-                {
-                    oauthService.updateUser(user).then(function (user)
-                    {
-                        res.status(200).json({"message": "User updated successfully.", "data": user});
-                    },
-                    function (err)
-                    {
-                        res.status(500).json(
-                            {
-                                "message": "An error occurred while updating user.",
-                                "data": err.message
-                            });
-                    });
-                }
-                // Saving new user.
-                else
-                {
-                    oauthService.saveUser(user).then(function (user)
-                    {
-                        res.status(200).json({"message": "User saved successfully.", "data": user});
-                    },
-                    function (err)
-                    {
-                        res.status(500).json(
-                            {
-                                "message": "An error occurred while saving new user.",
-                                "data": err.message
-                            });
-                    });
-                }
-            }
-            else
+                res.status(201).json({"count" : 1, "data" : user});
+            }).
+            catch(function(err)
             {
-                res.status(500).json({"message" : "Missing parameters.", "data" : false});
-            }
+                throw new ArchSaveError(err.message);
+            });
         },
 
         /** Get user's informations. */
@@ -61,22 +34,15 @@ module.exports = function(oauthService) {
             var accessToken = req.params.accessToken;
             var clientId = req.params.clientId;
 
-            if(accessToken && clientId)
+            // Get user.
+            oauthService.getUser(accessToken, clientId).then(function(user)
             {
-                // Get user.
-                oauthService.getUser(accessToken, clientId).then(function(user)
-                {
-                    res.status(200).json({"message" : "User found successfully.", "data" : user});
-                },
-                function(err)
-                {
-                    res.status(500).json({"message" : "An error occurred while founding user.", "data" : err.message});
-                });
-            }
-            else
+                res.status(201).json({"count" : 1, "data" : user});
+            },
+            function(err)
             {
-                res.status(500).json({"message" : "Missing parameters.", "data" : null});
-            }
+                throw new ArchFindError(err.message);
+            });
         },
 
         /** Save client.*/
@@ -85,22 +51,15 @@ module.exports = function(oauthService) {
             // Get posted client.
             var client = req.body;
 
-            if(client)
+            // Saving client.
+            oauthService.saveClient(client).then(function(client)
             {
-                // Saving client.
-                oauthService.saveClient(client).then(function(client)
-                {
-                    res.status(200).json({"message" : "Client saved successfully.", "data" : client});
-                },
-                function(err)
-                {
-                    res.status(500).json({"message" : "An error occurred while saving new client.", "data" : err.message});
-                });
-            }
-            else
+                res.status(201).json({"count" : 1, "data" : client});
+            },
+            function(err)
             {
-                res.status(500).json({"message" : "Missing parameters.", "data" : false});
-            }
+                throw new ArchSaveError(err.message);
+            });
         },
 
         /** Get client's informations. */
@@ -108,24 +67,16 @@ module.exports = function(oauthService) {
         {
             // Get parameters.
             var clientId = req.params.clientId;
-            var clientSecret = req.params.clientSecret;
 
-            if(clientId && clientSecret)
+            // Get user.
+            oauthService.getClient(clientId).then(function(client)
             {
-                // Get user.
-                oauthService.getClient(clientId, clientSecret).then(function(client)
-                {
-                    res.status(200).json({"message" : "Client found successfully.", "data" : client});
-                },
-                function(err)
-                {
-                    res.status(500).json({"message" : "An error occurred while founding client.", "data" : err.message});
-                });
-            }
-            else
+                res.status(201).json({"count" : 1, "data" : client});
+            },
+            function(err)
             {
-                res.status(500).json({"message" : "Missing parameters.", "data" : null});
-            }
+                throw new ArchFindError(err.message);
+            });
         }
     };
 };
