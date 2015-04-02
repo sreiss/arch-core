@@ -13,13 +13,14 @@ module.exports = function(Types) {
             address_line_3: String,
             country: String,
             zip: Number,
-            created: Date,
-            createdBy: {type: Types.ObjectId, ref: 'User'},
-            modified: Date,
-            modifiedBy: {type: Types.ObjectId, ref: 'User'},
-            archived: Date,
-            archivedBy: {type: Types.ObjectId, ref: 'User'},
-            published: Number
-        }
+            created: Date
+            //createdBy: {type: Types.ObjectId, ref: 'User'},
+            //modified: Date,
+            //modifiedBy: {type: Types.ObjectId, ref: 'User'},
+            //archived: Date,
+            //archivedBy: {type: Types.ObjectId, ref: 'User'},
+            //published: Number
+        },
+        priority: 1
     };
 };

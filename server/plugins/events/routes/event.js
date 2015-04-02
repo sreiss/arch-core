@@ -1,14 +1,19 @@
-module.exports = function(eventController, eventRouter, authMiddleware) {
+module.exports = function(eventController, eventRouter) {
 
     // This route will be available under /events/event/
 
     eventRouter.route('/')
-        .all(authMiddleware.checkEvent)
-        .get(eventController.getEvents);
+        .post(eventController.saveEvent)
+        .get(eventController.getEvent);
+
+
+    eventRouter.route('/:eventid')
+        .post(eventController.deleteEvent)
+        .get(eventController.getEvent);
 
     // This route will be available under /events/event/details
-
-    eventRouter.route('/details')
-        .get(eventController.getDetails);
+    //
+    //eventRouter.route('/details')
+    //    .get(eventController.getDetails);
 
 };
