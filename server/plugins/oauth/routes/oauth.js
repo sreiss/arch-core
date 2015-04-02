@@ -5,16 +5,21 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(oauthController, oauthRouter) {
+module.exports = function(oauthController, oauthRouter, oauthMiddleware) {
     oauthRouter.route('/user')
-        .post(oauthController.saveUser);
+        .all(oauthMiddleware.checkUser)
+        .post(oauthController.saveUser)
+        .put(oauthController.saveUser);
 
-    oauthRouter.route('/user/:accessToken/:clientId')
+    oauthRouter.route('/accesstoken/:accessToken/client/:clientId')
+        .get(oauthMiddleware.checkUserCredentials)
         .get(oauthController.getUser);
 
     oauthRouter.route('/client')
+        .post(oauthMiddleware.checkClient)
         .post(oauthController.saveClient);
 
-    oauthRouter.route('/client/:clientId/:clientSecret')
+    oauthRouter.route('/client/:clientId')
+        .get(oauthMiddleware.checkClientCredentials)
         .get(oauthController.getClient);
 }

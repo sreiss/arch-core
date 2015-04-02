@@ -2,11 +2,10 @@
 module.exports = function(Types) {
     return {
         schema: {
-            name: String,
-            firstName: String
+            //usr_id: { type: Types.ObjectId, ref: 'User' },
+            usr_id: { type: Number },
+            evt_id: { type: Types.ObjectId, ref: 'Event' }
         },
-        onSchemaReady: function(schema) {
-
-        }
+        priority: 2
     };
 };

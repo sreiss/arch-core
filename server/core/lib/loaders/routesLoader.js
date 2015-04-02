@@ -85,22 +85,16 @@ exports.init = function(done) {
     // will print stacktrace
     if (expressApp.get('env') === 'development') {
         expressApp.use(function (err, req, res, next) {
-            res.status(err.status || 500);
-            res.render('error', {
-                message: err.message,
-                error: err
-            });
+            res.status(err.status || 500)
+                .send(err);
         });
     }
 
     // production error handler
     // no stacktraces leaked to user
     expressApp.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: {}
-        });
+        res.status(err.status || 500)
+            .send(err);
     });
 
     return done();

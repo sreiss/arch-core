@@ -7,10 +7,9 @@
 
 module.exports = function(userController, userRouter) {
     userRouter.route('/')
-        .get(userController.getUser)
+        .get(userController.getUsers)
         .post(userController.saveUser);
 
     userRouter.route('/:userId')
-        .get(userController.getUser)
-        .delete(userController.deleteUser);
+        .get(userController.getUser);
 }

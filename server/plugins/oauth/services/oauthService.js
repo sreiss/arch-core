@@ -7,82 +7,53 @@
 
 var crypto = require('crypto');
 
-module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
+module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignuptypeService, qService) {
     return {
         /** Save user. */
-        saveUser: function(userData, callback)
+        saveUser: function(userData)
         {
             var deferred = qService.defer();
 
-            OauthUser.findOne({username: userData.username}).exec(function (err, user)
+            // Get signup type.
+            oauthSignuptypeService.getSignupType(userData.signuptype.name).then(function(signupType)
             {
-                if(err)
+                if(signupType)
                 {
-                    deferred.reject(err);
-                }
-
-                if (user != null)
-                {
-                    deferred.reject(new Error('An user already exists with this username.'));
+                    return signupType;
                 }
                 else
                 {
-                    var user = new OauthUser();
-                    user.username = userData.username;
-                    user.firstname = userData.firstname;
-                    user.lastname = userData.lastname;
-                    user.email = userData.email;
-                    user.password = userData.password;
-
-                    user.save(function(err, user)
+                    oauthSignuptypeService.saveSignupType(userData.signuptype).then(function(signupType)
                     {
-                        if(err)
-                        {
-                            deferred.reject(err);
-                        }
-
-                        deferred.resolve(user);
+                        return signupType;
                     });
                 }
-            });
-
-            return deferred.promise;
-        },
-
-        /** Update user. */
-        updateUser: function(userData, callback)
-        {
-            var deferred = qService.defer();
-
-            OauthUser.findById(userData._id).exec(function (err, user)
+            })
+            .then(function(signupType)
             {
-                if(err)
-                {
-                    deferred.reject(err);
-                }
+                var user = new OauthUser();
+                user.username = userData.username;
+                user.password = userData.password;
+                user.fname = userData.fname;
+                user.lname = userData.lname;
+                user.email = userData.email;
+                user.signuptype = signupType._id;
 
-                if (user == null)
+                user.save(function(err, user)
                 {
-                    deferred.reject(new Error('No user matching [ID] : ' + userData._id + '.'));
-                }
-                else
-                {
-                    user.username = userData.username;
-                    user.firstname = userData.firstname;
-                    user.lastname = userData.lastname;
-                    user.email = userData.email;
-                    user.password = userData.password;
-
-                    user.save(function(err, user)
+                    if(err)
                     {
-                        if(err)
-                        {
-                            deferred.reject(err);
-                        }
-
+                        deferred.reject(err.message);
+                    }
+                    else
+                    {
                         deferred.resolve(user);
-                    });
-                }
+                    }
+                });
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err)
             });
 
             return deferred.promise;
@@ -99,8 +70,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (accessToken == null)
+                else if (accessToken == null)
                 {
                     deferred.reject(new Error('No access token matching [ACCESS_TOKEN] and [CLIENT_ID].'));
                 }
@@ -108,16 +78,18 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                 {
                     OauthUser.findOne({_id: accessToken.userId}).exec(function (err, user)
                     {
-                        if (err) {
+                        if(err)
+                        {
                             deferred.reject(err);
                         }
-
-                        if (accessToken == null)
+                        else if(accessToken == null)
                         {
                             deferred.reject(new Error('No user matching [ACCESS_TOKEN] and [CLIENT_ID].'));
                         }
-
-                        deferred.resolve(user);
+                        else
+                        {
+                            deferred.resolve(user);
+                        }
                     });
                 }
             });
@@ -126,7 +98,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
         },
 
         /** Save client. */
-        saveClient: function(clientData, callback)
+        saveClient: function(clientData)
         {
             var deferred = qService.defer();
 
@@ -136,8 +108,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (client != null)
+                else if(client != null)
                 {
                     deferred.reject(new Error('A client already exists with this clientId.'));
                 }
@@ -158,8 +129,10 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
                         {
                             deferred.reject(err);
                         }
-
-                        deferred.resolve(client);
+                        else
+                        {
+                            deferred.resolve(client);
+                        }
                     });
                 }
             });
@@ -168,23 +141,24 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, qService) {
         },
 
         /** Get client's informations. */
-        getClient: function(clientId, clientSecret)
+        getClient: function(clientId)
         {
             var deferred = qService.defer();
 
-            OauthClient.findOne({clientId: clientId, clientSecret: clientSecret}).exec(function (err, client)
+            OauthClient.findOne({clientId: clientId}).exec(function (err, client)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-
-                if (client == null)
+                else if (client == null)
                 {
-                    deferred.reject(new Error('No client matching [CLIENT_ID] and [CLIENT_SECRET].'));
+                    deferred.reject(new Error('No client matching [CLIENT_ID].'));
                 }
-
-                deferred.resolve(client);
+                else
+                {
+                    deferred.resolve(client);
+                }
             });
 
             return deferred.promise;

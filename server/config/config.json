@@ -1,4 +1,12 @@
 {
+  "http":
+  {
+    "port": "3008"
+  },
+  "db":
+  {
+    "url": "mongodb://localhost/archCore"
+  },
   "security":
   {
     "tokenLife" : 3600

@@ -12,7 +12,10 @@ var path = require('path'),
     db = require(path.join(__dirname, 'lib', 'db', 'db')),
     types = require(path.join(__dirname, 'lib', 'db', 'types')),
     servicesLoader = require(path.join(__dirname, 'lib', 'loaders', 'servicesLoader')),
-    pluginLoader = require(path.join(__dirname, 'lib', 'loaders', 'pluginLoader'));
+    pluginLoader = require(path.join(__dirname, 'lib', 'loaders', 'pluginLoader'))
+    errorLoader = require(path.join(__dirname, 'lib', 'loaders', 'errorsLoader'));
+
+
 
 exports.name = 'arch';
 
@@ -24,6 +27,7 @@ exports.attach = function(opts) {
 
     app.use(utils);
     app.use(config);
+    app.use(errorLoader);
     app.use(db);
     app.use(types);
     app.use(pluginLoader);
