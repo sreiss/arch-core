@@ -6,6 +6,8 @@
  */
 
 var ArchSaveError = GLOBAL.ArchSaveError;
+var ArchFindError = GLOBAL.ArchFindError;
+var ArchDeleteError = GLOBAL.ArchDeleteError;
 
 module.exports = function(eventService) {
     return {
@@ -23,7 +25,7 @@ module.exports = function(eventService) {
             })
             .catch(function(err)
             {
-                throw new ArchSaveError(err.message);
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
         },
 
@@ -33,17 +35,18 @@ module.exports = function(eventService) {
             // Get event id.
             var id = req.params.eventid;
 
+            // PIERRE : Utilise les middleware pour vérifier la présence des champs (regarde users).
             if(id)
             {
                 // Deleting event.
-                eventService.deleteEvent(id).then(function(event)
-                    {
-                        res.status(200).json({"message" : "Event deleted successfully.", "data" : event});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while deleting event.", "data" : err.message});
-                    });
+                eventService.deleteEvent(id).then(function(result)
+                {
+                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
+                })
+                .catch(function(err)
+                {
+                    res.status(500).json({"error" : new ArchDeleteError(err.message)});
+                });
             }
             else
             {
@@ -57,29 +60,30 @@ module.exports = function(eventService) {
             // Get event id.
             var id = req.params.eventid;
 
+            // PIERRE : Utilise les middleware pour vérifier la présence des champs (regarde users).
             if(id)
             {
                 // Get event.
-                eventService.getEventById(id).then(function(event)
-                    {
-                        res.status(200).json({"message" : "Event found successfully.", "data" : event});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while founding event.", "data" : err.message});
-                    });
+                eventService.getEventById(id).then(function(result)
+                {
+                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
+                })
+                .catch(function(err)
+                {
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
+                });
             }
             else
             {
                 // Get all events.
-                eventService.getEvents().then(function(events)
-                    {
-                        res.status(200).json({"message" : "Events found successfully.", "data" : events});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while founding events.", "data" : err.message});
-                    });
+                eventService.getEvents().then(function(result)
+                {
+                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
+                })
+                .catch(function(err)
+                {
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
+                });
             }
         }
     };

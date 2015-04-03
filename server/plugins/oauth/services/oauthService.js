@@ -32,7 +32,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             .then(function(signupType)
             {
                 var user = new OauthUser();
-                user.username = userData.username;
+                user.username = userData.email;
                 user.password = userData.password;
                 user.fname = userData.fname;
                 user.lname = userData.lname;
@@ -60,37 +60,39 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
         },
 
         /** Get user's informations. */
-        getUser: function(accessToken, clientId)
+        getUserById: function(id)
         {
             var deferred = qService.defer();
 
-            OauthAccesstoken.findOne({accessToken: accessToken, clientId: clientId}).exec(function (err, accessToken)
+            OauthUser.findOne({_id:id}).populate('signuptype').exec(function (err, user)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-                else if (accessToken == null)
+                else
                 {
-                    deferred.reject(new Error('No access token matching [ACCESS_TOKEN] and [CLIENT_ID].'));
+                    deferred.resolve(user);
+                }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get user's informations. */
+        getUser: function(username, password)
+        {
+            var deferred = qService.defer();
+
+            OauthUser.findOne({username: username, password: password}).populate('signuptype').exec(function (err, user)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
                 }
                 else
                 {
-                    OauthUser.findOne({_id: accessToken.userId}).exec(function (err, user)
-                    {
-                        if(err)
-                        {
-                            deferred.reject(err);
-                        }
-                        else if(accessToken == null)
-                        {
-                            deferred.reject(new Error('No user matching [ACCESS_TOKEN] and [CLIENT_ID].'));
-                        }
-                        else
-                        {
-                            deferred.resolve(user);
-                        }
-                    });
+                    deferred.resolve(user);
                 }
             });
 
@@ -159,6 +161,37 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
                 {
                     deferred.resolve(client);
                 }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get user's informations. */
+        getUsersBySignuptype: function(signuptype)
+        {
+            var deferred = qService.defer();
+
+            oauthSignuptypeService.getSignupType(signuptype).then(function(signuptype)
+            {
+                return signuptype;
+            })
+            .then(function(signuptype)
+            {
+                OauthUser.find({signuptype:signuptype_id}).exec(function (err, user)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(user);
+                    }
+                });
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err);
             });
 
             return deferred.promise;

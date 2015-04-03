@@ -31,17 +31,34 @@ module.exports = function(oauthService) {
         getUser: function(req, res)
         {
             // Get parameters.
-            var accessToken = req.params.accessToken;
-            var clientId = req.params.clientId;
+            var username = req.params.username;
+            var password = req.params.password;
 
             // Get user.
-            oauthService.getUser(accessToken, clientId).then(function(result)
+            oauthService.getUser(username, password).then(function(result)
             {
                 res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
             },
             function(err)
             {
-                throw new ArchFindError(err.message);
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        },
+
+        /** Get user's informations. */
+        getUsersBySignuptype: function(req, res)
+        {
+            // Get parameter.
+            var signuptype = req.params.signuptype;
+
+            // Get users.
+            oauthService.getUsersBySignuptype(signuptype).then(function(result)
+            {
+                res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
+            },
+            function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
             });
         },
 
@@ -58,7 +75,7 @@ module.exports = function(oauthService) {
             },
             function(err)
             {
-                throw new ArchSaveError(err.message);
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
         },
 
@@ -75,7 +92,7 @@ module.exports = function(oauthService) {
             },
             function(err)
             {
-                throw new ArchFindError(err.message);
+                res.status(500).json({"error" : new ArchFindError(err.message)});
             });
         }
     };

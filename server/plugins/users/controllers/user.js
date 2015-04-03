@@ -19,11 +19,11 @@ module.exports = function(userService) {
             // Saving user.
             userService.saveUser(user).then(function(result)
             {
-                res.status(200).json({"count" : (result ? 1 : 0), "data" : result});
+                res.status(200).json({"count": (result ? 1 : 0), "data": result});
             })
             .catch(function(err)
             {
-                throw new ArchSaveError(err.message);
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
         },
 
@@ -40,7 +40,7 @@ module.exports = function(userService) {
             },
             function (err)
             {
-                throw new ArchFindError(err.message);
+                res.status(500).json({"error" : new ArchFindError(err.message)});
             });
         },
 
@@ -54,7 +54,7 @@ module.exports = function(userService) {
             },
             function(err)
             {
-                throw new ArchFindError(err.message);
+                res.status(500).json({"error" : new ArchFindError(err.message)});
             });
         }
     };

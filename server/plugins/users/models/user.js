@@ -7,7 +7,8 @@
 
 module.exports = function(Types) {
     return {
-        schema: {
+        schema:
+        {
             userId: {type: String, required: true},
             role: {type: String, required: true},
             level: {type: String},
@@ -18,7 +19,8 @@ module.exports = function(Types) {
             modifiedBy: {type: Types.ObjectId, ref: 'User'},
             archived: Date,
             archivedBy: {type: Types.ObjectId, ref: 'User'},
-            published: {type: Number, default: 1}
-        }
+            published: {type: Boolean, default: true}
+        },
+        priority: 2
     };
 };

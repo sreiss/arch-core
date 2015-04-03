@@ -11,8 +11,10 @@ module.exports = function(oauthController, oauthRouter, oauthMiddleware) {
         .post(oauthController.saveUser)
         .put(oauthController.saveUser);
 
-    oauthRouter.route('/accesstoken/:accessToken/client/:clientId')
-        .get(oauthMiddleware.checkUserCredentials)
+    oauthRouter.route('/users/:signuptype')
+        .get(oauthController.getUsersBySignuptype)
+
+    oauthRouter.route('/user/:username/:password')
         .get(oauthController.getUser);
 
     oauthRouter.route('/client')

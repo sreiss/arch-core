@@ -1,7 +1,7 @@
 /**
- * Kidoikoiaki plugin.
+ * User plugin.
  *
- * @module arch/kidoikoiaki
+ * @module arch/users
  * @copyright ArchTailors 2015
  */
 
@@ -14,13 +14,6 @@ module.exports = function() {
         {
             // Get user data.
             var userData = req.body;
-
-            // Check username.
-            var userUsername = userData.username || '';
-            if(!validator.isEmail(userUsername))
-            {
-                throw new ArchParameterError("User username isn't a valid mail address.")
-            }
 
             // Check user first name (length >= 3).
             var userFirstName = userData.fname || '';
@@ -60,35 +53,13 @@ module.exports = function() {
             next();
         },
 
-        checkClient: function(req, res, next)
+        checkUserId: function(req, res, next)
         {
-            // Get client data.
-            var clientData = req.body;
-
-            // Check client name.
-            var clientName = clientData.name || '';
-            if(!validator.isLength(clientName, 3))
+            // Check user id.
+            var userId = req.params.userId || '';
+            if(!validator.isMongoId(userId))
             {
-                throw new ArchParameterError("Client name must contain at least 3 chars.")
-            }
-
-            // Check client redirect uri.
-            var clientRedirectUri = clientData.redirect_uri || '';
-            if(!validator.isURL(clientRedirectUri))
-            {
-                throw new ArchParameterError("Client redirect uri isn't a valid url.")
-            }
-
-            next();
-        },
-
-        checkClientCredentials: function(req, res, next)
-        {
-            // Check client id.
-            var clientId = req.params.clientId || '';
-            if(!validator.isLength(clientId, 10))
-            {
-                throw new ArchParameterError("Client id must contain at least 10 chars.")
+                throw new ArchParameterError("User ID isn't a valid MongoId.");
             }
 
             next();
