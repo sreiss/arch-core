@@ -23,5 +23,5 @@ module.exports = function(oauthController, oauthRouter, oauthMiddleware) {
 
     oauthRouter.route('/client/:clientId')
         .get(oauthMiddleware.checkClientCredentials)
-        .get(oauthController.getClient);
+        .get(schoauthController.getClient);
 }
