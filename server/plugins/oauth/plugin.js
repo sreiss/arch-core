@@ -1,10 +1,11 @@
 /**
- * User plugin.
+ * Oauth plugin.
  *
- * @module arch/users
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 
 module.exports = {
-    dependencies: []
+    dependencies: [],
+    priority: 1
 };

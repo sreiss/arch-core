@@ -10,23 +10,23 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     });
 
   $stateProvider
-    .state('archCore',
-    {
-      url: '',
-      abstract: true,
-      template: '<div ui-view></div>'
-    })
-    .state('archCore.home',
+    .state('home',
     {
       url: "/",
       templateUrl: "app/main/main.html",
       controller: 'archHomeController'
     })
-    .state('archCore.users',
+    .state('users',
     {
       url: '/users',
       templateUrl: 'components/user/arch-user.html',
       controller: 'archUserController'
+    })
+    .state('userAdd',
+    {
+      url: "/users/add",
+      templateUrl: "components/user/arch-user-add.html",
+      controller: "archUserAddController"
     });
 
   $urlRouterProvider

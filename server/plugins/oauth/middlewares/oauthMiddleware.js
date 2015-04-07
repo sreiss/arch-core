@@ -1,7 +1,7 @@
 /**
- * Kidoikoiaki plugin.
+ * OAuth middleware.
  *
- * @module arch/kidoikoiaki
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 

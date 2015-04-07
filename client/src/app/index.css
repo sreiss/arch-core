@@ -337,3 +337,19 @@ blockquote {
 {
   margin-bottom:20px;
 }
+
+.input-select
+{
+  margin-left: 5px;
+  margin-bottom:26px;
+}
+
+.ng-message-notice
+{
+  background-color:#4386F9;
+  padding:10px;
+  margin-bottom:10px;
+  color:white;
+}
+
+

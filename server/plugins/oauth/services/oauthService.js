@@ -164,37 +164,6 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             });
 
             return deferred.promise;
-        },
-
-        /** Get user's informations. */
-        getUsersBySignuptype: function(signuptype)
-        {
-            var deferred = qService.defer();
-
-            oauthSignuptypeService.getSignupType(signuptype).then(function(signuptype)
-            {
-                return signuptype;
-            })
-            .then(function(signuptype)
-            {
-                OauthUser.find({signuptype:signuptype_id}).exec(function (err, user)
-                {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(user);
-                    }
-                });
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
         }
     };
 };

@@ -9,8 +9,8 @@ module.exports = function(Types) {
     return {
         schema:
         {
-            userId: {type: String, required: true},
-            role: {type: String, required: true},
+            oauth: {type: Types.ObjectId, ref: 'OauthUser', required: true},
+            role: {type: String},
             level: {type: String},
             block: {type: Boolean, default: false},
             created: {type: Date, default: Date.now},
@@ -21,6 +21,6 @@ module.exports = function(Types) {
             archivedBy: {type: Types.ObjectId, ref: 'User'},
             published: {type: Boolean, default: true}
         },
-        priority: 2
+        priority: 1
     };
 };

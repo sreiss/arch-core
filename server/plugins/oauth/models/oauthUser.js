@@ -1,7 +1,7 @@
 /**
  * User mongoose schema.
  *
- * @module arch/users
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 
@@ -14,6 +14,7 @@ module.exports = function(Types) {
             lname: { type: String, required: true },
             email: { type: String, required: true },
             signuptype: {type: Types.ObjectId, ref: 'OauthSignuptype', required: true}
-        }
+        },
+        priority: 3
     };
 };

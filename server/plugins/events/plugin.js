@@ -1,3 +1,4 @@
 module.exports = {
-    dependencies: ['users']
+    dependencies: ['users'],
+    priority: 3
 };
