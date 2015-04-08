@@ -53,13 +53,13 @@ module.exports = function() {
             next();
         },
 
-        checkUserId: function(req, res, next)
+        checkOauthUserId: function(req, res, next)
         {
             // Check user id.
-            var userId = req.params.userId || '';
-            if(!validator.isMongoId(userId))
+            var oauthUserId = req.params.oauthUserId || '';
+            if(!validator.isMongoId(oauthUserId))
             {
-                throw new ArchParameterError("User ID isn't a valid MongoId.");
+                throw new ArchParameterError("OAuth User ID isn't a valid MongoId.");
             }
 
             next();

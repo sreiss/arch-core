@@ -8,7 +8,8 @@
 var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 
-module.exports = function(oauthService) {
+module.exports = function(oauthService)
+{
     return {
         /** Save user.*/
         saveUser: function(req, res)
@@ -23,7 +24,7 @@ module.exports = function(oauthService) {
             }).
             catch(function(err)
             {
-                throw new ArchSaveError(err.message);
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
         },
 /*
@@ -38,8 +39,8 @@ module.exports = function(oauthService) {
             oauthService.getUser(username, password).then(function(result)
             {
                 res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -55,8 +56,8 @@ module.exports = function(oauthService) {
             oauthService.getUsersBySignuptype(signuptype).then(function(result)
             {
                 res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -72,8 +73,8 @@ module.exports = function(oauthService) {
             oauthService.saveClient(client).then(function(result)
             {
                 res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -89,8 +90,8 @@ module.exports = function(oauthService) {
             oauthService.getClient(clientId).then(function(result)
             {
                 res.status(201).json({"count" : (result ? 1 : 0), "data" : result});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });

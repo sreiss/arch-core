@@ -1,50 +1,75 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, Users)
+  .controller('archUserController', function($scope, $stateParams, Users, OauthUser)
   {
     $scope.users = Users.findAll();
-    console.log($scope.users);
-  });
 
-  /*
-.controller('archParticipantEditController', function($scope, Participant){
-  $scope.participants = Participant
-    .get({ sheetReference: 'prout' });
-})
-.controller('archParticipantNewController', function($scope, Participant,$location,$mdToast, Sheet,$stateParams, $state,$animate){
-    $scope.toastPosition = {
+    $scope.deleteUser = function(id)
+    {
+      if(confirm('Souhaitez-vous réellement supprimer ce membre ?'))
+      {
+        OauthUser.delete({id:id}, function(result)
+        {
+          console.log(result);
+        },
+        function(err)
+        {
+          console.log(err);
+        });
+      }
+    };
+  })
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User)
+  {
+    $scope.toastPosition =
+    {
       bottom: false,
       top: true,
       left: false,
       right: true
     };
-    $scope.getToastPosition = function() {
+
+    $scope.getToastPosition = function()
+    {
       return Object.keys($scope.toastPosition)
         .filter(function(pos) { return $scope.toastPosition[pos]; })
         .join(' ');
     };
-    $scope.participant = new Participant();
-    Sheet.get({she_id:$stateParams.idSheet},function(sheet) {
-      $scope.participant.prt_sheet = sheet.data._id;
-      console.log(sheet.data._id);
-    });
-    $scope.newParticipant = function() {
-      $scope.participant.$save(
-        function (value) {
-            $mdToast.show(
-              $mdToast.simple()
-                .content('Participant créé avec succés.')
-                .position($scope.getToastPosition())
-                .hideDelay(3000)
-          );
-          $state.go('sheet.categories');
-        }
-        ,
-        function (responseError) {
-          if (responseError.status === 400) {
-            console.log(responseError);
-          }
 
+    $scope.user = new User();
+
+    $scope.addUser = function()
+    {
+      $scope.user.password = "randompasswordmd5";
+      $scope.user.signuptype = httpConstant.signupType;
+
+      $scope.user.$save(function (result)
+      {
+        if(result.count > 0)
+        {
+          $mdToast.show($mdToast.simple()
+              .content("Membre ajouté avec succés.")
+              .position($scope.getToastPosition())
+              .hideDelay(3000)
+          );
+
+          $state.go('users');
         }
-      );
-      $state.go('sheet.participants');
-    }*/
+        else
+        {
+          $mdToast.show($mdToast.simple()
+              .content("Une erreur est survenue lors de l'ajout du membre.")
+              .position($scope.getToastPosition())
+              .hideDelay(3000)
+          );
+        }
+      },
+      function(responseError)
+      {
+        $mdToast.show($mdToast.simple()
+            .content("Une erreur est survenue lors de l'ajout du membre.")
+            .position($scope.getToastPosition())
+            .hideDelay(3000)
+        );
+      });
+   }
+  });

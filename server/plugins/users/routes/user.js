@@ -11,7 +11,8 @@ module.exports = function(userController, userRouter, userMiddleware) {
         .post(userMiddleware.checkUser)
         .post(userController.saveUser);
 
-    userRouter.route('/:userId')
-        .get(userMiddleware.checkUserId)
-        .get(userController.getUser);
+    userRouter.route('/:oauthUserId')
+        .all(userMiddleware.checkOauthUserId)
+        .get(userController.getUser)
+        .delete(userController.deleteUser);
 }

@@ -4,11 +4,14 @@ var path = require('path'),
 
 exports.name = 'arch-loaders-modelsLoader';
 
-exports.attach = function(opts) {
+exports.attach = function(opts)
+{
     var app = this;
 
-    if (!app.arch.plugins)
+    if(!app.arch.plugins)
+    {
         throw new Error('Please, load plugins first');
+    }
 
     var pluginsDir = app.arch.config.get('pluginsDir');
     var plugins = app.arch.plugins;
@@ -56,6 +59,7 @@ exports.attach = function(opts) {
     }
 };
 
-exports.init = function(done) {
+exports.init = function(done)
+{
     return done();
 };

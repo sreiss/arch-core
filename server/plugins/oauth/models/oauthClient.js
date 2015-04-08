@@ -1,7 +1,7 @@
 /**
  * User mongoose schema.
  *
- * @module arch/users
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 
@@ -11,6 +11,7 @@ module.exports = function(Types) {
             clientId: { type: String },
             clientSecret: { type: String },
             clientRedirectUri: { type: String }
-        }
+        },
+        priority: 1
     };
 };
