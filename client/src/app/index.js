@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate']).config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate','ui.bootstrap','ui.calendar'])
+  .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
 {
   $mdThemingProvider
     .theme('default')
@@ -27,6 +28,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: '/users',
       templateUrl: 'components/user/arch-user.html',
       controller: 'archUserController'
+    })
+    .state('archCore.calendar',
+    {
+      url: "/calendar",
+      templateUrl: "components/calendar/calendar.html",
+      controller: 'CalendarCtrl'
     });
 
   $urlRouterProvider
