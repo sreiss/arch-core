@@ -1,7 +1,7 @@
 /**
  * Signup type service.
  *
- * @module arch/users
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 

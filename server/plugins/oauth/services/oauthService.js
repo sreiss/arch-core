@@ -60,26 +60,6 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
         },
 
         /** Get user's informations. */
-        getUserById: function(id)
-        {
-            var deferred = qService.defer();
-
-            OauthUser.findOne({_id:id}).populate('signuptype').exec(function (err, user)
-            {
-                if(err)
-                {
-                    deferred.reject(err);
-                }
-                else
-                {
-                    deferred.resolve(user);
-                }
-            });
-
-            return deferred.promise;
-        },
-
-        /** Get user's informations. */
         getUser: function(username, password)
         {
             var deferred = qService.defer();
@@ -166,32 +146,21 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             return deferred.promise;
         },
 
-        /** Get user's informations. */
-        getUsersBySignuptype: function(signuptype)
+        /** Get all users' informations. */
+        deleteUser: function(id)
         {
             var deferred = qService.defer();
 
-            oauthSignuptypeService.getSignupType(signuptype).then(function(signuptype)
+            OauthUser.findOneAndRemove({_id:id}).exec(function(err, result)
             {
-                return signuptype;
-            })
-            .then(function(signuptype)
-            {
-                OauthUser.find({signuptype:signuptype_id}).exec(function (err, user)
+                if(err)
                 {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(user);
-                    }
-                });
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(result);
+                }
             });
 
             return deferred.promise;

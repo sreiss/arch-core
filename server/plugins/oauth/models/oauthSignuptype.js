@@ -1,7 +1,7 @@
 /**
  * Signup type model.
  *
- * @module arch/users
+ * @module arch/oauth
  * @copyright ArchTailors 2015
  */
 
@@ -11,6 +11,7 @@ module.exports = function(Types) {
             name: {type: String, required: true},
             description: {type: String, required: true},
             isPublic: {type: Boolean, default: false, required: true}
-        }
+        },
+        priority: 2
     };
 };

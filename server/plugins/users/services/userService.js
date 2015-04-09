@@ -5,7 +5,8 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(User, userService, oauthService, qService) {
+module.exports = function(User, userService, oauthService, qService)
+{
     return {
         /** Save user. */
         saveUser: function(userData)
@@ -21,7 +22,7 @@ module.exports = function(User, userService, oauthService, qService) {
                 var user = new User();
 
                 // Assign data.
-                user.userId = oauthUser._id;
+                user.oauth = oauthUser._id;
                 user.role = userData.role;
                 user.level = userData.level;
                 user.block = userData.block;
@@ -33,6 +34,9 @@ module.exports = function(User, userService, oauthService, qService) {
                 user.archivedBy = userData.archivedBy;
                 user.published = userData.published;
 
+                console.log(oauthUser);
+                console.log(user);
+
                 user.save(function(err, user)
                 {
                     if(err)
@@ -41,14 +45,7 @@ module.exports = function(User, userService, oauthService, qService) {
                     }
                     else
                     {
-                        userService.getUserById(user.userId).then(function(user)
-                        {
-                            deferred.resolve(user);
-                        })
-                        .catch(function(err)
-                        {
-                            deferred.reject(err);
-                        });
+                        deferred.resolve(user);
                     }
                 })
             })
@@ -60,38 +57,21 @@ module.exports = function(User, userService, oauthService, qService) {
             return deferred.promise;
         },
 
-        /** Get user's informations by UserId. */
-        getUserById: function(userId)
+        /** Get user's informations. */
+        getUser: function(oauthUserId)
         {
             var deferred = qService.defer();
 
-            oauthService.getUserById(userId).then(function(oauthUser)
+            User.findOne({oauth: oauthUserId}).populate('oauth').exec(function(err, result)
             {
-               return oauthUser;
-            })
-            .then(function(oauthUser)
-            {
-                User.findOne({userId: userId}).exec(function(err, user)
+                if(err)
                 {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        var data =
-                        {
-                            account: oauthUser,
-                            profile: user
-                        };
-
-                        deferred.resolve(data);
-                    }
-                });
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(result);
+                }
             });
 
             return deferred.promise;
@@ -102,7 +82,7 @@ module.exports = function(User, userService, oauthService, qService) {
         {
             var deferred = qService.defer();
 
-            User.find().exec(function(err, result)
+            User.find().populate('oauth').exec(function(err, result)
             {
                 if(err)
                 {
@@ -112,6 +92,33 @@ module.exports = function(User, userService, oauthService, qService) {
                 {
                     deferred.resolve(result);
                 }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get all users' informations. */
+        deleteUser: function(oauthUserId)
+        {
+            var deferred = qService.defer();
+
+            oauthService.deleteUser(oauthUserId).then(function(result)
+            {
+                User.findOneAndRemove({oauth:oauthUserId}).exec(function(err, result)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(result);
+                    }
+                });
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err);
             });
 
             return deferred.promise;

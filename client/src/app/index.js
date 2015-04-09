@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate']).config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate','ui.bootstrap','ui.calendar','angular-md5'])
+  .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
 {
   $mdThemingProvider
     .theme('default')
@@ -10,23 +11,35 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     });
 
   $stateProvider
-    .state('archCore',
-    {
-      url: '',
-      abstract: true,
-      template: '<div ui-view></div>'
-    })
-    .state('archCore.home',
+    .state('home',
     {
       url: "/",
       templateUrl: "app/main/main.html",
       controller: 'archHomeController'
     })
-    .state('archCore.users',
+    .state('users',
     {
       url: '/users',
       templateUrl: 'components/user/arch-user.html',
       controller: 'archUserController'
+    })
+    .state('calendar',
+    {
+      url: "/calendar",
+      templateUrl: "components/calendar/calendar.html",
+      controller: 'CalendarCtrl'
+    })
+    .state('userAdd',
+    {
+      url: "/users/add",
+      templateUrl: "components/user/arch-user-add.html",
+      controller: "archUserAddController"
+    })
+    .state('userEdit',
+    {
+      url: "/users/edit/:id",
+      templateUrl: "components/user/arch-user-edit.html",
+      controller: "archUserEditController"
     });
 
   $urlRouterProvider
