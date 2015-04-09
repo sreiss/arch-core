@@ -8,8 +8,10 @@
 module.exports = function(userController, userRouter, userMiddleware) {
     userRouter.route('/')
         .get(userController.getUsers)
-        .post(userMiddleware.checkUser)
-        .post(userController.saveUser);
+        .post(userMiddleware.checkSaveUser)
+        .post(userController.saveUser)
+        .put(userMiddleware.checkUpdateUser)
+        .put(userController.updateUser);
 
     userRouter.route('/:oauthUserId')
         .all(userMiddleware.checkOauthUserId)

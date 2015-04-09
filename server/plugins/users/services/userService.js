@@ -26,16 +26,6 @@ module.exports = function(User, userService, oauthService, qService)
                 user.role = userData.role;
                 user.level = userData.level;
                 user.block = userData.block;
-                user.created = userData.created;
-                user.createdBy = userData.createdBy;
-                user.modified = userData.modified;
-                user.modifiedBy = userData.modifiedBy;
-                user.archived = userData.archived;
-                user.archivedBy = userData.archivedBy;
-                user.published = userData.published;
-
-                console.log(oauthUser);
-                console.log(user);
 
                 user.save(function(err, user)
                 {
@@ -52,6 +42,43 @@ module.exports = function(User, userService, oauthService, qService)
             .catch(function(err)
             {
                deferred.reject(err);
+            });
+
+            return deferred.promise;
+        },
+
+        /** Update user. */
+        updateUser: function(userData)
+        {
+            var deferred = qService.defer();
+
+            oauthService.updateUser(userData).then(function(oauthUser)
+            {
+                return oauthUser;
+            })
+            .then(function(oauthUser)
+            {
+                User.update({oauth: userData.id},
+                {
+                    birthdate: userData.birthdate,
+                    role: userData.role,
+                    level: userData.level
+                },
+                function(err, numberAffected, rawResponse)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(rawResponse);
+                    }
+                })
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err);
             });
 
             return deferred.promise;

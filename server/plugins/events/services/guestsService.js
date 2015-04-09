@@ -4,8 +4,8 @@ module.exports = function (Guest, qService) {
         getGuestsByEvent: function(eventId)
         {
             var deferred = qService.defer();
-    //'usr_id',
-            Guest.find({evt_id: eventId}).populate('evt_id').exec(function (err, guests)
+
+            Guest.find({evt_id: eventId}).populate('usr_id evt_id').exec(function (err, result)
             {
                 if(err)
                 {
@@ -13,7 +13,7 @@ module.exports = function (Guest, qService) {
                 }
                 else
                 {
-                    deferred.resolve(guests);
+                    deferred.resolve(result);
                 }
             });
 

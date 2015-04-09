@@ -28,6 +28,23 @@ module.exports = function(userService) {
             });
         },
 
+        /** Update user. */
+        updateUser: function(req, res)
+        {
+            // Get posted user.
+            var user = req.body.user;
+
+            // Saving user.
+            userService.updateUser(user).then(function(result)
+            {
+                res.status(200).json({"count": (result ? 1 : 0), "data": result});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
+            });
+        },
+
         /** Get user's informations. */
         getUser: function(req, res)
         {

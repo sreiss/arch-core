@@ -1,4 +1,6 @@
 var ArchSaveError = GLOBAL.ArchSaveError;
+var ArchFindError = GLOBAL.ArchFindError;
+
 
 module.exports = function(guestService) {
     return {
@@ -9,13 +11,14 @@ module.exports = function(guestService) {
             //console.log(guest);
 
             // Saving guest.
-            guestService.saveGuest(guest).then(function(result) {
-                res.status(200).json({"count" : (result ? 1 : 0), "data" : result});
-            })
-            .catch(function(err)
-            {
-                throw new ArchSaveError(err.message);
-            });
+            guestService.saveGuest(guest).then(function(guest)
+                {
+                    res.status(200).json({"count" : (guest ? 1 : 0), "data" : guest});
+                },
+                function(err)
+                {
+                    res.status(500).json({"error": new ArchSaveError(err.message)});
+                });
         },
 
         /** Delete existing guest. */
@@ -24,22 +27,15 @@ module.exports = function(guestService) {
             // Get guest id.
             var id = req.params.guestid;
 
-            if(id)
-            {
-                // Deleting guest.
-                guestService.deleteGuest(id).then(function(guest)
-                    {
-                        res.status(200).json({"message" : "Guest deleted successfully.", "data" : guest});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while deleting guest.", "data" : err.message});
-                    });
-            }
-            else
-            {
-                res.status(500).json({"message" : "Missing parameters.", "data" : false});
-            }
+            // Deleting guest.
+            guestService.deleteGuest(id).then(function(guest)
+                {
+                    res.status(200).json({"count" : (guest ? 1 : 0), "data" : guest});
+                },
+                function(err)
+                {
+                    res.status(500).json({"message" : "An error occurred while deleting guest.", "data" : err.message});
+                });
         },
 
         /** Get guest's informations. */
@@ -48,46 +44,42 @@ module.exports = function(guestService) {
             // Get guest id.
             var id = req.params.guestid;
 
-            if(id)
-            {
-                // Get guest.
-                guestService.getGuest(id).then(function(guest)
-                    {
-                        res.status(200).json({"message" : "Guest found successfully.", "data" : guest});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while founding guest.", "data" : err.message});
-                    });
-            }
-            else
-            {
-                // Get all guests.
-                guestService.getGuests().then(function(guests)
-                    {
-                        res.status(200).json({"message" : "guests found successfully.", "data" : guests});
-                    },
-                    function(err)
-                    {
-                        res.status(500).json({"message" : "An error occurred while founding guests.", "data" : err.message});
-                    });
-            }
-        },
-
-        /** Get guests by event */
-        getGuests: function(req, res)
-        {
-            // Get event id.
-            var id = req.params.eventid;
-
-                // Get guest.
-            guestService.getGuests(id).then(function(guest)
+            // Get guest.
+            guestService.getGuest(id).then(function(guest)
                 {
-                    res.status(200).json({"message" : "Guests found successfully.", "data" : guest});
+                    if(!guest)
+                    {
+                        res.status(204).json({"count": 0, "data": guest});
+                    }
+                    else
+                    {
+                        res.status(200).json({"count":  1, "data": guest});
+                    }
                 },
                 function(err)
                 {
-                    res.status(500).json({"message" : "An error occurred while founding guest.", "data" : err.message});
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
+                });
+        },
+
+        /** Get all guests */
+        getGuests: function(req, res)
+        {
+                // Get guest.
+            guestService.getGuests().then(function(guests)
+                {
+                    if(guests.length == 0)
+                    {
+                        res.status(204).json({"count": guests.length, "data": guests});
+                    }
+                    else
+                    {
+                        res.status(200).json({"count": guests.length, "data": guests});
+                    }
+                },
+                function(err)
+                {
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
                 });
         }
     };

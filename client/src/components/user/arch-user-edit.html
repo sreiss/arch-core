@@ -20,14 +20,28 @@
       <md-icon class="fa fa-envelope-o"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_EMAIL' | translate}}</label>
-        <input type="email" ng-model="user.email" required>
+        <input type="email" ng-model="user.email" readonly>
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-icon class="fa fa-lock"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_PASSWORD' | translate}}</label>
+        <input type="password" ng-model="user.newPassword">
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-icon class="fa fa-lock"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_CONFIRM' | translate}}</label>
+        <input type="password" ng-model="user.confirmPassword">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-calendar"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_BIRTHDATE' | translate}}</label>
-        <input type="date" placeholder="yyyy-MM-dd" min="1900-01-01" max="yyyy-MM-dd" ng-model="user.birthdate" required="true">
+        <input type="date" ng-model="user.birthdate">
       </md-input-container>
     </div>
     <div layout="row">

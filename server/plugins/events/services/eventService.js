@@ -4,6 +4,7 @@
  * @module arch/events
  * @copyright ArchTailors 2015
  */
+var moment = require('moment');
 
 module.exports = function(Event, qService) {
     return {
@@ -20,13 +21,14 @@ module.exports = function(Event, qService) {
             event.begin = eventData.begin;
             event.end = eventData.end;
             event.description = eventData.description;
-            event.data_reference = eventData.data_reference;
+            //event.data_reference = eventData.data_reference;
             event.address_line_1 = eventData.address_line_1;
-            event.address_line_2 = eventData.address_line_2;
-            event.address_line_3 = eventData.address_line_3;
+            event.ville = eventData.ville;
+            //event.address_line_2 = eventData.address_line_2;
+            //event.address_line_3 = eventData.address_line_3;
             event.country = eventData.country;
             event.zip = eventData.zip;
-            event.created = eventData.created;
+            event.created = moment().toDate();
             //event.createdBy = eventData.createdBy;
             //event.modified = eventData.modified;
             //event.modifiedBy = eventData.modifiedBy;
@@ -73,7 +75,7 @@ module.exports = function(Event, qService) {
         },
 
         /** Get event's informations by eventId. */
-        getEventById: function(eventId)
+        getEvent: function(eventId)
         {
             var deferred = qService.defer();
 
@@ -83,13 +85,10 @@ module.exports = function(Event, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (event == null)
+                else
                 {
-                    deferred.reject(new Error('No event matching [EVENT_ID] : ' + eventId + "."));
+                    deferred.resolve(event);
                 }
-
-                deferred.resolve(event);
             });
 
             return deferred.promise;

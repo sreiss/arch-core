@@ -1,3 +1,5 @@
+var ArchFindError = GLOBAL.ArchFindError;
+
 module.exports = function(guestsService) {
     return {
 
@@ -8,13 +10,20 @@ module.exports = function(guestsService) {
             var id = req.params.eventid;
 
                 // Get guest.
-            guestsService.getGuestsByEvent(id).then(function(guest)
+            guestsService.getGuestsByEvent(id).then(function(guests)
                 {
-                    res.status(200).json({"message" : "Guests found successfully.", "data" : guest});
+                    if(guests.length == 0)
+                    {
+                        res.status(204).json({"count": guests.length, "data": guests});
+                    }
+                    else
+                    {
+                        res.status(200).json({"count": guests.length, "data": guests});
+                    }
                 },
                 function(err)
                 {
-                    res.status(500).json({"message" : "An error occurred while founding guest.", "data" : err.message});
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
                 });
         }
     };

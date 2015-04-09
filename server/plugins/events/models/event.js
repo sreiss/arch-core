@@ -1,19 +1,20 @@
 module.exports = function(Types) {
     return {
         schema: {
-            name: String,
-            type: String,
-            begin: Date,
-            end: Date,
-            description: String,
+            name: {type: String, required: true},
+            type: {type :String, required: true},
+            begin: {type: Date, required: true},
+            end: {type :Date},
+            description: {type : String},
             //data_reference: { type: Types.ObjectId, ref: 'kid_participant' },
-            data_reference: String,
-            address_line_1: String,
-            address_line_2: String,
-            address_line_3: String,
-            country: String,
-            zip: Number,
-            created: Date
+            //data_reference: String,
+            address_line_1: {type : String},
+            //address_line_2: String,
+            ville: {type:String},
+            //address_line_3: String,
+            country: {type:String},
+            zip: {type : Number},
+            created: {type :Date}
             //createdBy: {type: Types.ObjectId, ref: 'User'},
             //modified: Date,
             //modifiedBy: {type: Types.ObjectId, ref: 'User'},
