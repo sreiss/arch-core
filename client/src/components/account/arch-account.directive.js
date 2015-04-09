@@ -2,7 +2,7 @@
 angular.module('archCore')
   .directive('archAccount', function (archAccountService, $translate, $state, $window, httpConstant) {
     return {
-      restrict: 'A',
+      restrict: 'E',
       templateUrl: 'components/account/arch-account.html',
       controller: function($scope, $cookieStore, $base64) {
         var init = function()

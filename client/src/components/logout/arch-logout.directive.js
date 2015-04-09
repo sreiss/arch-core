@@ -2,7 +2,7 @@
 angular.module('archCore')
   .directive('archLogout', function ($translate, httpConstant) {
     return {
-      restrict: 'A',
+      restrict: 'E',
       templateUrl: 'components/logout/arch-logout.html',
       controller: function($scope, $cookieStore) {
         $scope.logout = function()
