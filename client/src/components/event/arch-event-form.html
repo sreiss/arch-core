@@ -1,0 +1,62 @@
+<div layout="column">
+  <div layout="row">
+    <md-icon class="fa fa-user"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_NAME' | translate}}</label>
+      <input type="text" ng-model="event.name" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-graduation-cap"></md-icon>
+    <md-select placeholder="{{'EVENT_FORM_TYPE' | translate}}" ng-model="event.type" flex class="input-select" required>
+      <md-option value="race">{{'EVENT_FORM_TYPE_RACE' | translate}}</md-option>
+      <md-option value="discovery">{{'EVENT_FORM_TYPE_DISCOVERY' | translate}}</md-option>
+      <md-option value="training">{{'EVENT_FORM_TYPE_TRAINING' | translate}}</md-option>
+    </md-select>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_BEGIN' | translate}}</label>
+      <input type="date" min="1900-01-01" max="yyyy-MM-dd" ng-model="event.begin" required="true">
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_END' | translate}}</label>
+      <input type="date" min="1900-01-01" max="yyyy-MM-dd" ng-model="event.end">
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_DESCRIPTION' | translate}}</label>
+      <input type="text" ng-model="event.description" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-user"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_ADDRESS' | translate}}</label>
+      <input type="text" ng-model="event.address_line_1" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-envelope-o"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_COUNTRY' | translate}}</label>
+      <input type="text" ng-model="event.country" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-envelope-o"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_ZIP' | translate}}</label>
+      <input type="text" ng-model="event.zip" required>
+    </md-input-container>
+  </div>
+  <div class="md-actions" layout="row">
+    <md-button class="md-raised md-accent" type="submit">Valider</md-button>
+  </div>
+</div>

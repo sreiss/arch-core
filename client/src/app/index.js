@@ -23,12 +23,6 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       templateUrl: 'components/user/arch-user.html',
       controller: 'archUserController'
     })
-    .state('calendar',
-    {
-      url: "/calendar",
-      templateUrl: "components/calendar/calendar.html",
-      controller: 'CalendarCtrl'
-    })
     .state('userAdd',
     {
       url: "/users/add",
@@ -40,6 +34,24 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: "/users/edit/:id",
       templateUrl: "components/user/arch-user-edit.html",
       controller: "archUserEditController"
+    })
+    .state('events',
+    {
+      url: "/events",
+      templateUrl: "components/event/arch-event.html",
+      controller : "archEventController"
+    })
+    .state('eventAdd',
+    {
+      url: "/event/add",
+      templateUrl: "components/event/arch-event-add.html",
+      controller : "archEventAddController"
+    })
+    .state('calendar',
+    {
+      url: "/calendar",
+      templateUrl: "components/calendar/calendar.html",
+      controller: 'CalendarCtrl'
     });
 
   $urlRouterProvider

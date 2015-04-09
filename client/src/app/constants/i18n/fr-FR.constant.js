@@ -37,5 +37,19 @@ angular.module('archCore')
     'USER_FORM_ROLE': "Rôle",
     'USER_FORM_ROLE_MEMBER': "Membre",
     'USER_FORM_ROLE_ADMIN': "Administrateur",
-    'USER_FORM_NOTICE_RANDOM_PASSWORD': "Un mot de passe aléatoire sera généré et communiqué par courrier électronique à la création du membre."
+    'USER_FORM_NOTICE_RANDOM_PASSWORD': "Un mot de passe aléatoire sera généré et communiqué par courrier électronique à la création du membre.",
+
+    'EVENT_FORM_NAME' : "Nom de l'évènement",
+    'EVENT_FORM_TYPE' : "Type de l'évènement",
+    'EVENT_FORM_TYPE_RACE' : "Course",
+    'EVENT_FORM_TYPE_DISCOVERY' : "Découverte",
+    'EVENT_FORM_TYPE_TRAINING' : "Entrainement",
+    'EVENT_FORM_BEGIN' : "Date de l'évènement",
+    'EVENT_FORM_END' : "Date de fin de l'évènement",
+    'EVENT_FORM_DESCRIPTION' : "Description",
+    'EVENT_FORM_ADDRESS' : "Addresse",
+    'EVENT_FORM_COUNTRY' : "Pays",
+    'EVENT_FORM_ZIP' : "Code postal",
+    'EVENTS_TITLE' : "Events",
+    'EVENTS_ADD_EVENT' : "Ajout d'un évenement"
   });
