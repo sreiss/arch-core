@@ -10,7 +10,7 @@ var ArchParameterError = GLOBAL.ArchParameterError;
 
 module.exports = function() {
     return {
-        checkGuest: function(req, res, next)
+        /*checkGuest: function(req, res, next)
         {
             // Get guest data.
             var guestData = req.body;
@@ -18,7 +18,7 @@ module.exports = function() {
             console.log(guestData);
 
             next();
-        },
+        },*/
 
         checkGuestId: function(req, res, next)
         {

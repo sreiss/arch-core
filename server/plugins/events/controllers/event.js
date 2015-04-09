@@ -88,33 +88,35 @@ module.exports = function(eventService){
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
-        }/*,
+        },
 
         getIcal: function(req, res)
         {
-            eventService.getEvents().then(function(events) {
+            //eventService.getEvents().then(function(events) {
+            //
+            //    for(var i=0; i<events.length; i++)
+            //    {
+            //        var options = {
+            //            eventName: 'Fingerpainting lessons',
+            //            fileName: 'event.ics',
+            //            dtstart: 'Sat Nov 02 2014 13:15:00 GMT-0700 (PDT)',
+            //            email: {
+            //                name: 'Isaac Asimov',
+            //                email: 'isaac@asimov.com'
+            //            }
+            //        };
+            //
+            //        ics.createEvent(options, null, function (err, success) {
+            //            if (err) {
+            //                console.log(err);
+            //            }
+            //
+            //            console.log(success);
+            //        });
+            //    }
+            //});
 
-                for(var i=0; i<events.length; i++)
-                {
-                    var options = {
-                        eventName: 'Fingerpainting lessons',
-                        fileName: 'event.ics',
-                        dtstart: 'Sat Nov 02 2014 13:15:00 GMT-0700 (PDT)',
-                        email: {
-                            name: 'Isaac Asimov',
-                            email: 'isaac@asimov.com'
-                        }
-                    };
-
-                    ics.createEvent(options, null, function (err, success) {
-                        if (err) {
-                            console.log(err);
-                        }
-
-                        console.log(success);
-                    });
-                }
-            });
-        }*/
+            console.log('ical');
+        }
     }
 };
