@@ -59,6 +59,32 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             return deferred.promise;
         },
 
+        /** Update user. */
+        updateUser: function(userData)
+        {
+            var deferred = qService.defer();
+
+            OauthUser.update({_id: userData.id},
+            {
+                fname: userData.fname,
+                lname: userData.lname,
+                password: userData.password
+            },
+            function(err, numberAffected, rawResponse)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(rawResponse);
+                }
+            })
+
+            return deferred.promise;
+        },
+
         /** Get user's informations. */
         getUser: function(username, password)
         {

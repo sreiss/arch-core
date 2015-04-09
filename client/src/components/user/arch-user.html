@@ -18,11 +18,11 @@
     </thead>
     <tbody>
     <tr ng-repeat="user in users.data">
-      <td>{{user.oauth.fname}}</td>
       <td>{{user.oauth.lname}}</td>
+      <td>{{user.oauth.fname}}</td>
       <td>{{user.oauth.email}}</td>
       <td>{{'USER_FORM_ROLE_' + user.role.toUpperCase() | translate}}</td>
-      <td>{{user.created | date : 'dd/mm/yyyy'}}</td>
+      <td>{{user.created | date : 'dd/MM/yyyy'}}</td>
       <td class="text-right">
         <a href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user.oauth._id)"></md-icon></a>
         <a href="#"><md-icon class="fa fa-trash" ng-click="deleteUser(user.oauth._id)"></md-icon></a>
