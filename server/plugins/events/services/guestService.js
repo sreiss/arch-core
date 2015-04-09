@@ -53,7 +53,7 @@ module.exports = function (Guest, qService) {
         {
             var deferred = qService.defer();
 
-            Guest.findOne({_id: guestId}).populate('evt_id').exec(function (err, guest)
+            Guest.findOne({_id: guestId}).populate('usr_id evt_id').exec(function (err, guest)
             {
                 if(err)
                 {
@@ -73,8 +73,8 @@ module.exports = function (Guest, qService) {
         getGuests: function()
         {
             var deferred = qService.defer();
-    //'usr_id',
-            Guest.find().populate('evt_id').exec(function (err, result)
+
+            Guest.find().populate('usr_id evt_id').exec(function (err, result)
             {
                 if(err)
                 {
