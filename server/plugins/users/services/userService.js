@@ -95,6 +95,33 @@ module.exports = function(User, userService, oauthService, qService)
             });
 
             return deferred.promise;
+        },
+
+        /** Get all users' informations. */
+        deleteUser: function(oauthUserId)
+        {
+            var deferred = qService.defer();
+
+            oauthService.deleteUser(oauthUserId).then(function(result)
+            {
+                User.findOneAndRemove({oauth:oauthUserId}).exec(function(err, result)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(result);
+                    }
+                });
+            })
+            .catch(function(err)
+            {
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
         }
     };
 };

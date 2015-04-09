@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate','ui.bootstrap','ui.calendar'])
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate','ui.bootstrap','ui.calendar','angular-md5'])
   .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
 {
   $mdThemingProvider
@@ -34,6 +34,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: "/users/add",
       templateUrl: "components/user/arch-user-add.html",
       controller: "archUserAddController"
+    })
+    .state('userEdit',
+    {
+      url: "/users/edit/:id",
+      templateUrl: "components/user/arch-user-edit.html",
+      controller: "archUserEditController"
     });
 
   $urlRouterProvider
