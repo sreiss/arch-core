@@ -1,10 +1,10 @@
 module.exports = function(Types) {
     return {
         schema: {
-            name: String,
-            type: String,
-            begin: Date,
-            end: Date,
+            name: String, required: true,
+            type: String, required: true,
+            begin: Date, required: true,
+            end: Date, required: true,
             description: String,
             //data_reference: { type: Types.ObjectId, ref: 'kid_participant' },
             data_reference: String,

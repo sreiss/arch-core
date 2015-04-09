@@ -59,6 +59,7 @@ module.exports = function (Guest, qService) {
                 {
                     deferred.reject(err);
                 }
+
                 else
                 {
                     deferred.resolve(guest);
@@ -73,7 +74,7 @@ module.exports = function (Guest, qService) {
         {
             var deferred = qService.defer();
     //'usr_id',
-            Guest.find().populate('evt_id').exec(function (err, guests)
+            Guest.find().populate('evt_id').exec(function (err, result)
             {
                 if(err)
                 {
@@ -81,7 +82,7 @@ module.exports = function (Guest, qService) {
                 }
                 else
                 {
-                    deferred.resolve(guests);
+                    deferred.resolve(result);
                 }
             });
 

@@ -8,22 +8,22 @@
 var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
+var ics = require('ics');
 
-module.exports = function(eventService) {
+module.exports = function(eventService){
     return {
         /** Save event. */
         saveEvent: function(req, res)
         {
             // Get posted event.
             var event = req.body;
-            //console.log(event);
 
             // Saving event.
-            eventService.saveEvent(event).then(function(result)
+            eventService.saveEvent(event).then(function(event)
             {
-                res.status(200).json({"count": (result ? 1 : 0), "data": result});
-            })
-            .catch(function(err)
+                res.status(200).json({"count": (event ? 1 : 0), "data": event});
+            },
+            function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -35,23 +35,15 @@ module.exports = function(eventService) {
             // Get event id.
             var id = req.params.eventid;
 
-            // PIERRE : Utilise les middleware pour vérifier la présence des champs (regarde users).
-            if(id)
+            // Deleting event.
+            eventService.deleteEvent(id).then(function(event)
             {
-                // Deleting event.
-                eventService.deleteEvent(id).then(function(result)
-                {
-                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
-                })
-                .catch(function(err)
-                {
-                    res.status(500).json({"error" : new ArchDeleteError(err.message)});
-                });
-            }
-            else
+                res.status(200).json({"count": (event ? 1 : 0), "data": event});
+            },
+            function(err)
             {
-                res.status(500).json({"message" : "Missing parameters.", "data" : false});
-            }
+                res.status(500).json({"error" : new ArchDeleteError(err.message)});
+            });
         },
 
         /** Get event's informations. */
@@ -60,31 +52,69 @@ module.exports = function(eventService) {
             // Get event id.
             var id = req.params.eventid;
 
-            // PIERRE : Utilise les middleware pour vérifier la présence des champs (regarde users).
-            if(id)
+            // Get event.
+            eventService.getEvent(id).then(function(event)
             {
-                // Get event.
-                eventService.getEventById(id).then(function(result)
+                if(!event)
                 {
-                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
-                })
-                .catch(function(err)
+                    res.status(204).json({"count": 0, "data": event});
+                }
+                else
                 {
-                    res.status(500).json({"error" : new ArchFindError(err.message)});
-                });
-            }
-            else
+                    res.status(200).json({"count": 1, "data": event});
+                }
+            },
+            function(err)
             {
-                // Get all events.
-                eventService.getEvents().then(function(result)
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        },
+
+        getEvents: function(req, res)
+        {
+            // Get all events.
+            eventService.getEvents().then(function(events)
+            {
+                if(events.length == 0)
                 {
-                    res.status(200).json({"count": (result ? 1 : 0), "data": result});
-                })
-                .catch(function(err)
+                    res.status(204).json({"count": events.length, "data": events});
+                }
+                else
                 {
-                    res.status(500).json({"error" : new ArchFindError(err.message)});
-                });
-            }
-        }
-    };
+                    res.status(200).json({"count": events.length, "data": events});
+                }
+            },
+            function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        }/*,
+
+        getIcal: function(req, res)
+        {
+            eventService.getEvents().then(function(events) {
+
+                for(var i=0; i<events.length; i++)
+                {
+                    var options = {
+                        eventName: 'Fingerpainting lessons',
+                        fileName: 'event.ics',
+                        dtstart: 'Sat Nov 02 2014 13:15:00 GMT-0700 (PDT)',
+                        email: {
+                            name: 'Isaac Asimov',
+                            email: 'isaac@asimov.com'
+                        }
+                    };
+
+                    ics.createEvent(options, null, function (err, success) {
+                        if (err) {
+                            console.log(err);
+                        }
+
+                        console.log(success);
+                    });
+                }
+            });
+        }*/
+    }
 };

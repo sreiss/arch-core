@@ -73,7 +73,7 @@ module.exports = function(Event, qService) {
         },
 
         /** Get event's informations by eventId. */
-        getEventById: function(eventId)
+        getEvent: function(eventId)
         {
             var deferred = qService.defer();
 
@@ -83,13 +83,10 @@ module.exports = function(Event, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (event == null)
+                else
                 {
-                    deferred.reject(new Error('No event matching [EVENT_ID] : ' + eventId + "."));
+                    deferred.resolve(event);
                 }
-
-                deferred.resolve(event);
             });
 
             return deferred.promise;

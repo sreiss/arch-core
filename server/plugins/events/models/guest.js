@@ -2,9 +2,9 @@
 module.exports = function(Types) {
     return {
         schema: {
-            //usr_id: { type: Types.ObjectId, ref: 'User' },
-            usr_id: { type: Number },
-            evt_id: { type: Types.ObjectId, ref: 'Event' }
+            //usr_id: { type: Types.ObjectId, ref: 'User', required: true },
+            usr_id: { type: Number, required: true },
+            evt_id: { type: Types.ObjectId, ref: 'Event', required: true }
         },
         priority: 2
     };
