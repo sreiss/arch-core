@@ -1,6 +1,21 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, Users, OauthUser)
+  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, Users, OauthUser)
   {
+    $scope.toastPosition =
+    {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+
+    $scope.getToastPosition = function()
+    {
+      return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+    };
+
     $scope.users = Users.findAll();
 
     $scope.deleteUser = function(id)
@@ -9,16 +24,32 @@ angular.module('archCore')
       {
         OauthUser.delete({id:id}, function(result)
         {
-          console.log(result);
+          $mdToast.show($mdToast.simple()
+              .content("Membre supprimé avec succés.")
+              .position($scope.getToastPosition())
+              .hideDelay(3000)
+          );
+
+          $scope.users = Users.findAll();
         },
         function(err)
         {
-          console.log(err);
+          $mdToast.show($mdToast.simple()
+              .content("Une erreur est survenue lors de la suppression du membre.")
+              .position($scope.getToastPosition())
+              .hideDelay(3000)
+          );
         });
       }
     };
+
+    $scope.editUser = function(id)
+    {
+      alert(id);
+      $state.go('userEdit', {'id' : id});
+    };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, md5)
   {
     $scope.toastPosition =
     {
@@ -39,7 +70,9 @@ angular.module('archCore')
 
     $scope.addUser = function()
     {
-      $scope.user.password = "randompasswordmd5";
+      var password = archUserService.generateRandomPassword();
+
+      $scope.user.password = md5.createHash(password);
       $scope.user.signuptype = httpConstant.signupType;
 
       $scope.user.$save(function (result)
@@ -51,6 +84,8 @@ angular.module('archCore')
               .position($scope.getToastPosition())
               .hideDelay(3000)
           );
+
+          archUserService.sendUserMail($scope.user.fname, $scope.user.lname, $scope.user.email, password);
 
           $state.go('users');
         }
@@ -72,4 +107,23 @@ angular.module('archCore')
         );
       });
    }
+  })
+  .controller('archUserEditController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, md5)
+  {
+    $scope.toastPosition =
+    {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+
+    $scope.getToastPosition = function()
+    {
+      return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+    };
+
+    console.log($stateParams);
   });

@@ -60,26 +60,6 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
         },
 
         /** Get user's informations. */
-        getUserById: function(id)
-        {
-            var deferred = qService.defer();
-
-            OauthUser.findOne({_id:id}).populate('signuptype').exec(function (err, user)
-            {
-                if(err)
-                {
-                    deferred.reject(err);
-                }
-                else
-                {
-                    deferred.resolve(user);
-                }
-            });
-
-            return deferred.promise;
-        },
-
-        /** Get user's informations. */
         getUser: function(username, password)
         {
             var deferred = qService.defer();
@@ -160,6 +140,26 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
                 else
                 {
                     deferred.resolve(client);
+                }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get all users' informations. */
+        deleteUser: function(id)
+        {
+            var deferred = qService.defer();
+
+            OauthUser.findOneAndRemove({_id:id}).exec(function(err, result)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(result);
                 }
             });
 
