@@ -5,6 +5,8 @@ angular.module('archCore')
 
     'SIDEBAR_HOME' : "Accueil",
     'SIDEBAR_USERS' : "Membres",
+    'SIDEBAR_EVENTS' : "Evènements",
+    'SIDEBAR_TRACKS' : "Parcours",
     'SIDEBAR_ACCOUNT' : "Mon compte",
     'SIDEBAR_LOGOUT' : "Déconnexion",
 
