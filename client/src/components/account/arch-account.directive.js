@@ -68,7 +68,7 @@ angular.module('archCore')
 
         function logout()
         {
-          if(confirm('Tu veux te deconnecter fils de pute ?'))
+          if(confirm('Tu veux te deconnecter ?'))
           {
             $cookieStore.remove('token');
           }

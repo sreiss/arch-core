@@ -50,8 +50,8 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     .state('calendar',
     {
       url: "/calendar",
-      templateUrl: "components/calendar/calendar.html",
-      controller: 'CalendarCtrl'
+      templateUrl: "components/calendar/arch-calendar.html",
+      controller: 'archCalendarController'
     });
 
   $urlRouterProvider

@@ -2,7 +2,7 @@
  * Created by Brian on 07/04/2015.
  */
 angular.module('archCore')
-  .controller('CalendarCtrl', function($scope,$compile,uiCalendarConfig) {
+  .controller('archCalendarController', function($scope,$compile,uiCalendarConfig) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();

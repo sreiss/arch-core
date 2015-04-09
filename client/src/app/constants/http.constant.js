@@ -2,9 +2,9 @@
 
 angular.module('archCore').constant('httpConstant',
 {
-  apiUrl: 'http://localhost:3008',
-  loginUrl: 'http://localhost:3002',
-  casUrl: 'http://localhost:3008',
+  apiUrl: 'http://localhost:3021',
+  loginUrl: 'http://localhost:3010',
+  casUrl: 'http://localhost:3021',
 
   signupType: {
     name: 'ASCPA',
@@ -13,5 +13,5 @@ angular.module('archCore').constant('httpConstant',
   },
 
   clientName: 'ARCH-ASCPA',
-  clientRedirectUri : 'http://localhost:3000'
+  clientRedirectUri : 'http://localhost:3011'
 });
