@@ -52,7 +52,25 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: "/calendar",
       templateUrl: "components/calendar/arch-calendar.html",
       controller: 'archCalendarController'
-    });
+    })
+    .state('parcours',
+    {
+      url: '/parcours',
+      templateUrl: 'components/parcours/arch-parcours.html',
+      controller: 'archParcoursController'
+    })
+    .state('parcoursAdd',
+    {
+      url: "/parcours/add",
+      templateUrl: "components/parcours/arch-parcours-add.html",
+      controller: "archParcoursAddController"
+    })
+    .state('parcoursEdit',
+    {
+      url: "/parcours/edit/:id",
+      templateUrl: "components/parcours/arch-parcours-edit.html",
+      controller: "archParcoursEditController"
+    })
 
   $urlRouterProvider
     .otherwise("/");

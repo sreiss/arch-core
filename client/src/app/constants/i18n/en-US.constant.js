@@ -41,5 +41,27 @@ angular.module('archCore')
     'USER_FORM_ROLE': "Role",
     'USER_FORM_ROLE_MEMBER': "Member",
     'USER_FORM_ROLE_ADMIN': "Administrator",
-    'USER_FORM_NOTICE_RANDOM_PASSWORD': "A random password will be generated and send by mail after the creation of the member."
+    'USER_FORM_NOTICE_RANDOM_PASSWORD': "A random password will be generated and send by mail after the creation of the member.",
+
+    'EVENTS_TITLE' : "Events",
+    'EVENTS_ADD_TITLE': "New event",
+    'EVENTS_ADD_EVENT' : "Add event",
+    'EVENTS_EDIT_EVENT' : "Edit event",
+    'EVENT_FORM_NAME' : "Name",
+    'EVENT_FORM_TYPE' : "Type",
+    'EVENT_FORM_TYPE_RACE' : "Run",
+    'EVENT_FORM_TYPE_DISCOVERY' : "Discover",
+    'EVENT_FORM_TYPE_TRAINING' : "Training",
+    'EVENT_FORM_BEGIN' : "Begin",
+    'EVENT_FORM_END' : "End",
+    'EVENT_FORM_DESCRIPTION' : "Description",
+    'EVENT_FORM_ADDRESS' : "Address",
+    'EVENT_FORM_COUNTRY' : "Country",
+    'EVENT_FORM_ZIP' : "Zip code",
+
+    'TRACKS_TITLE': "Tracks",
+    'TRACKS_ADD_TRACK': "Nouveau track",
+    'TRACKS_NO_TRACK': "Vous n'avez à ce jour ajouté aucun track.",
+    'TRACKS_ADD_TITLE': "Add track",
+    'TRACKS_EDIT_TITLE': "Edit track"
   });
