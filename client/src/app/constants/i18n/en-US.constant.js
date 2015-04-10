@@ -42,6 +42,9 @@ angular.module('archCore')
     'USER_FORM_ROLE_MEMBER': "Member",
     'USER_FORM_ROLE_ADMIN': "Administrator",
     'USER_FORM_NOTICE_RANDOM_PASSWORD': "A random password will be generated and send by mail after the creation of the member.",
+    'USER_FORM_PHONE' : "Phone number",
+    'USER_FORM_AVATAR' : "Picture",
+    'USER_FORM_FFA' : "Link to FFA licence",
 
     'EVENTS_TITLE' : "Events",
     'EVENTS_ADD_TITLE': "New event",

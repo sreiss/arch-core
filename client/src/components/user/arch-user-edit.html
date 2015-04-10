@@ -45,6 +45,27 @@
       </md-input-container>
     </div>
     <div layout="row">
+      <md-icon class="fa fa-phone"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_PHONE' | translate}}</label>
+        <input type="date" ng-model="user.phone">
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-icon class="fa fa-user"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_AVATAR' | translate}}</label>
+        <input type="date" ng-model="user.avatar">
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-icon class="fa fa-newspaper-o"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_FFA' | translate}}</label>
+        <input type="date" ng-model="user.ffa">
+      </md-input-container>
+    </div>
+    <div layout="row">
       <md-icon class="fa fa-line-chart"></md-icon>
       <md-select placeholder="{{'USER_FORM_LEVEL' | translate}}" ng-model="user.level" flex class="input-select">
         <md-option value="beginner">{{'USER_FORM_LEVEL_BEGINNER' | translate}}</md-option>

@@ -42,6 +42,9 @@ angular.module('archCore')
     'USER_FORM_ROLE_MEMBER': "Membre",
     'USER_FORM_ROLE_ADMIN': "Administrateur",
     'USER_FORM_NOTICE_RANDOM_PASSWORD': "Un mot de passe aléatoire sera généré et communiqué par courrier électronique à la création du membre.",
+    'USER_FORM_PHONE' : "Telephone",
+    'USER_FORM_AVATAR' : "Photo",
+    'USER_FORM_FFA' : "Lien licence FFA",
 
     'EVENTS_TITLE' : "Evènements",
     'EVENTS_ADD_TITLE': "Nouvel évènement",
@@ -58,6 +61,7 @@ angular.module('archCore')
     'EVENT_FORM_ADDRESS' : "Addresse",
     'EVENT_FORM_COUNTRY' : "Pays",
     'EVENT_FORM_ZIP' : "Code postal",
+
 
     'TRACKS_TITLE': "Parcours",
     'TRACKS_ADD_TRACK': "Nouveau parcours",
