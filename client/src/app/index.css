@@ -357,4 +357,6 @@ blockquote {
   color:white;
 }
 
-
+.md-button {
+  text-transform: none;
+}

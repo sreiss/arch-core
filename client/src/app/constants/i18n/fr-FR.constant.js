@@ -1,7 +1,8 @@
 'use strict'
 angular.module('archCore')
   .constant('i18nfrFRConstant', {
-    'NAVBAR_TITLE' : "Administration de l'ASCPA",
+    'CUSTOMER_NAME' : "ArchCore",
+    'CUSTOMER_DESC' : "Administration de l'ASCPA",
 
     'SIDEBAR_HOME' : "Accueil",
     'SIDEBAR_USERS' : "Membres",
