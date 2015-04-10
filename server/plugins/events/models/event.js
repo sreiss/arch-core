@@ -22,14 +22,14 @@ module.exports = function(Types)
             //address_line_3: String,
             country: {type:String},
             zip: {type : Number},
-            created: {type :Date}
+            created: {type :Date},
+            guests: [{ evt_guest : {type: Types.ObjectId, ref: 'User'}}]
             //createdBy: {type: Types.ObjectId, ref: 'User'},
             //modified: Date,
             //modifiedBy: {type: Types.ObjectId, ref: 'User'},
             //archived: Date,
             //archivedBy: {type: Types.ObjectId, ref: 'User'},
             //published: Number
-        },
-        priority: 1
+        }
     };
 };

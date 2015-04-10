@@ -18,7 +18,7 @@ module.exports = function(eventService)
         {
             // Get posted event.
             var event = req.body;
-
+            //console.log(event);
             // Saving event.
             eventService.saveEvent(event).then(function(event)
             {

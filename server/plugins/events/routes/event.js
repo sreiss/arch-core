@@ -8,7 +8,7 @@
 module.exports = function(eventController, eventRouter, eventMiddleware)
 {
     eventRouter.route('/')
-        .post(eventMiddleware.checkEvent)
+        //.post(eventMiddleware.checkEvent)
         .post(eventController.saveEvent)
         .get(eventController.getEvents);
 
