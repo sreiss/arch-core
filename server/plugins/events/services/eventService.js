@@ -1,12 +1,14 @@
 /**
- * event service.
+ * Event service.
  *
  * @module arch/events
  * @copyright ArchTailors 2015
  */
+
 var moment = require('moment');
 
-module.exports = function(Event, qService) {
+module.exports = function(Event, qService)
+{
     return {
         /** Save event. */
         saveEvent: function(eventData)
@@ -62,13 +64,14 @@ module.exports = function(Event, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (event == null)
+                else if(!event)
                 {
                     deferred.reject(new Error('No event matching [EVENT_ID] : ' + eventId + "."));
                 }
-
-                deferred.resolve(event);
+                else
+                {
+                    deferred.resolve(event);
+                }
             });
 
             return deferred.promise;
@@ -105,13 +108,14 @@ module.exports = function(Event, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (events.length == 0)
+                else if(!events)
                 {
                     deferred.reject(new Error('No events found.'));
                 }
-
-                deferred.resolve(events);
+                else
+                {
+                    deferred.resolve(events);
+                }
             });
 
             return deferred.promise;

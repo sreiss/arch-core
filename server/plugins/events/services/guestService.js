@@ -1,4 +1,12 @@
-module.exports = function (Guest, qService) {
+/**
+ * Guest service.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
+module.exports = function (Guest, qService)
+{
     return {
         /** Save guest. */
         saveGuest: function(guestData)
@@ -59,7 +67,6 @@ module.exports = function (Guest, qService) {
                 {
                     deferred.reject(err);
                 }
-
                 else
                 {
                     deferred.resolve(guest);

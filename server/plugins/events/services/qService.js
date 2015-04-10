@@ -1,7 +1,7 @@
 /**
  * Query service.
  *
- * @module arch/users
+ * @module arch/events
  * @copyright ArchTailors 2015
  */
 

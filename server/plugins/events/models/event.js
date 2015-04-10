@@ -1,4 +1,12 @@
-module.exports = function(Types) {
+/**
+ * Event model.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
+module.exports = function(Types)
+{
     return {
         schema: {
             name: {type: String, required: true},

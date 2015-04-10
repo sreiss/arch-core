@@ -1,4 +1,12 @@
-module.exports = function(guestController, guestRouter, guestMiddleware) {
+/**
+ * Guest routes.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
+module.exports = function(guestController, guestRouter, guestMiddleware)
+{
     guestRouter.route('/')
         //.post(guestMiddleware.checkGuest)
         .post(guestController.saveGuest)

@@ -1,5 +1,12 @@
-// This model will be available is services in this._models.Guest
-module.exports = function(Types) {
+/**
+ * Guest model.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
+module.exports = function(Types)
+{
     return {
         schema: {
             usr_id: { type: Types.ObjectId, ref: 'User', required: true },

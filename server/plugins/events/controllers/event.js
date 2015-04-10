@@ -1,5 +1,5 @@
 /**
- * event controller.
+ * Event controller.
  *
  * @module arch/events
  * @copyright ArchTailors 2015
@@ -10,7 +10,8 @@ var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
 var ics = require('ics');
 
-module.exports = function(eventService){
+module.exports = function(eventService)
+{
     return {
         /** Save event. */
         saveEvent: function(req, res)
@@ -22,8 +23,8 @@ module.exports = function(eventService){
             eventService.saveEvent(event).then(function(event)
             {
                 res.status(200).json({"count": (event ? 1 : 0), "data": event});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -39,8 +40,8 @@ module.exports = function(eventService){
             eventService.deleteEvent(id).then(function(event)
             {
                 res.status(200).json({"count": (event ? 1 : 0), "data": event});
-            },
-            function(err)
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchDeleteError(err.message)});
             });
@@ -55,16 +56,9 @@ module.exports = function(eventService){
             // Get event.
             eventService.getEvent(id).then(function(event)
             {
-                if(!event)
-                {
-                    res.status(204).json({"count": 0, "data": event});
-                }
-                else
-                {
-                    res.status(200).json({"count": 1, "data": event});
-                }
-            },
-            function(err)
+                res.status(event ? 200 : 204).json({"count": 1, "data": event});
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -75,16 +69,9 @@ module.exports = function(eventService){
             // Get all events.
             eventService.getEvents().then(function(events)
             {
-                if(events.length == 0)
-                {
-                    res.status(204).json({"count": events.length, "data": events});
-                }
-                else
-                {
-                    res.status(200).json({"count": events.length, "data": events});
-                }
-            },
-            function(err)
+                res.status(events.length > 0 ? 200 : 204).json({"count": events.length, "data": events});
+            })
+            .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });

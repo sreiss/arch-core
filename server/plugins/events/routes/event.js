@@ -1,12 +1,16 @@
-module.exports = function(eventController, eventRouter, eventMiddleware) {
+/**
+ * Event routes.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
 
-    // This route will be available under /events/event/
-
+module.exports = function(eventController, eventRouter, eventMiddleware)
+{
     eventRouter.route('/')
         .post(eventMiddleware.checkEvent)
         .post(eventController.saveEvent)
         .get(eventController.getEvents);
-
 
     eventRouter.route('/:eventid')
         .all(eventMiddleware.checkEventId)

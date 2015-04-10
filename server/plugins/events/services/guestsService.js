@@ -1,4 +1,12 @@
-module.exports = function (Guest, qService) {
+/**
+ * Guests service.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
+module.exports = function (Guest, qService)
+{
     return {
         /** Get guests by event */
         getGuestsByEvent: function(eventId)

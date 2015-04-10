@@ -1,14 +1,15 @@
 /**
- * guest plugin.
+ * Guest middleware.
  *
- * @module arch/guests
+ * @module arch/events
  * @copyright ArchTailors 2015
  */
 
 var validator = require('validator');
 var ArchParameterError = GLOBAL.ArchParameterError;
 
-module.exports = function() {
+module.exports = function()
+{
     return {
         /*checkGuest: function(req, res, next)
         {

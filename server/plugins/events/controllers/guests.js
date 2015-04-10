@@ -1,8 +1,15 @@
+/**
+ * Guests controller.
+ *
+ * @module arch/events
+ * @copyright ArchTailors 2015
+ */
+
 var ArchFindError = GLOBAL.ArchFindError;
 
-module.exports = function(guestsService) {
+module.exports = function(guestsService)
+{
     return {
-
         /** Get guests by event */
         getGuestsByEvent: function(req, res)
         {
@@ -11,20 +18,13 @@ module.exports = function(guestsService) {
 
                 // Get guest.
             guestsService.getGuestsByEvent(id).then(function(guests)
-                {
-                    if(guests.length == 0)
-                    {
-                        res.status(204).json({"count": guests.length, "data": guests});
-                    }
-                    else
-                    {
-                        res.status(200).json({"count": guests.length, "data": guests});
-                    }
-                },
-                function(err)
-                {
-                    res.status(500).json({"error" : new ArchFindError(err.message)});
-                });
+            {
+                res.status(guests.length > 0 ? 200 : 204).json({"count": guests.length, "data": guests});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
         }
     };
 };
