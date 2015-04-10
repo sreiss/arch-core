@@ -22,8 +22,8 @@ module.exports = function(Types)
             //address_line_3: String,
             country: {type:String},
             zip: {type : Number},
-            created: {type :Date},
-            guests: [{ evt_guest : {type: Types.ObjectId, ref: 'User'}}]
+            guests: [{ evt_guest : {type: Types.ObjectId, ref: 'User'}}],
+            created: {type :Date}
             //createdBy: {type: Types.ObjectId, ref: 'User'},
             //modified: Date,
             //modifiedBy: {type: Types.ObjectId, ref: 'User'},
