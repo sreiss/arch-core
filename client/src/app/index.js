@@ -53,24 +53,24 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       templateUrl: "components/calendar/arch-calendar.html",
       controller: 'archCalendarController'
     })
-    .state('parcours',
+    .state('tracks',
     {
-      url: '/parcours',
-      templateUrl: 'components/parcours/arch-parcours.html',
-      controller: 'archParcoursController'
+      url: '/tracks',
+      templateUrl: 'components/track/arch-track.html',
+      controller: 'archTrackController'
     })
-    .state('parcoursAdd',
+    .state('trackAdd',
     {
-      url: "/parcours/add",
-      templateUrl: "components/parcours/arch-parcours-add.html",
-      controller: "archParcoursAddController"
+      url: "/tracks/add",
+      templateUrl: "components/track/arch-track-add.html",
+      controller: "archTrackAddController"
     })
-    .state('parcoursEdit',
+    .state('trackEdit',
     {
-      url: "/parcours/edit/:id",
-      templateUrl: "components/parcours/arch-parcours-edit.html",
-      controller: "archParcoursEditController"
-    })
+      url: "/tracks/edit/:id",
+      templateUrl: "components/track/arch-track-edit.html",
+      controller: "archTrackEditController"
+    });
 
   $urlRouterProvider
     .otherwise("/");

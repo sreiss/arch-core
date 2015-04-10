@@ -77,9 +77,17 @@ angular.module('archCore')
         $scope.myAccount = function()
         {
           var token = $cookieStore.get('token');
-          console.log(token);
           $state.go('userEdit', {'id' : token.user._id});
-        }
+        };
+
+        $scope.logout = function()
+        {
+          if(confirm("Souhaitez-vous réellement vous déconnecter ?"))
+          {
+            $cookieStore.remove('token');
+            window.location.reload();
+          }
+        };
       }
     };
   });
