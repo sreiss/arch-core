@@ -22,8 +22,8 @@ module.exports = function(officialRunService)
             officialRunService.saveOfficialRun(officialRunData).then(function(officialRun)
             {
                 res.status(200).json({"count" : (officialRun ? 1 : 0), "data" : officialRun});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -39,8 +39,8 @@ module.exports = function(officialRunService)
             officialRunService.deleteOfficialRun(officialRunId).then(function(officialRun)
             {
                 res.status(200).json({"count" : (officialRun ? 1 : 0), "data" : officialRun});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchDeleteError(err.message)});
             });
@@ -56,8 +56,8 @@ module.exports = function(officialRunService)
             officialRunService.getOfficialRun(officialRunId).then(function (officialRun)
             {
                 res.status(200).json({"count": (officialRun ? 1 : 0), "data": officialRun});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -69,9 +69,9 @@ module.exports = function(officialRunService)
             // Get official runs.
             officialRunService.getOfficialRuns().then(function(officialRuns)
             {
-                res.status(200).json({"count" : categories.length, "data" : officialRuns});
-            }
-			.catch(err)
+                res.status(200).json({"count" : officialRuns.length, "data" : officialRuns});
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });

@@ -16,7 +16,7 @@ module.exports = function(eventController, eventRouter, eventMiddleware)
         .get(eventController.getIcal);
 
     eventRouter.route('/:eventid')
-        .all(eventMiddleware.checkEventId)
+        //.all(eventMiddleware.checkEventId)
         .delete(eventController.deleteEvent)
         .get(eventController.getEvent);
 };

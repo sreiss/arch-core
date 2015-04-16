@@ -21,7 +21,7 @@ module.exports = function(Types) {
 			category: {type: String, required: true},
 			participants: 
 			[{
-				guest: {type: Types.ObjetId, ref: 'User', required: true},
+				guest: {type: Types.ObjectId, ref: 'User', required: true},
 				status: {type: String, required: true}
 			}],
 			course: {type: Types.ObjectId, ref: 'Course', required: true}
