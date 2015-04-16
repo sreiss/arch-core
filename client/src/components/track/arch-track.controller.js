@@ -15,7 +15,7 @@ angular.module('archCore')
       $state.go('trackEdit', {'id' : id});
     };
   })
-  .controller('archTrackAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, md5)
+  .controller('archTrackAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state)
   {
     $scope.track = {};
 
@@ -23,7 +23,7 @@ angular.module('archCore')
     {
     }
   })
-  .controller('archTrackEditController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, md5)
+  .controller('archTrackEditController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state)
   {
     var id = $stateParams.id;
 

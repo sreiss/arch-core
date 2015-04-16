@@ -38,48 +38,51 @@
       </md-input-container>
     </div>
     <div layout="row">
+      <md-icon class="fa fa-graduation-cap"></md-icon>
+      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="user.role" flex class="input-select">
+        <md-option value="member">{{'USER_FORM_ROLE_MEMBER' | translate}}</md-option>
+        <md-option value="admin">{{'USER_FORM_ROLE_ADMIN' | translate}}</md-option>
+      </md-select>
+    </div>
+    <div layout="row">
       <md-icon class="fa fa-calendar"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_BIRTHDATE' | translate}}</label>
-        <input type="date" ng-model="user.birthdate">
+        <input type="text" pick-a-date="date" pick-a-date-options="{ format: 'dd/mm/yyyy' }" ng-model="user.birthdate"/>
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-phone"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_PHONE' | translate}}</label>
-        <input type="date" ng-model="user.phone">
-      </md-input-container>
-    </div>
-    <div layout="row">
-      <md-icon class="fa fa-user"></md-icon>
-      <md-input-container flex>
-        <label>{{'USER_FORM_AVATAR' | translate}}</label>
-        <input type="date" ng-model="user.avatar">
+        <input type="text" ng-model="user.phone">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-newspaper-o"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_FFA' | translate}}</label>
-        <input type="date" ng-model="user.ffa">
+        <input type="text" ng-model="user.licenceffa">
       </md-input-container>
     </div>
     <div layout="row">
-      <md-icon class="fa fa-line-chart"></md-icon>
-      <md-select placeholder="{{'USER_FORM_LEVEL' | translate}}" ng-model="user.level" flex class="input-select">
-        <md-option value="beginner">{{'USER_FORM_LEVEL_BEGINNER' | translate}}</md-option>
-        <md-option value="casual">{{'USER_FORM_LEVEL_CASUAL' | translate}}</md-option>
-        <md-option value="confirmed">{{'USER_FORM_LEVEL_CONFIRMED' | translate}}</md-option>
-        <md-option value="pro">{{'USER_FORM_LEVEL_PRO' | translate}}</md-option>
-      </md-select>
+      <md-icon class="fa fa-picture-o"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_AVATAR' | translate}}</label>
+        <input type="text" readonly="true">
+      </md-input-container>
     </div>
-    <div layout="row">
-      <md-icon class="fa fa-graduation-cap"></md-icon>
-      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="user.role" flex class="input-select">
-        <md-option value="member">{{'USER_FORM_ROLE_MEMBER' | translate}}</md-option>
-        <md-option value="admin">{{'USER_FORM_ROLE_ADMIN' | translate}}</md-option>
-      </md-select>
+    <div layout="row" class="avatar-space">
+      <md-input-container flex>
+        <input id="input-avatar" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" />
+        <div layout="row">
+          <div id="avatar_preview"></div>
+        </div>
+        <div class="md-actions" layout="row">
+          <md-button class="md-raised md-primary" type="button" onclick="document.getElementById('input-avatar').click();">{{'USER_FORM_CHOOSE' | translate}}</md-button>
+        </div>
+      </md-input-container>
+      <input type="hidden" ng-model="user.avatar">
     </div>
   </div>
 

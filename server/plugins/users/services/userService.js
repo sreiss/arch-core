@@ -24,7 +24,6 @@ module.exports = function(User, userService, oauthService, qService)
                 // Assign data.
                 user.oauth = oauthUser._id;
                 user.role = userData.role;
-                user.level = userData.level;
                 user.block = userData.block;
 
                 user.save(function(err, user)
@@ -60,9 +59,11 @@ module.exports = function(User, userService, oauthService, qService)
             {
                 User.update({oauth: userData.id},
                 {
-                    birthdate: userData.birthdate,
                     role: userData.role,
-                    level: userData.level
+                    birthdate: userData.birthdate,
+                    phone: userData.phone,
+                    licenceffa: userData.licenceffa,
+                    avatar: userData.avatar
                 },
                 function(err, numberAffected, rawResponse)
                 {
