@@ -1,5 +1,5 @@
 /**
- * event plugin.
+ * Event middleware.
  *
  * @module arch/events
  * @copyright ArchTailors 2015
@@ -8,7 +8,8 @@
 var validator = require('validator');
 var ArchParameterError = GLOBAL.ArchParameterError;
 
-module.exports = function() {
+module.exports = function()
+{
     return {
         checkEvent: function(req, res, next)
         {

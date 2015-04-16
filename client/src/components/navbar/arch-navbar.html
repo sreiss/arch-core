@@ -1,7 +1,10 @@
-<md-toolbar layout="row" ng-controller="archNavbarCtrl">
-  <span flex></span>
-  <img src="../../assets/images/logo.gif" style="margin: 0 auto;"/>
-  <span flex></span>
-  <arch-account></arch-account>
-  <arch-logout></arch-logout>
+<md-toolbar class="md-default-theme" layout="row" ng-controller="archNavbarCtrl">
+  <div class="md-toolbar-tools">
+    <a href="/"><b>{{'CUSTOMER_NAME' | translate}}</b> - {{'CUSTOMER_DESC' | translate}}</a>
+
+    <span flex></span>
+    <ul class="main-menu">
+      <li><arch-account></arch-account></li>
+    </ul>
+  </div>
 </md-toolbar>

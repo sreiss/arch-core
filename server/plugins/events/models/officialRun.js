@@ -5,8 +5,8 @@
  * @copyright ArchTailors 2015
  */
 
-
-/** Miscellaneous event */
+ 
+/** Official run */
 module.exports = function(Types) {
     return {
         schema:
@@ -18,12 +18,16 @@ module.exports = function(Types) {
             description: {type: String, required: true},
             transp: {type: String, required: true},
             sequence: {type: String, required: true},
-            category: {type: String, required: true},
-            participants:
-                [{
-                    guest: {type: Types.ObjetId, ref: 'User', required: true},
-                    status: {type: String, required: true}
-                }]
+			category: {type: String, required: true},
+			participants: 
+			[{
+				guest: {type: Types.ObjetId, ref: 'User', required: true},
+				status: {type: String, required: true}
+			}],
+			website: {type:String, required: true},
+			information: {type:String, required: true},
+			training: [{type: Types.ObjectId, ref: 'Training'}],
+			course: {type: Types.ObjectId, ref: 'Course', required: true}
         },
         priority: 1
     };

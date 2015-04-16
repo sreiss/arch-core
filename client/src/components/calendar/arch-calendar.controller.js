@@ -43,8 +43,15 @@ angular.module('archCore')
       ]
     };
     /* alert on eventClick */
-    $scope.alertOnEventClick = function( date, jsEvent, view){
-      $scope.alertMessage = (date.title + ' was clicked ');
+    $scope.alertOnEventClick = function( date, jsEvent, view,$mdDialog){
+      $mdDialog.show(
+        $mdDialog.alert()
+          .parent(angular.element(document.body))
+          .title('This is an alert title')
+          .content('You can specify some description text in here.')
+          .ariaLabel('Alert Dialog Demo')
+          .ok('Got it!')
+      );
     };
     /* alert on Drop */
     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){

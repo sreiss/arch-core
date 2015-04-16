@@ -1,12 +1,14 @@
 /**
- * event service.
+ * Event service.
  *
  * @module arch/events
  * @copyright ArchTailors 2015
  */
+
 var moment = require('moment');
 
-module.exports = function(Event, qService) {
+module.exports = function(Event, qService)
+{
     return {
         /** Save event. */
         saveEvent: function(eventData)
@@ -29,12 +31,24 @@ module.exports = function(Event, qService) {
             event.country = eventData.country;
             event.zip = eventData.zip;
             event.created = moment().toDate();
+            event.guests = [];
             //event.createdBy = eventData.createdBy;
             //event.modified = eventData.modified;
             //event.modifiedBy = eventData.modifiedBy;
             //event.archived = eventData.archived;
             //event.archivedBy = eventData.archivedBy;
             //event.published = eventData.published;
+
+            //console.log(eventData.guests.length);
+            for(var i=0; i<eventData.guests.length; i++)
+            {
+                console.log(eventData.guests[i].evt_guest);
+                var guest = {
+                    evt_guest : eventData.guests[i].evt_guest
+                };
+                event.guests.push(guest);
+            };
+            console.log(event.guests);
 
             event.save(function(err)
             {
@@ -62,13 +76,14 @@ module.exports = function(Event, qService) {
                 {
                     deferred.reject(err);
                 }
-
-                if (event == null)
+                else if(!event)
                 {
                     deferred.reject(new Error('No event matching [EVENT_ID] : ' + eventId + "."));
                 }
-
-                deferred.resolve(event);
+                else
+                {
+                    deferred.resolve(event);
+                }
             });
 
             return deferred.promise;
@@ -79,7 +94,7 @@ module.exports = function(Event, qService) {
         {
             var deferred = qService.defer();
 
-            Event.findOne({_id: eventId}).exec(function (err, event)
+            Event.findOne({_id: eventId}).populate('guests.evt_guest').exec(function (err, event)
             {
                 if(err)
                 {
@@ -99,22 +114,33 @@ module.exports = function(Event, qService) {
         {
             var deferred = qService.defer();
 
+            //Event.find().populate('guests.evt_guest').exec(function (err, events)
             Event.find().exec(function (err, events)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-
-                if (events.length == 0)
+                else if(!events)
                 {
                     deferred.reject(new Error('No events found.'));
                 }
-
-                deferred.resolve(events);
+                else
+                {
+                    deferred.resolve(events);
+                }
             });
 
             return deferred.promise;
         }
+        //,
+        //
+        //getGuests: function()
+        //{
+        //
+        //},
+        //
+        //deleteGuest: function()
+        //{}
     };
 };

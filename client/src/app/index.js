@@ -52,6 +52,24 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: "/calendar",
       templateUrl: "components/calendar/arch-calendar.html",
       controller: 'archCalendarController'
+    })
+    .state('tracks',
+    {
+      url: '/tracks',
+      templateUrl: 'components/track/arch-track.html',
+      controller: 'archTrackController'
+    })
+    .state('trackAdd',
+    {
+      url: "/tracks/add",
+      templateUrl: "components/track/arch-track-add.html",
+      controller: "archTrackAddController"
+    })
+    .state('trackEdit',
+    {
+      url: "/tracks/edit/:id",
+      templateUrl: "components/track/arch-track-edit.html",
+      controller: "archTrackEditController"
     });
 
   $urlRouterProvider

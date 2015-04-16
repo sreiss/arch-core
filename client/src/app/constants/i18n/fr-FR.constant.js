@@ -1,7 +1,8 @@
 'use strict'
 angular.module('archCore')
   .constant('i18nfrFRConstant', {
-    'NAVBAR_TITLE' : "Administration de l'ASCPA",
+    'CUSTOMER_NAME' : "ArchCore",
+    'CUSTOMER_DESC' : "Administration de l'ASCPA",
 
     'SIDEBAR_HOME' : "Accueil",
     'SIDEBAR_USERS' : "Membres",
@@ -15,7 +16,7 @@ angular.module('archCore')
     'HOME_P2' : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse magna neque, condimentum id odio eget, dapibus dictum mauris. Cras at fermentum velit. Nullam nibh diam, tincidunt quis leo non, vehicula placerat nisi. Nunc auctor, quam vitae venenatis imperdiet, nunc mauris vehicula nibh eget scelerisque est sapien ac odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam ligula lorem, molestie id neque ac, consequat iaculis ante.",
 
     'USERS_TITLE' : "Membres",
-    'USERS_NEW_USER' : "Nouveau membre",
+    'USERS_ADD_USER' : "Nouveau membre",
     'USERS_NO_USERS' : "Vous n'avez à ce jour ajouté aucun membre.",
     'USERS_TABLE_NOM' : "Nom",
     'USERS_TABLE_PRENOM' : "Prénom",
@@ -42,7 +43,14 @@ angular.module('archCore')
     'USER_FORM_ROLE_MEMBER': "Membre",
     'USER_FORM_ROLE_ADMIN': "Administrateur",
     'USER_FORM_NOTICE_RANDOM_PASSWORD': "Un mot de passe aléatoire sera généré et communiqué par courrier électronique à la création du membre.",
+    'USER_FORM_PHONE' : "Telephone",
+    'USER_FORM_AVATAR' : "Photo",
+    'USER_FORM_FFA' : "Lien licence FFA",
 
+    'EVENTS_TITLE' : "Evènements",
+    'EVENTS_ADD_TITLE': "Nouvel évènement",
+    'EVENTS_ADD_EVENT' : "Ajout d'un évènement",
+    'EVENTS_EDIT_EVENT' : "Modification d'un évenement",
     'EVENT_FORM_NAME' : "Nom de l'évènement",
     'EVENT_FORM_TYPE' : "Type de l'évènement",
     'EVENT_FORM_TYPE_RACE' : "Course",
@@ -54,6 +62,11 @@ angular.module('archCore')
     'EVENT_FORM_ADDRESS' : "Addresse",
     'EVENT_FORM_COUNTRY' : "Pays",
     'EVENT_FORM_ZIP' : "Code postal",
-    'EVENTS_TITLE' : "Events",
-    'EVENTS_ADD_EVENT' : "Ajout d'un évenement"
+
+
+    'TRACKS_TITLE': "Parcours",
+    'TRACKS_ADD_TRACK': "Nouveau parcours",
+    'TRACKS_NO_TRACK': "Vous n'avez à ce jour ajouté aucun parcours.",
+    'TRACKS_ADD_TITLE': "Ajout d'un parcours",
+    'TRACKS_EDIT_TITLE': "Modification d'un parcours"
   });
