@@ -7,12 +7,11 @@ module.exports = function(eventController, eventRouter, eventMiddleware) {
         .post(eventController.saveEvent)
         .get(eventController.getEvents);
 
+    eventRouter.route('/ical')
+        .get(eventController.getIcal);
 
     eventRouter.route('/:eventid')
         .all(eventMiddleware.checkEventId)
         .delete(eventController.deleteEvent)
         .get(eventController.getEvent);
-
-    eventRouter.route('/ical')
-        .get(eventController.getIcal);
 };
