@@ -9,6 +9,8 @@ var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
 var ics = require('ics');
+var icalendar = require('icalendar');
+var moment = require('moment');
 
 module.exports = function(eventService)
 {
@@ -79,6 +81,10 @@ module.exports = function(eventService)
 
         getIcal: function(req, res)
         {
+            var event = new icalendar.VEvent('okozfizegz');
+            event.setDate(moment().toDate(), moment().toDate());
+            event.setLocation("Jacksonville");
+            event.setSummary('eogieoib');
             //eventService.getEvents().then(function(events) {
             //
             //    for(var i=0; i<events.length; i++)
