@@ -22,8 +22,8 @@ module.exports = function(discoveryService)
             discoveryService.saveDiscovery(discoveryData).then(function(discovery)
             {
                 res.status(200).json({"count" : (discovery ? 1 : 0), "data" : discovery});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -39,8 +39,8 @@ module.exports = function(discoveryService)
             discoveryService.deleteDiscovery(discoveryId).then(function(discovery)
             {
                 res.status(200).json({"count" : (discovery ? 1 : 0), "data" : discovery});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchDeleteError(err.message)});
             });
@@ -56,8 +56,8 @@ module.exports = function(discoveryService)
             discoveryService.getDiscovery(discoveryId).then(function (discovery)
             {
                 res.status(200).json({"count": (discovery ? 1 : 0), "data": discovery});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -67,11 +67,11 @@ module.exports = function(discoveryService)
         getDiscoveries: function(req, res)
         {
             // Get discoverys.
-            discoveryService.getDiscoveries().then(function(discoverys)D
+            discoveryService.getDiscoveries().then(function(discoverys)
             {
                 res.status(200).json({"count" : categories.length, "data" : discoverys});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
