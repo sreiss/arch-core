@@ -9,7 +9,6 @@ var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
 var ics = require('ics');
-
 var moment = require('moment');
 
 module.exports = function(eventService)

@@ -19,6 +19,8 @@ module.exports = function(User, userService, oauthService, qService)
             })
             .then(function(oauthUser)
             {
+                console.log(oauthUser);
+
                 var user = new User();
 
                 // Assign data.

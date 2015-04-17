@@ -124,14 +124,5 @@ module.exports = function(Discovery, qService)
 
             return deferred.promise;
         }
-        //,
-        //
-        //getGuests: function()
-        //{
-        //
-        //},
-        //
-        //deleteGuest: function()
-        //{}
     };
 };

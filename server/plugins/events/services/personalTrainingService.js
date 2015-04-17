@@ -15,9 +15,8 @@ module.exports = function(PersonalTraining, qService)
         {
             var deferred = qService.defer();
             var personalTraining = new PersonalTraining();
-            //console.log(personalTrainingData);
-            // Assign data.
 
+            // Assign data.
             personalTraining.dtstart = personalTrainingData.dtstart;
             personalTraining.dtend = personalTrainingData.dtend;
             personalTraining.summary = personalTrainingData.summary;
@@ -127,14 +126,5 @@ module.exports = function(PersonalTraining, qService)
 
             return deferred.promise;
         }
-        //,
-        //
-        //getGuests: function()
-        //{
-        //
-        //},
-        //
-        //deleteGuest: function()
-        //{}
     };
 };
