@@ -5,14 +5,15 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(officialRunController, officialRunRouter, officialRunMiddleware) {
+module.exports = function(officialRunController, officialRunRouter, officialRunMiddleware)
+{
     officialRunRouter.route('/')
         //.post(officialRunMiddleware.checkOfficialRun)
         .post(officialRunController.saveOfficialRun)
-		.get(officialRunController.getOfficialRuns)
+		.get(officialRunController.getOfficialRuns);
 
-    officialRunRouter.route('/:officialRunId')
+    officialRunRouter.route('/:officialrunid')
         //.all(officialRunMiddleware.checkOfficialRunId)
         .get(officialRunController.getOfficialRun)
-        .delete(officialRunController.deleteOfficialRun)
+        .delete(officialRunController.deleteOfficialRun);
 }

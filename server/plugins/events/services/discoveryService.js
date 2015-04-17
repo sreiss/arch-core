@@ -7,17 +7,16 @@
 
 var moment = require('moment');
 
-module.exports = function(discovery, qService)
+module.exports = function(Discovery, qService)
 {
     return {
         /** Save discovery. */
         saveDiscovery: function(discoveryData)
         {
             var deferred = qService.defer();
-            var discovery = new discovery();
-            //console.log(discoveryData);
-            // Assign data.
+            var discovery = new Discovery();
 
+            // Assign data.
             discovery.dtstart = discoveryData.dtstart;
             discovery.dtend = discoveryData.dtend;
             discovery.summary = discoveryData.summary;
@@ -29,7 +28,6 @@ module.exports = function(discovery, qService)
             discovery.participants = [];
             discovery.course = discoveryData.course;
 
-            //console.log(discoveryData.guests.length);
             for(var i=0; i<discoveryData.participants.length; i++)
             {
                 var guest = {
@@ -60,7 +58,7 @@ module.exports = function(discovery, qService)
         {
             var deferred = qService.defer();
 
-            discovery.findOneAndRemove({_id: discoveryId}, function(err, discovery)
+            Discovery.findOneAndRemove({_id: discoveryId}, function(err, discovery)
             {
                 if(err)
                 {
@@ -84,7 +82,7 @@ module.exports = function(discovery, qService)
         {
             var deferred = qService.defer();
 
-            discovery.findOne({_id: discoveryId}).populate('participants.guest course').exec(function (err, discovery)
+            Discovery.findOne({_id: discoveryId}).populate('participants.guest course').exec(function (err, discovery)
             {
                 if(err)
                 {
@@ -108,19 +106,19 @@ module.exports = function(discovery, qService)
         {
             var deferred = qService.defer();
 
-            discovery.find().populate('participants.guest course').exec(function (err, discoverys)
+            Discovery.find().populate('participants.guest course').exec(function (err, discoveries)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-                else if(!discoverys)
+                else if(!discoveries)
                 {
                     deferred.reject(new Error('No discoveries found.'));
                 }
                 else
                 {
-                    deferred.resolve(discoverys);
+                    deferred.resolve(discoveries);
                 }
             });
 

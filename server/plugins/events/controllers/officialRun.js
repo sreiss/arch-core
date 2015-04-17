@@ -30,10 +30,10 @@ module.exports = function(officialRunService)
         },
 
         /** Delete official run. */
-        deleteofficialRun: function(req, res)
+        deleteOfficialRun: function(req, res)
         {
             // Get officialRunId.
-            var officialRunId = req.params.officialRunId;
+            var officialRunId = req.params.officialrunid;
 
             // Saving officialRun.
             officialRunService.deleteOfficialRun(officialRunId).then(function(officialRun)
@@ -47,15 +47,15 @@ module.exports = function(officialRunService)
         },
 
         /** Get official run. */
-        getofficialRun: function(req, res)
+        getOfficialRun: function(req, res)
         {
             // Get officialRunId.
-            var officialRunId = req.params.officialRunId;
+            var officialRunId = req.params.officialrunid;
 
             // Get officialRun.
-            officialRunService.getOfficialRun(officialRunId).then(function (officialRun)
+            officialRunService.getOfficialRun(officialRunId).then(function(officialRun)
             {
-                res.status(200).json({"count": (officialRun ? 1 : 0), "data": officialRun});
+                res.status(officialRun ? 200 : 204).json({"count": (officialRun ? 1 : 0), "data": officialRun});
             })
 			.catch(function(err)
             {
@@ -69,7 +69,7 @@ module.exports = function(officialRunService)
             // Get official runs.
             officialRunService.getOfficialRuns().then(function(officialRuns)
             {
-                res.status(200).json({"count" : officialRuns.length, "data" : officialRuns});
+                res.status(officialRuns.length > 0 ? 200 : 204).json({"count" : officialRuns.length, "data" : officialRuns});
             })
 			.catch(function(err)
             {

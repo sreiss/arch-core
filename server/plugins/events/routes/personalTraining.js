@@ -5,14 +5,15 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(personalTrainingController, personalTrainingRouter, personalTrainingMiddleware) {
+module.exports = function(personalTrainingController, personalTrainingRouter, personalTrainingMiddleware)
+{
     personalTrainingRouter.route('/')
         //.post(personalTrainingMiddleware.checkPersonalTraining)
         .post(personalTrainingController.savePersonalTraining)
-		.get(personalTrainingController.getPersonalTrainings)
+		.get(personalTrainingController.getPersonalTrainings);
 
-    personalTrainingRouter.route('/:personalTrainingId')
+    personalTrainingRouter.route('/:personaltrainingid')
         //.all(personalTrainingMiddleware.checkPersonalTrainingId)
         .get(personalTrainingController.getPersonalTraining)
-        .delete(personalTrainingController.deletePersonalTraining)
+        .delete(personalTrainingController.deletePersonalTraining);
 }

@@ -33,7 +33,7 @@ module.exports = function(discoveryService)
         deleteDiscovery: function(req, res)
         {
             // Get discoveryId.
-            var discoveryId = req.params.discoveryId;
+            var discoveryId = req.params.discoveryid;
 
             // Saving discovery.
             discoveryService.deleteDiscovery(discoveryId).then(function(discovery)
@@ -50,12 +50,12 @@ module.exports = function(discoveryService)
         getDiscovery: function(req, res)
         {
             // Get discoveryId.
-            var discoveryId = req.params.discoveryId;
+            var discoveryId = req.params.discoveryid;
 
             // Get discovery.
-            discoveryService.getDiscovery(discoveryId).then(function (discovery)
+            discoveryService.getDiscovery(discoveryId).then(function(discovery)
             {
-                res.status(200).json({"count": (discovery ? 1 : 0), "data": discovery});
+                res.status(discovery ? 200 : 204).json({"count": (discovery ? 1 : 0), "data": discovery});
             })
 			.catch(function(err)
             {
@@ -66,10 +66,10 @@ module.exports = function(discoveryService)
         /** Get all discoveries. */
         getDiscoveries: function(req, res)
         {
-            // Get discoverys.
+            // Get discoveries.
             discoveryService.getDiscoveries().then(function(discoveries)
             {
-                res.status(200).json({"count" : discoveries.length, "data" : discoveries});
+                res.status(discoveries.length > 0 ? 200 : 204).json({"count" : discoveries.length, "data" : discoveries});
             })
 			.catch(function(err)
             {

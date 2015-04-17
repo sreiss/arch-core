@@ -5,14 +5,15 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(trainingController, trainingRouter, trainingMiddleware) {
+module.exports = function(trainingController, trainingRouter, trainingMiddleware)
+{
     trainingRouter.route('/')
         //.post(trainingMiddleware.checkTraining)
         .post(trainingController.saveTraining)
-		.get(trainingController.getTrainings)
+		.get(trainingController.getTrainings);
 
-    trainingRouter.route('/:trainingId')
+    trainingRouter.route('/:trainingid')
         //.all(trainingMiddleware.checkTrainingId)
         .get(trainingController.getTraining)
-        .delete(trainingController.deleteTraining)
+        .delete(trainingController.deleteTraining);
 }

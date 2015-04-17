@@ -7,14 +7,14 @@
 
 var moment = require('moment');
 
-module.exports = function(training, qService)
+module.exports = function(Training, qService)
 {
     return {
         /** Save training. */
         saveTraining: function(trainingData)
         {
             var deferred = qService.defer();
-            var training = new training();
+            var training = new Training();
             //console.log(trainingData);
             // Assign data.
 
@@ -74,7 +74,7 @@ module.exports = function(training, qService)
         {
             var deferred = qService.defer();
 
-            training.findOneAndRemove({_id: trainingId}, function(err, training)
+            Training.findOneAndRemove({_id: trainingId}, function(err, training)
             {
                 if(err)
                 {
@@ -98,7 +98,7 @@ module.exports = function(training, qService)
         {
             var deferred = qService.defer();
 
-            training.findOne({_id: trainingId}).populate('participants.guest runs.run course').exec(function (err, training)
+            Training.findOne({_id: trainingId}).populate('participants.guest runs.run course').exec(function (err, training)
             {
                 if(err)
                 {
@@ -122,7 +122,7 @@ module.exports = function(training, qService)
         {
             var deferred = qService.defer();
 
-            training.find().populate('participants.guest runs.run course').exec(function (err, trainings)
+            Training.find().populate('participants.guest runs.run course').exec(function (err, trainings)
             {
                 if(err)
                 {

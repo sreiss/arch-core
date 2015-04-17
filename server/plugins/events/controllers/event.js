@@ -9,7 +9,7 @@ var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
 var ics = require('ics');
-var icalendar = require('icalendar');
+
 var moment = require('moment');
 
 module.exports = function(eventService)
@@ -20,7 +20,7 @@ module.exports = function(eventService)
         {
             // Get posted event.
             var event = req.body;
-            //console.log(event);
+
             // Saving event.
             eventService.saveEvent(event).then(function(event)
             {
@@ -85,31 +85,6 @@ module.exports = function(eventService)
             event.setDate(moment().toDate(), moment().toDate());
             event.setLocation("Jacksonville");
             event.setSummary('eogieoib');
-            //eventService.getEvents().then(function(events) {
-            //
-            //    for(var i=0; i<events.length; i++)
-            //    {
-            //        var options = {
-            //            eventName: 'Fingerpainting lessons',
-            //            fileName: 'event.ics',
-            //            dtstart: 'Sat Nov 02 2014 13:15:00 GMT-0700 (PDT)',
-            //            email: {
-            //                name: 'Isaac Asimov',
-            //                email: 'isaac@asimov.com'
-            //            }
-            //        };
-            //
-            //        ics.createEvent(options, null, function (err, success) {
-            //            if (err) {
-            //                console.log(err);
-            //            }
-            //
-            //            console.log(success);
-            //        });
-            //    }
-            //});
-
-            console.log('ical');
         }
     }
 };

@@ -33,7 +33,7 @@ module.exports = function(personalTrainingService)
         deletePersonalTraining: function(req, res)
         {
             // Get personalTrainingId.
-            var personalTrainingId = req.params.personalTrainingId;
+            var personalTrainingId = req.params.personaltrainingid;
 
             // Saving personalTraining.
             personalTrainingService.deletePersonalTraining(personalTrainingId).then(function(personalTraining)
@@ -50,12 +50,12 @@ module.exports = function(personalTrainingService)
         getPersonalTraining: function(req, res)
         {
             // Get personalTrainingId.
-            var personalTrainingId = req.params.personalTrainingId;
+            var personalTrainingId = req.params.personaltrainingid;
 
             // Get personalTraining.
-            personalTrainingService.getPersonalTraining(personalTrainingId).then(function (personalTraining)
+            personalTrainingService.getPersonalTraining(personalTrainingId).then(function(personalTraining)
             {
-                res.status(200).json({"count": (personalTraining ? 1 : 0), "data": personalTraining});
+                res.status(personalTraining ? 200 : 204).json({"count": (personalTraining ? 1 : 0), "data": personalTraining});
             })
 			.catch(function(err)
             {
@@ -69,7 +69,7 @@ module.exports = function(personalTrainingService)
             // Get personal trainings.
             personalTrainingService.getPersonalTrainings().then(function(personalTrainings)
             {
-                res.status(200).json({"count" : personalTrainings.length, "data" : personalTrainings});
+                res.status(personalTrainings.length > 0 ? 200 : 204).json({"count" : personalTrainings.length, "data" : personalTrainings});
             })
 			.catch(function(err)
             {

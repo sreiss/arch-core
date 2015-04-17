@@ -15,9 +15,8 @@ module.exports = function(Event, qService)
         {
             var deferred = qService.defer();
             var event = new Event();
-            //console.log(eventData);
-            // Assign data.
 
+            // Assign data.
             event.dtstart = eventData.dtstart;
             event.dtend = eventData.dtend;
             event.summary = eventData.summary;
@@ -28,7 +27,6 @@ module.exports = function(Event, qService)
             event.category = eventData.category;
             event.participants = [];
 
-            //console.log(eventData.guests.length);
             for(var i=0; i<eventData.participants.length; i++)
             {
                 var guest = {
