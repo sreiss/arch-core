@@ -22,8 +22,8 @@ module.exports = function(trainingService)
             trainingService.saveTraining(trainingData).then(function(training)
             {
                 res.status(200).json({"count" : (training ? 1 : 0), "data" : training});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchSaveError(err.message)});
             });
@@ -39,8 +39,8 @@ module.exports = function(trainingService)
             trainingService.deleteTraining(trainingId).then(function(training)
             {
                 res.status(200).json({"count" : (training ? 1 : 0), "data" : training});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchDeleteError(err.message)});
             });
@@ -56,8 +56,8 @@ module.exports = function(trainingService)
             trainingService.getTraining(trainingId).then(function (training)
             {
                 res.status(200).json({"count": (training ? 1 : 0), "data": training});
-            }
-			.catch(err)
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
@@ -69,9 +69,9 @@ module.exports = function(trainingService)
             // Get personnal trainings.
             trainingService.getTrainings().then(function(trainings)
             {
-                res.status(200).json({"count" : categories.length, "data" : trainings});
-            }
-			.catch(err)
+                res.status(200).json({"count" : trainings.length, "data" : trainings});
+            })
+			.catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });

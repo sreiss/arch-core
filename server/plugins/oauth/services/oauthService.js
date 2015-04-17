@@ -7,7 +7,7 @@
 
 var crypto = require('crypto');
 
-module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignuptypeService, qService) {
+module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthService, oauthSignuptypeService, qService) {
     return {
         /** Save user. */
         saveUser: function(userData)
@@ -33,7 +33,7 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             {
                 var user = new OauthUser();
                 user.username = userData.email;
-                user.password = userData.password;
+                user.password = oauthService.generateRandomPassword();
                 user.fname = userData.fname;
                 user.lname = userData.lname;
                 user.email = userData.email;
@@ -190,6 +190,19 @@ module.exports = function(OauthUser, OauthAccesstoken, OauthClient, oauthSignupt
             });
 
             return deferred.promise;
+        },
+
+        generateRandomPassword: function()
+        {
+            var pwd = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for(var i= 0; i < 8; i++ )
+            {
+                pwd += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            return pwd;
         }
     };
 };

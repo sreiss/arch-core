@@ -43,13 +43,6 @@ module.exports = function() {
                 throw new ArchParameterError("User email isn't a valid mail address.")
             }
 
-            // Check user password.
-            var userPassword = userData.password || '';
-            if(!validator.isLength(userPassword, 5))
-            {
-                throw new ArchParameterError("User password must contain at least 5 chars.")
-            }
-
             // Check user signuptype.
             var userSignupTypeName = userData.signuptype || {};
             if(!validator.isLength(userSignupTypeName, 3))

@@ -10,9 +10,11 @@ module.exports = function(Types) {
         schema:
         {
             oauth: {type: Types.ObjectId, ref: 'OauthUser', required: true},
-            birthdate: {type: Date},
             role: {type: String},
-            level: {type: String},
+            birthdate: {type: Date},
+            phone: {type: String},
+            licenceffa: {type: String},
+            avatar: {type: String},
             block: {type: Boolean, default: false},
             created: {type: Date, default: Date.now},
             createdBy: {type: Types.ObjectId, ref: 'User'},

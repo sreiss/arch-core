@@ -33,7 +33,7 @@ angular.module('archCore')
       $state.go('userEdit', {'id' : id});
     };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, md5)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService)
   {
     $scope.user = new User();
 
@@ -42,9 +42,6 @@ angular.module('archCore')
       var fname = $scope.user.fname;
       var lname = $scope.user.lname;
       var email = $scope.user.email;
-      var password = archUserService.generateRandomPassword();
-
-      $scope.user.password = md5.createHash(password);
       $scope.user.signuptype = httpConstant.signupType;
 
       $scope.user.$save(function(result)
@@ -56,8 +53,6 @@ angular.module('archCore')
               .position('top right')
               .hideDelay(3000)
           );
-
-          archUserService.sendUserMail(lname, fname, email, password);
 
           $state.go('users');
         }
@@ -80,7 +75,7 @@ angular.module('archCore')
       });
    }
   })
-  .controller('archUserEditController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, md5, OauthUser)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, OauthUser)
   {
     var id = $stateParams.id;
 
@@ -88,14 +83,22 @@ angular.module('archCore')
     {
       $scope.user = new User();
       $scope.user.id = result.data.oauth._id;
-      $scope.user.fname = result.data.oauth.fname;
-      $scope.user.lname = result.data.oauth.lname;
-      $scope.user.email = result.data.oauth.email;
-      $scope.user.password = result.data.oauth.password;
+      $scope.user.fname = result.data.oauth.fname || '';
+      $scope.user.lname = result.data.oauth.lname  || '';
+      $scope.user.email = result.data.oauth.email  || '';
+      $scope.user.password = result.data.oauth.password  || '';
       $scope.user.newPassword = '';
       $scope.user.confirmPassword = '';
-      $scope.user.level = result.data.level;
-      $scope.user.role = result.data.role;
+      $scope.user.role = result.data.role  || '';
+      $scope.user.birthdate = result.data.birthdate  || '';
+      $scope.user.phone = result.data.phone  || '';
+      $scope.user.licenceffa = result.data.licenceffa  || '';
+      $scope.user.avatar = result.data.avatar  || '';
+
+      if($scope.user.avatar.length > 0)
+      {
+        previewAvatar($scope.user.avatar);
+      }
     },
     function(err)
     {
@@ -107,6 +110,39 @@ angular.module('archCore')
 
       $state.go('users');
     });
+
+    $scope.file_changed = function(element)
+    {
+      var avatar = element.files[0];
+      var reader = new FileReader();
+
+      if(!avatar.type.match('image.*'))
+      {
+        $mdToast.show($mdToast.simple()
+            .content("L'avatar du membre doit être une image.")
+            .position('top right')
+            .hideDelay(3000)
+        );
+        return false;
+      }
+
+      reader.onload = (function(file)
+      {
+        return function(e)
+        {
+          previewAvatar(e.target.result);
+          $scope.user.avatar = e.target.result;
+        };
+      })(avatar);
+
+      reader.readAsDataURL(avatar);
+    };
+
+    function previewAvatar(base64)
+    {
+      var html = '<img class="thumb" src="' + base64 + '"/>';
+      document.getElementById('avatar_preview').innerHTML = html;
+    }
 
     $scope.editUser = function()
     {
@@ -122,7 +158,7 @@ angular.module('archCore')
       {
         if($scope.user.newPassword.length > 0)
         {
-          $scope.user.password = md5.createHash($scope.user.newPassword);
+          $scope.user.password = $scope.user.newPassword;
         }
 
         User.update({user:$scope.user}, function(result)

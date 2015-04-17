@@ -360,3 +360,21 @@ blockquote {
 .md-button {
   text-transform: none;
 }
+
+#avatar_preview > img
+{
+  max-width: 250px;
+  max-height: 250px;
+  margin-bottom: 5px;
+}
+
+.avatar-space
+{
+  margin-top:-20px;
+  margin-left:25px;
+}
+
+#input-avatar
+{
+  display:none;
+}
