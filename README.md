@@ -12,7 +12,7 @@ Tout est sur le [wiki](https://github.com/sreiss/arch-core/wiki).
 
 # Gestion des événements
 
-Il existe 5 types d'événements: officialRun, personalTraining, training, discovery et event. Ces 5 types se partagent 9 champs identiques: leur catégorie (=type) et 7 autres correspondant aux champs utilisés pour générer un fichier ics (icalendar): dtstart (date de début), dtend (date de fin), summary (titre de l'événement), location (lieu de l'événement), description (description de l'événement), transp (???) et sequence (nombre de màj). Le neuvième champ correspond à la liste des participants couplé avec leur statut.
+Il existe 5 types d'événements: officialRun, personalTraining, training, discovery et event. Ces 5 types se partagent 9 champs identiques: leur catégorie (=type) et 7 autres correspondant aux champs utilisés pour générer un fichier ics (icalendar): dtstart (date de début), dtend (date de fin), summary (titre de l'événement), location (lieu de l'événement), description (description de l'événement), transp (visibilité de l'événement) et sequence (nombre de màj). Le neuvième champ correspond à la liste des participants couplé avec leur statut.
 
 En plus de ces 9 champs communs, certains événements en possèdent d'autres en plus. Voici la liste des types avec leurs champs respectifs:
 
@@ -23,7 +23,7 @@ Le type "event" est composé de:
   - location de type String,
   - "description" de type String,
   - "transp" de type String,
-  - "sequence" de type String,
+  - "sequence" de type Integer,
   - "category" de type String (correspond à l'un des 5 types d'événements, "event" ici),
   - "participants" de type User couplé avec son "status" de type String (comme pour les participants à un kidoikoi et leur(s) part(s))(il peut y en avoir plusieurs)
 
