@@ -8,9 +8,9 @@ angular.module('archCore')
         var init = function()
         {
           // Check token in coockies.
-          var token = $cookieStore.get('token');
+          var token = archAccountService.getCurrentToken();
 
-          if(!token || isExpired(token))
+          if(!token)
           {
             $scope.alreadyLogged = false;
             console.log('INIT : Not connected');
@@ -47,29 +47,34 @@ angular.module('archCore')
           else
           {
             console.log('INIT : Already connected.');
-            $scope.username = token.user.fname + " " + token.user.lname;
+            $scope.token = token;
+            $scope.user = token.user;
+
+            console.log($scope.user.profile);
+
+            // Get current user's profile um die Role zu haben !
+            if(!$scope.user.profile)
+            {
+              console.log('INIT : Get profil of current user.');
+
+              archAccountService.getProfile($scope.user._id).then(function(result)
+              {
+                $scope.user.profile = result.data;
+              })
+              .catch(function(err)
+              {
+                console.log(err);
+              });
+            }
+
+            console.log($scope.user.profile);
           }
         }();
 
-        function isExpired(token)
-        {
-          var now = new Date();
-
-          if(now.getTime() > token.expired_at)
-          {
-            $cookieStore.remove('token');
-            return true;
-          }
-          else
-          {
-            return false;
-          }
-        };
-
         $scope.myAccount = function()
         {
-          var token = $cookieStore.get('token');
-          $state.go('userEdit', {'id' : token.user._id});
+          var user = archAccountService.getCurrentUser();
+          $state.go('userEdit', {'id' : user._id});
         };
 
         $scope.logout = function()

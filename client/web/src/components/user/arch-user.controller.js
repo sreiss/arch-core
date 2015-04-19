@@ -1,11 +1,11 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService)
+  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService)
   {
     $scope.users = archUserService.getUsers();
+    $scope.currentUser = archAccountService.getCurrentUser();
 
     $scope.deleteUser = function(id)
     {
-      console.log(id);
       if(confirm('Souhaitez-vous réellement supprimer ce membre ?'))
       {
         archUserService.deleteUser(id).then(function(result)
@@ -34,55 +34,29 @@ angular.module('archCore')
       $state.go('userEdit', {'id' : id});
     };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService)
   {
     $scope.oauthUser = new OAuthUsers();
     $scope.coreUser = new CoreUsers();
 
     $scope.addUser = function()
     {
-      $scope.oauthUser.signuptype = httpConstant.signupType;
-      $scope.oauthUser.$save(function(result)
+      archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
       {
-        if(result.count > 0)
-        {
-          $scope.coreUser.oauth = result.data._id;
-          $scope.coreUser.$save(function(result)
-          {
-            if(result.count > 0)
-            {
-              $mdToast.show($mdToast.simple()
-                .content("Membre ajouté avec succés.")
-                .position('top right')
-                .hideDelay(3000)
-              );
-              $state.go('users');
-            }
-            else
-            {
-              throw new Error();
-            }
-          },
-          function(responseError)
-          {
-            throw responseError;
-          });
-        }
-        else
-        {
-          throw new Error();
-        }
-      },
-      function(responseError)
-      {
-        throw responseError;
+        $mdToast.show($mdToast.simple()
+          .content("Membre ajouté avec succés.")
+          .position('top right')
+          .hideDelay(3000)
+        );
+
+        $state.go('users');
       })
       .catch(function(err)
       {
         $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de l'ajout du membre.")
-            .position('top right')
-            .hideDelay(3000)
+          .content("Une erreur est survenue lors de l'ajout du membre.")
+          .position('top right')
+          .hideDelay(3000)
         );
       });
    }

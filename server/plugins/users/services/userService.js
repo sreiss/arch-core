@@ -91,12 +91,12 @@ module.exports = function(User, userService, config)
             return deferred.promise;
         },
 
-        /** Get all users' informations. */
+        /** Get users. */
         deleteUser: function(oauthUserId)
         {
             var deferred = Q.defer();
 
-            User.findOneAndRemove({oauth:oauthUserId}).exec(function(err, result)
+            User.findOneAndRemove({oauth : oauthUserId}).exec(function(err, result)
             {
                 if(err)
                 {
@@ -106,10 +106,6 @@ module.exports = function(User, userService, config)
                 {
                     deferred.resolve(result);
                 }
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
             });
 
             return deferred.promise;

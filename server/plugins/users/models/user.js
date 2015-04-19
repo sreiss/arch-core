@@ -16,14 +16,7 @@ module.exports = function(Types) {
             licenceffa: {type: String},
             avatar: {type: String},
             token: {type: String},
-            firstconnexion: {type: Boolean, default: true},
-            created: {type: Date, default: Date.now},
-            createdBy: {type: Types.ObjectId, ref: 'User'},
-            modified: Date,
-            modifiedBy: {type: Types.ObjectId, ref: 'User'},
-            archived: Date,
-            archivedBy: {type: Types.ObjectId, ref: 'User'},
-            published: {type: Boolean, default: true}
+            firstconnexion: {type: Boolean, default: true}
         },
         priority: 1
     };

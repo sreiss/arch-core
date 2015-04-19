@@ -21,7 +21,7 @@
       <td>{{user.email}}</td>
       <td class="text-right">
         <a href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
-        <a href="#"><md-icon class="fa fa-trash" ng-click="deleteUser(user._id)"></md-icon></a>
+        <a href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
     </tr>
     </tbody>
