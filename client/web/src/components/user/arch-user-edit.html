@@ -6,40 +6,40 @@
       <md-icon class="fa fa-user"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_LNAME' | translate}}</label>
-        <input type="text" ng-model="user.lname" required>
+        <input type="text" ng-model="oauthUser.lname" required>
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-user"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_FNAME' | translate}}</label>
-        <input type="text" ng-model="user.fname" required>
+        <input type="text" ng-model="oauthUser.fname" required>
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-envelope-o"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_EMAIL' | translate}}</label>
-        <input type="email" ng-model="user.email" readonly>
+        <input type="email" ng-model="oauthUser.email" readonly>
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-lock"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_PASSWORD' | translate}}</label>
-        <input type="password" ng-model="user.newPassword">
+        <input type="password" ng-model="oauthUser.newPassword">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-lock"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_CONFIRM' | translate}}</label>
-        <input type="password" ng-model="user.confirmPassword">
+        <input type="password" ng-model="oauthUser.confirmPassword">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-graduation-cap"></md-icon>
-      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="user.role" flex class="input-select">
+      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="coreUser.role" flex class="input-select">
         <md-option value="member">{{'USER_FORM_ROLE_MEMBER' | translate}}</md-option>
         <md-option value="admin">{{'USER_FORM_ROLE_ADMIN' | translate}}</md-option>
       </md-select>
@@ -48,21 +48,21 @@
       <md-icon class="fa fa-calendar"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_BIRTHDATE' | translate}}</label>
-        <input type="text" pick-a-date="date" pick-a-date-options="{ format: 'dd/mm/yyyy' }" ng-model="user.birthdate"/>
+        <input type="text" pick-a-date="date" pick-a-date-options="{ format: 'dd/mm/yyyy' }" ng-model="coreUser.birthdate"/>
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-phone"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_PHONE' | translate}}</label>
-        <input type="text" ng-model="user.phone">
+        <input type="text" ng-model="coreUser.phone">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-newspaper-o"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_FFA' | translate}}</label>
-        <input type="text" ng-model="user.licenceffa">
+        <input type="text" ng-model="coreUser.licenceffa">
       </md-input-container>
     </div>
     <div layout="row">
@@ -82,7 +82,7 @@
           <md-button class="md-raised md-primary" type="button" onclick="document.getElementById('input-avatar').click();">{{'USER_FORM_CHOOSE' | translate}}</md-button>
         </div>
       </md-input-container>
-      <input type="hidden" ng-model="user.avatar">
+      <input type="hidden" ng-model="coreUser.avatar">
     </div>
   </div>
 

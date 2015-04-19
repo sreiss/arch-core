@@ -65,7 +65,7 @@ angular.module('archCore')
   })
   .factory("CoreUser", function($resource, httpConstant)
   {
-    return $resource(httpConstant.apiUrl + '/users/user/:id', {},
+    return $resource(httpConstant.coreServerUrl + '/users/user/:id', {},
     {
       query:
       {
@@ -123,7 +123,7 @@ angular.module('archCore')
   })
 .factory("Event", function($resource, httpConstant)
   {
-    return $resource(httpConstant.apiUrl + '/events/event', {},
+    return $resource(httpConstant.coreServerUrl + '/events/event', {},
       {
         save:
         {

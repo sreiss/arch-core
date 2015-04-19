@@ -76,27 +76,7 @@ module.exports = function(User, userService, config)
         {
             var deferred = Q.defer();
 
-            User.findOne({oauth: oauthUserId}).populate('oauth').exec(function(err, result)
-            {
-                if(err)
-                {
-                    deferred.reject(err);
-                }
-                else
-                {
-                    deferred.resolve(result);
-                }
-            });
-
-            return deferred.promise;
-        },
-
-        /** Get all users' informations. */
-        getUsers: function()
-        {
-            var deferred = Q.defer();
-
-            User.find().exec(function(err, result)
+            User.findOne({oauth: oauthUserId}).exec(function(err, result)
             {
                 if(err)
                 {

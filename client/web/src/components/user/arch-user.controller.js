@@ -1,39 +1,29 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, SignupTypeUsers, OAuthUser, CoreUser)
+  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService)
   {
-    $scope.users = SignupTypeUsers.query({signupType : httpConstant.signupType.name});
+    $scope.users = archUserService.getUsers();
 
     $scope.deleteUser = function(id)
     {
+      console.log(id);
       if(confirm('Souhaitez-vous réellement supprimer ce membre ?'))
       {
-        OAuthUser.delete({id:id}, function(result)
+        archUserService.deleteUser(id).then(function(result)
         {
-         /* CoreUser.delete({id:id}, function(result)
-          {
-            $mdToast.show($mdToast.simple()
-                .content("Membre supprimé avec succés.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+          $mdToast.show($mdToast.simple()
+            .content("Membre supprimé avec succés.")
+            .position('top right')
+            .hideDelay(3000)
+          );
 
-            $scope.users = SignupTypeUsers.query();
-          },
-          function(err)
-          {
-            throw err;
-          });*/
-        },
-        function(err)
-        {
-          throw err;
+          $scope.users = archUserService.getUsers();
         })
         .catch(function(err)
         {
           $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de la suppression du membre.")
-              .position('top right')
-              .hideDelay(3000)
+            .content("Une erreur est survenue lors de la suppression du membre.")
+            .position('top right')
+            .hideDelay(3000)
           );
         });
       }
@@ -56,13 +46,11 @@ angular.module('archCore')
       {
         if(result.count > 0)
         {
-          console.log(result);
           $scope.coreUser.oauth = result.data._id;
           $scope.coreUser.$save(function(result)
           {
             if(result.count > 0)
             {
-              console.log(result);
               $mdToast.show($mdToast.simple()
                 .content("Membre ajouté avec succés.")
                 .position('top right')
@@ -99,30 +87,45 @@ angular.module('archCore')
       });
    }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, CoreUser, OauthUser)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, OAuthUser, CoreUser)
   {
     var id = $stateParams.id;
 
-    CoreUser.query({id:id}, function(result)
+    OAuthUser.query({id:id}, function(result)
     {
-      $scope.user = new User();
-      $scope.user.id = result.data.oauth._id;
-      $scope.user.fname = result.data.oauth.fname || '';
-      $scope.user.lname = result.data.oauth.lname  || '';
-      $scope.user.email = result.data.oauth.email  || '';
-      $scope.user.password = result.data.oauth.password  || '';
-      $scope.user.newPassword = '';
-      $scope.user.confirmPassword = '';
-      $scope.user.role = result.data.role  || '';
-      $scope.user.birthdate = result.data.birthdate  || '';
-      $scope.user.phone = result.data.phone  || '';
-      $scope.user.licenceffa = result.data.licenceffa  || '';
-      $scope.user.avatar = result.data.avatar  || '';
+      $scope.oauthUser = new OAuthUsers();
+      $scope.oauthUser.id = result.data._id;
+      $scope.oauthUser.fname = result.data.fname || '';
+      $scope.oauthUser.lname = result.data.lname  || '';
+      $scope.oauthUser.email = result.data.email  || '';
+      $scope.oauthUser.password = result.data.password  || '';
+      $scope.oauthUser.newPassword = '';
+      $scope.oauthUser.confirmPassword = '';
 
-      if($scope.user.avatar.length > 0)
+      CoreUser.query({id:id}, function(result)
       {
-        previewAvatar($scope.user.avatar);
-      }
+        $scope.coreUser = new CoreUsers();
+        $scope.coreUser.role = result.data.role  || '';
+        $scope.coreUser.birthdate = result.data.birthdate  || '';
+        $scope.coreUser.phone = result.data.phone  || '';
+        $scope.coreUser.licenceffa = result.data.licenceffa  || '';
+        $scope.coreUser.avatar = result.data.avatar  || '';
+
+        if($scope.coreUser.avatar.length > 0)
+        {
+          previewAvatar($scope.coreUser.avatar);
+        }
+      },
+      function(err)
+      {
+        $mdToast.show($mdToast.simple()
+            .content("Une erreur est survenue lors de la récupération du membre.")
+            .position('top right')
+            .hideDelay(3000)
+        );
+
+        $state.go('users');
+      });
     },
     function(err)
     {
@@ -155,7 +158,7 @@ angular.module('archCore')
         return function(e)
         {
           previewAvatar(e.target.result);
-          $scope.user.avatar = e.target.result;
+          $scope.coreUser.avatar = e.target.result;
         };
       })(avatar);
 

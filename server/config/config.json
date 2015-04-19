@@ -7,8 +7,8 @@
   {
     "smtp": "mailserver.u-strasbg.fr",
     "port": "587",
-    "username": "maxime.rauch",
-    "password": "Wf3c2g9h_",
+    "username": "username",
+    "password": "password",
     "noreply": "ASCPA Administration <no-reply@ascpa.fr>"
   },
   "db":

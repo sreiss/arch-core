@@ -7,7 +7,6 @@
 
 module.exports = function(userController, userRouter, userMiddleware) {
     userRouter.route('/')
-        .get(userController.getUsers)
         .post(userController.saveUser)
         .put(userController.updateUser);
 
