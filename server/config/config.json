@@ -3,6 +3,14 @@
   {
     "port": "3021"
   },
+  "mail":
+  {
+    "smtp": "mailserver.u-strasbg.fr",
+    "port": "587",
+    "username": "maxime.rauch",
+    "password": "Wf3c2g9h_",
+    "noreply": "ASCPA Administration <no-reply@ascpa.fr>"
+  },
   "db":
   {
     "url": "mongodb://localhost/archCore"

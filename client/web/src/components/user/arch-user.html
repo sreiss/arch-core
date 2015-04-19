@@ -11,21 +11,17 @@
       <th data-field="fname">{{'USERS_TABLE_NOM' | translate}}</th>
       <th data-field="lname">{{'USERS_TABLE_PRENOM' | translate}}</th>
       <th data-field="email">{{'USERS_TABLE_EMAIL' | translate}}</th>
-      <th data-field="role">{{'USERS_TABLE_ROLE' | translate}}</th>
-      <th data-field="created">{{'USERS_TABLE_CREATED' | translate}}</th>
       <th data-field="actions>"></th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="user in users.data">
-      <td>{{user.oauth.lname}}</td>
-      <td>{{user.oauth.fname}}</td>
-      <td>{{user.oauth.email}}</td>
-      <td>{{'USER_FORM_ROLE_' + user.role.toUpperCase() | translate}}</td>
-      <td>{{user.created | date : 'dd/MM/yyyy'}}</td>
+      <td>{{user.lname}}</td>
+      <td>{{user.fname}}</td>
+      <td>{{user.email}}</td>
       <td class="text-right">
-        <a href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user.oauth._id)"></md-icon></a>
-        <a href="#"><md-icon class="fa fa-trash" ng-click="deleteUser(user.oauth._id)"></md-icon></a>
+        <a href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
+        <a href="#"><md-icon class="fa fa-trash" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
     </tr>
     </tbody>

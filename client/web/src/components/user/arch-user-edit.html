@@ -1,6 +1,6 @@
 <h1>{{'USERS_EDIT_TITLE' | translate}}</h1>
 
-<form  role="form" ng-submit="editUser()">
+<form name="userForm" role="form" ng-submit="editUser()">
   <div layout="column">
     <div layout="row">
       <md-icon class="fa fa-user"></md-icon>
@@ -87,6 +87,6 @@
   </div>
 
   <div class="md-actions" layout="row">
-    <md-button class="md-raised md-accent" type="submit">{{'USER_FORM_SUBMIT' | translate}}</md-button>
+    <md-button class="md-raised md-accent" type="submit" ng-disabled="userForm.$invalid">{{'USER_FORM_SUBMIT' | translate}}</md-button>
   </div>
 </form>

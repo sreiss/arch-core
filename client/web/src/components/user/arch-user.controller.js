@@ -1,23 +1,34 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, Users, OauthUser)
+  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, SignupTypeUsers, OAuthUser, CoreUser)
   {
-    $scope.users = Users.query();
+    $scope.users = SignupTypeUsers.query({signupType : httpConstant.signupType.name});
 
     $scope.deleteUser = function(id)
     {
       if(confirm('Souhaitez-vous réellement supprimer ce membre ?'))
       {
-        OauthUser.delete({id:id}, function(result)
+        OAuthUser.delete({id:id}, function(result)
         {
-          $mdToast.show($mdToast.simple()
-              .content("Membre supprimé avec succés.")
-              .position('top right')
-              .hideDelay(3000)
-          );
+         /* CoreUser.delete({id:id}, function(result)
+          {
+            $mdToast.show($mdToast.simple()
+                .content("Membre supprimé avec succés.")
+                .position('top right')
+                .hideDelay(3000)
+            );
 
-          $scope.users = Users.query();
+            $scope.users = SignupTypeUsers.query();
+          },
+          function(err)
+          {
+            throw err;
+          });*/
         },
         function(err)
+        {
+          throw err;
+        })
+        .catch(function(err)
         {
           $mdToast.show($mdToast.simple()
               .content("Une erreur est survenue lors de la suppression du membre.")
@@ -33,39 +44,52 @@ angular.module('archCore')
       $state.go('userEdit', {'id' : id});
     };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers)
   {
-    $scope.user = new User();
+    $scope.oauthUser = new OAuthUsers();
+    $scope.coreUser = new CoreUsers();
 
     $scope.addUser = function()
     {
-      var fname = $scope.user.fname;
-      var lname = $scope.user.lname;
-      var email = $scope.user.email;
-      $scope.user.signuptype = httpConstant.signupType;
-
-      $scope.user.$save(function(result)
+      $scope.oauthUser.signuptype = httpConstant.signupType;
+      $scope.oauthUser.$save(function(result)
       {
         if(result.count > 0)
         {
-          $mdToast.show($mdToast.simple()
-              .content("Membre ajouté avec succés.")
-              .position('top right')
-              .hideDelay(3000)
-          );
-
-          $state.go('users');
+          console.log(result);
+          $scope.coreUser.oauth = result.data._id;
+          $scope.coreUser.$save(function(result)
+          {
+            if(result.count > 0)
+            {
+              console.log(result);
+              $mdToast.show($mdToast.simple()
+                .content("Membre ajouté avec succés.")
+                .position('top right')
+                .hideDelay(3000)
+              );
+              $state.go('users');
+            }
+            else
+            {
+              throw new Error();
+            }
+          },
+          function(responseError)
+          {
+            throw responseError;
+          });
         }
         else
         {
-          $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de l'ajout du membre.")
-              .position('top right')
-              .hideDelay(3000)
-          );
+          throw new Error();
         }
       },
       function(responseError)
+      {
+        throw responseError;
+      })
+      .catch(function(err)
       {
         $mdToast.show($mdToast.simple()
             .content("Une erreur est survenue lors de l'ajout du membre.")
@@ -75,11 +99,11 @@ angular.module('archCore')
       });
    }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, OauthUser)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, CoreUser, OauthUser)
   {
     var id = $stateParams.id;
 
-    OauthUser.query({id:id}, function(result)
+    CoreUser.query({id:id}, function(result)
     {
       $scope.user = new User();
       $scope.user.id = result.data.oauth._id;

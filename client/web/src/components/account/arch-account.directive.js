@@ -35,13 +35,13 @@ angular.module('archCore')
                 $cookieStore.put('clientRedirectUri', result.data.clientRedirectUri);
                 $cookieStore.put('clientHash', clientHash);
 
-                window.location = httpConstant.loginUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri);
+                window.location = httpConstant.casClientUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri);
               });
             }
             else
             {
               console.log('INIT : Params found in cookies.');
-              window.location = httpConstant.loginUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri);
+              window.location = httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri);
             }
           }
           else
@@ -57,7 +57,7 @@ angular.module('archCore')
 
           if(now.getTime() > token.expired_at)
           {
-            logout();
+            $cookieStore.remove('token');
             return true;
           }
           else
@@ -65,14 +65,6 @@ angular.module('archCore')
             return false;
           }
         };
-
-        function logout()
-        {
-          if(confirm('Tu veux te deconnecter ?'))
-          {
-            $cookieStore.remove('token');
-          }
-        }
 
         $scope.myAccount = function()
         {
@@ -82,11 +74,8 @@ angular.module('archCore')
 
         $scope.logout = function()
         {
-          if(confirm("Souhaitez-vous réellement vous déconnecter ?"))
-          {
             $cookieStore.remove('token');
             window.location.reload();
-          }
         };
       }
     };

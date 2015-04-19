@@ -1,6 +1,6 @@
 <h1>{{'USERS_ADD_TITLE' | translate}}</h1>
 
-<form  role="form" ng-submit="addUser()">
+<form name="userForm" role="form" ng-submit="addUser()">
   <md-button class="md-raised" ui-sref="users">{{'USER_FORM_BACK' | translate}}</md-button>
 
   <div layout="column">
@@ -8,26 +8,26 @@
       <md-icon class="fa fa-user"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_LNAME' | translate}}</label>
-        <input type="text" ng-model="user.lname" required>
+        <input type="text" ng-model="oauthUser.lname" ng-required="true">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-user"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_FNAME' | translate}}</label>
-        <input type="text" ng-model="user.fname" required>
+        <input type="text" ng-model="oauthUser.fname" ng-required="true">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-envelope-o"></md-icon>
       <md-input-container flex>
         <label>{{'USER_FORM_EMAIL' | translate}}</label>
-        <input type="email" ng-model="user.email" required>
+        <input type="email" ng-model="oauthUser.email" ng-required="true">
       </md-input-container>
     </div>
     <div layout="row">
       <md-icon class="fa fa-graduation-cap"></md-icon>
-      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="user.role" flex class="input-select" required>
+      <md-select placeholder="{{'USER_FORM_ROLE' | translate}}" ng-model="coreUser.role" flex class="input-select" ng-required="true">
         <md-option value="member">{{'USER_FORM_ROLE_MEMBER' | translate}}</md-option>
         <md-option value="admin">{{'USER_FORM_ROLE_ADMIN' | translate}}</md-option>
       </md-select>
@@ -37,6 +37,6 @@
   <div class="ng-message-notice">{{'USER_FORM_NOTICE_RANDOM_PASSWORD' | translate}}</div>
 
   <div class="md-actions" layout="row">
-    <md-button class="md-raised md-accent" type="submit">{{'USER_FORM_SUBMIT' | translate}}</md-button>
+    <md-button class="md-raised md-accent" type="submit" ng-disabled="userForm.$invalid">{{'USER_FORM_SUBMIT' | translate}}</md-button>
   </div>
 </form>

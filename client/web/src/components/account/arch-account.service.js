@@ -1,7 +1,7 @@
 'use strict'
 angular.module('archCore')
   .factory('archAccountService', function(archHttpService, $q, httpConstant) {
-    var casUrl = httpConstant.casUrl + '/oauth/oauth';
+    var casUrl = httpConstant.casServerUrl + '/oauth';
 
     return {
       saveClient: function()

@@ -15,11 +15,10 @@ var path = require('path'),
     pluginLoader = require(path.join(__dirname, 'lib', 'loaders', 'pluginLoader'))
     errorLoader = require(path.join(__dirname, 'lib', 'loaders', 'errorsLoader'));
 
-
-
 exports.name = 'arch';
 
-exports.attach = function(opts) {
+exports.attach = function(opts)
+{
     var app = this;
 
     app.arch = {};
@@ -42,7 +41,8 @@ exports.attach = function(opts) {
     //app.use(pluginsLoader);
 };
 
-exports.init = function(done) {
+exports.init = function(done)
+{
     var app = this;
 
     var config = app.arch.config;
