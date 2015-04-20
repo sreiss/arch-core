@@ -47,4 +47,4 @@ Le type "personalTraining" est composé des exacts même champs que "event" avec
 
 
 Les URL pour ajouter/supprimer/récupérer un événement sont crées de la manière suivante: /events/type événement/(id)
-Pour créer un training par exemple, l'url sera: /events/training, pour récupérer ou supprimer le training d'id 84322: /events/training/84322
+Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par exemple, l'url sera: /events/training, pour récupérer (GET) ou supprimer le training (POST) d'id 84322: /events/training/84322
