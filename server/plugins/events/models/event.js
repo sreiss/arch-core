@@ -14,15 +14,15 @@ module.exports = function(Types) {
             dtstart: { type: Date, required: true},
             dtend: {type: Date, required: true},
             summary: {type: String, required: true},
-            location: {type: String, required: true},
-            description: {type: String, required: true},
-            transp: {type: String, required: true},
-            sequence: {type: String, required: true},
+            location: {type: String},
+            description: {type: String},
+            transp: {type: String},
+            sequence: {type: String},
             category: {type: String, required: true},
             participants:
                 [{
-                    guest: {type: Types.ObjectId, ref: 'User', required: true},
-                    status: {type: String, required: true}
+                    guest: {type: Types.ObjectId, ref: 'User'},
+                    status: {type: String}
                 }]
         },
         priority: 1
