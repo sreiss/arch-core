@@ -6,7 +6,7 @@
  */
 
 
-/** Miscellaneous event */
+/** Event */
 module.exports = function(Types) {
     return {
         schema:
@@ -17,14 +17,27 @@ module.exports = function(Types) {
             location: {type: String, required: true},
             description: {type: String, required: true},
             transp: {type: String, required: true},
-            sequence: {type: String, required: true},
-            category: {type: String, required: true},
+            sequence: {type: Number, required: true},
+            category: {type: Types.ObjectId, ref: 'Category', required: true},
             participants:
-                [{
-                    guest: {type: Types.ObjectId, ref: 'User', required: true},
-                    status: {type: String, required: true}
-                }]
+            [{
+                guest: {type: Types.ObjectId, ref: 'User', required: true},
+                status: {type: String, required: true}
+            }],
+            course: {type: Types.ObjectId, ref: 'Course'},
+            website: {type:String},
+            information: {type:String},
+            trainings:
+            [{
+                training: {type: Types.ObjectId, ref: 'Training'}
+            }],
+            creator: {type: Types.ObjectId, ref: 'User'},
+            program: {type: String},
+            runs:
+            [{
+                run: {type: Types.ObjectId, ref: 'OfficialRun'}
+            }]
         },
-        priority: 1
+        priority: 2
     };
 };

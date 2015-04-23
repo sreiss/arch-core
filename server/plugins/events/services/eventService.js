@@ -6,14 +6,15 @@
  */
 
 var moment = require('moment');
+var q = require('q');
 
-module.exports = function(Event, qService)
+module.exports = function(Event)
 {
     return {
         /** Save event. */
         saveEvent: function(eventData)
         {
-            var deferred = qService.defer();
+            var deferred = q.defer();
             var event = new Event();
 
             // Assign data.
@@ -26,6 +27,13 @@ module.exports = function(Event, qService)
             event.sequence = eventData.sequence;
             event.category = eventData.category;
             event.participants = [];
+            event.course = eventData.course;
+            event.website = eventData.website;
+            event.information = eventData.information;
+            event.trainings = [];
+            event.creator = eventData.creator;
+            event.program = eventData.program;
+            event.runs = [];
 
             for(var i=0; i<eventData.participants.length; i++)
             {
@@ -35,13 +43,31 @@ module.exports = function(Event, qService)
                 };
 
                 event.participants.push(guest);
-            };
+            }
+
+            for(var j=0; j<eventData.trainings.length; j++)
+            {
+                var training = {
+                    training : eventData.trainings[j].training
+                };
+
+                event.trainings.push(training);
+            }
+
+            for(var k=0; k<eventData.runs.length; k++)
+            {
+                var run = {
+                    run : eventData.runs[k].run
+                };
+
+                event.runs.push(run);
+            }
 
             event.save(function(err)
             {
                 if(err)
                 {
-                    deferred.reject(err.message)
+                    deferred.reject(err.message);
                 }
                 else
                 {
@@ -55,7 +81,7 @@ module.exports = function(Event, qService)
         /** Delete existing event. */
         deleteEvent: function(eventId)
         {
-            var deferred = qService.defer();
+            var deferred = q.defer();
 
             Event.findOneAndRemove({_id: eventId}, function(err, event)
             {
@@ -79,9 +105,9 @@ module.exports = function(Event, qService)
         /** Get event's informations by eventId. */
         getEvent: function(eventId)
         {
-            var deferred = qService.defer();
+            var deferred = q.defer();
 
-            Event.findOne({_id: eventId}).populate('participants.guest').exec(function (err, event)
+            Event.findOne({_id: eventId}).populate('category participants.guest course trainings.training creator runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -103,9 +129,9 @@ module.exports = function(Event, qService)
         /** Get all events' informations. */
         getEvents: function()
         {
-            var deferred = qService.defer();
+            var deferred = q.defer();
 
-            Event.find().populate('participants.guest').exec(function (err, events)
+            Event.find().populate('category participants.guest course trainings.training creator runs.run').exec(function (err, events)
             {
                 if(err)
                 {
