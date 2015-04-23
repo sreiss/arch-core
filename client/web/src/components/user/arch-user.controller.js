@@ -1,28 +1,29 @@
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, Users, OauthUser)
+  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService)
   {
-    $scope.users = Users.query();
+    $scope.users = archUserService.getUsers();
+    $scope.currentUser = archAccountService.getCurrentUser();
 
     $scope.deleteUser = function(id)
     {
       if(confirm('Souhaitez-vous réellement supprimer ce membre ?'))
       {
-        OauthUser.delete({id:id}, function(result)
+        archUserService.deleteUser(id).then(function(result)
         {
           $mdToast.show($mdToast.simple()
-              .content("Membre supprimé avec succés.")
-              .position('top right')
-              .hideDelay(3000)
+            .content("Membre supprimé avec succés.")
+            .position('top right')
+            .hideDelay(3000)
           );
 
-          $scope.users = Users.query();
-        },
-        function(err)
+          $scope.users = archUserService.getUsers();
+        })
+        .catch(function(err)
         {
           $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de la suppression du membre.")
-              .position('top right')
-              .hideDelay(3000)
+            .content("Une erreur est survenue lors de la suppression du membre.")
+            .position('top right')
+            .hideDelay(3000)
           );
         });
       }
@@ -33,72 +34,72 @@ angular.module('archCore')
       $state.go('userEdit', {'id' : id});
     };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService)
   {
-    $scope.user = new User();
+    $scope.oauthUser = new OAuthUsers();
+    $scope.coreUser = new CoreUsers();
 
     $scope.addUser = function()
     {
-      var fname = $scope.user.fname;
-      var lname = $scope.user.lname;
-      var email = $scope.user.email;
-      $scope.user.signuptype = httpConstant.signupType;
-
-      $scope.user.$save(function(result)
-      {
-        if(result.count > 0)
-        {
-          $mdToast.show($mdToast.simple()
-              .content("Membre ajouté avec succés.")
-              .position('top right')
-              .hideDelay(3000)
-          );
-
-          $state.go('users');
-        }
-        else
-        {
-          $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de l'ajout du membre.")
-              .position('top right')
-              .hideDelay(3000)
-          );
-        }
-      },
-      function(responseError)
+      archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
       {
         $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de l'ajout du membre.")
-            .position('top right')
-            .hideDelay(3000)
+          .content("Membre ajouté avec succés.")
+          .position('top right')
+          .hideDelay(3000)
+        );
+
+        $state.go('users');
+      })
+      .catch(function(err)
+      {
+        $mdToast.show($mdToast.simple()
+          .content("Une erreur est survenue lors de l'ajout du membre.")
+          .position('top right')
+          .hideDelay(3000)
         );
       });
    }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, User, archUserService, OauthUser)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, OAuthUser, CoreUser)
   {
     var id = $stateParams.id;
 
-    OauthUser.query({id:id}, function(result)
+    OAuthUser.query({id:id}, function(result)
     {
-      $scope.user = new User();
-      $scope.user.id = result.data.oauth._id;
-      $scope.user.fname = result.data.oauth.fname || '';
-      $scope.user.lname = result.data.oauth.lname  || '';
-      $scope.user.email = result.data.oauth.email  || '';
-      $scope.user.password = result.data.oauth.password  || '';
-      $scope.user.newPassword = '';
-      $scope.user.confirmPassword = '';
-      $scope.user.role = result.data.role  || '';
-      $scope.user.birthdate = result.data.birthdate  || '';
-      $scope.user.phone = result.data.phone  || '';
-      $scope.user.licenceffa = result.data.licenceffa  || '';
-      $scope.user.avatar = result.data.avatar  || '';
+      $scope.oauthUser = new OAuthUsers();
+      $scope.oauthUser.id = result.data._id;
+      $scope.oauthUser.fname = result.data.fname || '';
+      $scope.oauthUser.lname = result.data.lname  || '';
+      $scope.oauthUser.email = result.data.email  || '';
+      $scope.oauthUser.password = result.data.password  || '';
+      $scope.oauthUser.newPassword = '';
+      $scope.oauthUser.confirmPassword = '';
 
-      if($scope.user.avatar.length > 0)
+      CoreUser.query({id:id}, function(result)
       {
-        previewAvatar($scope.user.avatar);
-      }
+        $scope.coreUser = new CoreUsers();
+        $scope.coreUser.role = result.data.role  || '';
+        $scope.coreUser.birthdate = result.data.birthdate  || '';
+        $scope.coreUser.phone = result.data.phone  || '';
+        $scope.coreUser.licenceffa = result.data.licenceffa  || '';
+        $scope.coreUser.avatar = result.data.avatar  || '';
+
+        if($scope.coreUser.avatar.length > 0)
+        {
+          previewAvatar($scope.coreUser.avatar);
+        }
+      },
+      function(err)
+      {
+        $mdToast.show($mdToast.simple()
+            .content("Une erreur est survenue lors de la récupération du membre.")
+            .position('top right')
+            .hideDelay(3000)
+        );
+
+        $state.go('users');
+      });
     },
     function(err)
     {
@@ -131,7 +132,7 @@ angular.module('archCore')
         return function(e)
         {
           previewAvatar(e.target.result);
-          $scope.user.avatar = e.target.result;
+          $scope.coreUser.avatar = e.target.result;
         };
       })(avatar);
 

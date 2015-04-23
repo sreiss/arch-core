@@ -7,10 +7,7 @@
 
 module.exports = function(userController, userRouter, userMiddleware) {
     userRouter.route('/')
-        .get(userController.getUsers)
-        .post(userMiddleware.checkSaveUser)
         .post(userController.saveUser)
-        .put(userMiddleware.checkUpdateUser)
         .put(userController.updateUser);
 
     userRouter.route('/:oauthUserId')

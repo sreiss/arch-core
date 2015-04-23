@@ -2,9 +2,10 @@
 
 angular.module('archCore').constant('httpConstant',
 {
-  apiUrl: 'http://localhost:3021',
-  loginUrl: 'http://localhost:3010',
-  casUrl: 'http://localhost:3021',
+  casClientUrl: 'http://localhost:3010',
+  casServerUrl: 'http://localhost:3020',
+  coreClientUrl: 'http://localhost:3011',
+  coreServerUrl: 'http://localhost:3021',
 
   signupType: {
     name: 'ASCPA',

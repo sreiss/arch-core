@@ -62,20 +62,6 @@ module.exports = function(userService) {
             });
         },
 
-        /** Get users informations. */
-        getUsers: function(req, res)
-        {
-            // Get all users.
-            userService.getUsers().then(function(result)
-            {
-                res.status(result.length > 0 ? 200 : 204).json({"count" : result.length, "data" : result});
-            })
-            .catch(function(err)
-            {
-                res.status(500).json({"error" : new ArchFindError(err.message)});
-            });
-        },
-
         /** Delete user. */
         deleteUser: function(req, res)
         {
@@ -85,7 +71,7 @@ module.exports = function(userService) {
             // Delete user.
             userService.deleteUser(id).then(function(result)
             {
-                res.status(result.length > 0 ? 200 : 204).json({"count" : result.length, "data" : result});
+                res.status(result ? 200 : 204).json({"count": (result ? 1 : 0), "data": result});
             })
             .catch(function(err)
             {

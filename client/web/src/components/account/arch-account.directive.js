@@ -8,9 +8,9 @@ angular.module('archCore')
         var init = function()
         {
           // Check token in coockies.
-          var token = $cookieStore.get('token');
+          var token = archAccountService.getCurrentToken();
 
-          if(!token || isExpired(token))
+          if(!token)
           {
             $scope.alreadyLogged = false;
             console.log('INIT : Not connected');
@@ -35,58 +35,52 @@ angular.module('archCore')
                 $cookieStore.put('clientRedirectUri', result.data.clientRedirectUri);
                 $cookieStore.put('clientHash', clientHash);
 
-                window.location = httpConstant.loginUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri);
+                window.location = httpConstant.casClientUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri);
               });
             }
             else
             {
               console.log('INIT : Params found in cookies.');
-              window.location = httpConstant.loginUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri);
+              window.location = httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri);
             }
           }
           else
           {
             console.log('INIT : Already connected.');
-            $scope.username = token.user.fname + " " + token.user.lname;
+            $scope.token = token;
+            $scope.user = token.user;
+
+            console.log($scope.user.profile);
+
+            // Get current user's profile um die Role zu haben !
+            if(!$scope.user.profile)
+            {
+              console.log('INIT : Get profil of current user.');
+
+              archAccountService.getProfile($scope.user._id).then(function(result)
+              {
+                $scope.user.profile = result.data;
+              })
+              .catch(function(err)
+              {
+                console.log(err);
+              });
+            }
+
+            console.log($scope.user.profile);
           }
         }();
 
-        function isExpired(token)
-        {
-          var now = new Date();
-
-          if(now.getTime() > token.expired_at)
-          {
-            logout();
-            return true;
-          }
-          else
-          {
-            return false;
-          }
-        };
-
-        function logout()
-        {
-          if(confirm('Tu veux te deconnecter ?'))
-          {
-            $cookieStore.remove('token');
-          }
-        }
-
         $scope.myAccount = function()
         {
-          var token = $cookieStore.get('token');
-          $state.go('userEdit', {'id' : token.user._id});
+          var user = archAccountService.getCurrentUser();
+          $state.go('userEdit', {'id' : user._id});
         };
 
         $scope.logout = function()
         {
-          if(confirm("Souhaitez-vous réellement vous déconnecter ?"))
-          {
             $cookieStore.remove('token');
             window.location.reload();
-          }
         };
       }
     };

@@ -5,42 +5,35 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(User, userService, oauthService, qService)
+var Q = require('q');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+
+module.exports = function(User, userService, config)
 {
     return {
         /** Save user. */
         saveUser: function(userData)
         {
-            var deferred = qService.defer();
+            var deferred = Q.defer();
 
-            oauthService.saveUser(userData).then(function(oauthUser)
+            // Assign data.
+            var user = new User();
+            user.oauth = userData.oauth;
+            user.role = userData.role;
+
+            user.save(function(err, user)
             {
-                return oauthUser;
-            })
-            .then(function(oauthUser)
-            {
-                var user = new User();
-
-                // Assign data.
-                user.oauth = oauthUser._id;
-                user.role = userData.role;
-                user.block = userData.block;
-
-                user.save(function(err, user)
+                if(err)
                 {
-                    if(err)
-                    {
-                        deferred.reject(err.message)
-                    }
-                    else
-                    {
-                        deferred.resolve(user);
-                    }
-                })
-            })
-            .catch(function(err)
-            {
-               deferred.reject(err);
+                    deferred.reject(err.message)
+                }
+                else
+                {
+                   // userService.sendMail(user);
+
+                    deferred.resolve(user);
+                }
             });
 
             return deferred.promise;
@@ -49,33 +42,26 @@ module.exports = function(User, userService, oauthService, qService)
         /** Update user. */
         updateUser: function(userData)
         {
-            var deferred = qService.defer();
+            var deferred = Q.defer();
 
-            oauthService.updateUser(userData).then(function(oauthUser)
+            User.update({oauth: userData.id},
             {
-                return oauthUser;
-            })
-            .then(function(oauthUser)
+                role: userData.role,
+                birthdate: userData.birthdate,
+                phone: userData.phone,
+                licenceffa: userData.licenceffa,
+                avatar: userData.avatar
+            },
+            function(err, numberAffected, rawResponse)
             {
-                User.update({oauth: userData.id},
+                if(err)
                 {
-                    role: userData.role,
-                    birthdate: userData.birthdate,
-                    phone: userData.phone,
-                    licenceffa: userData.licenceffa,
-                    avatar: userData.avatar
-                },
-                function(err, numberAffected, rawResponse)
+                    deferred.reject(err);
+                }
+                else
                 {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(rawResponse);
-                    }
-                })
+                    deferred.resolve(rawResponse);
+                }
             })
             .catch(function(err)
             {
@@ -88,9 +74,9 @@ module.exports = function(User, userService, oauthService, qService)
         /** Get user's informations. */
         getUser: function(oauthUserId)
         {
-            var deferred = qService.defer();
+            var deferred = Q.defer();
 
-            User.findOne({oauth: oauthUserId}).populate('oauth').exec(function(err, result)
+            User.findOne({oauth: oauthUserId}).exec(function(err, result)
             {
                 if(err)
                 {
@@ -105,51 +91,60 @@ module.exports = function(User, userService, oauthService, qService)
             return deferred.promise;
         },
 
-        /** Get all users' informations. */
-        getUsers: function()
-        {
-            var deferred = qService.defer();
-
-            User.find().populate('oauth').exec(function(err, result)
-            {
-                if(err)
-                {
-                    deferred.reject(err);
-                }
-                else
-                {
-                    deferred.resolve(result);
-                }
-            });
-
-            return deferred.promise;
-        },
-
-        /** Get all users' informations. */
+        /** Get users. */
         deleteUser: function(oauthUserId)
         {
-            var deferred = qService.defer();
+            var deferred = Q.defer();
 
-            oauthService.deleteUser(oauthUserId).then(function(result)
+            User.findOneAndRemove({oauth : oauthUserId}).exec(function(err, result)
             {
-                User.findOneAndRemove({oauth:oauthUserId}).exec(function(err, result)
+                if(err)
                 {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(result);
-                    }
-                });
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(result);
+                }
             });
 
             return deferred.promise;
+        },
+
+        /** Send Mail. */
+        sendMail: function(oauthUser)
+        {
+            var transporter = nodemailer.createTransport(smtpTransport(
+            {
+                host: config.get('mail:smtp'),
+                port: config.get('mail:port'),
+                auth: {
+                    user: config.get('mail:username'),
+                    pass: config.get('mail:password')
+                },
+                tls: {rejectUnauthorized: false},
+                debug:true
+            }));
+
+            var mailOptions =
+            {
+                from: config.get('mail:noreply'),
+                to: oauthUser.email,
+                subject: 'ASCPA - Inscription réussie ✔', // Subject line
+                html: '<b>Mot de passe : ' + oauthUser.password + '</b>' // html body
+            };
+
+            transporter.sendMail(mailOptions, function(error, info)
+            {
+                if(error)
+                {
+                    console.log(error);
+                }
+                else
+                {
+                    console.log(info);
+                }
+            });
         }
     };
 };

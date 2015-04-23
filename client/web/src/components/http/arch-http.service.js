@@ -43,20 +43,14 @@ angular.module('archCore')
       }
     }
   })
-  .factory("Users", function($resource, httpConstant)
+  .factory("CoreUsers", function($resource, httpConstant)
   {
-    return $resource(httpConstant.apiUrl + '/users/user', {},
+    return $resource(httpConstant.coreServerUrl + '/users/user', {},
     {
       query:
       {
         isArray: false
-      }
-    })
-  })
-  .factory("User", function($resource, httpConstant)
-  {
-    return $resource(httpConstant.apiUrl + '/users/user', {},
-    {
+      },
       save:
       {
         method: 'POST',
@@ -67,11 +61,69 @@ angular.module('archCore')
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
       }
+    })
+  })
+  .factory("CoreUser", function($resource, httpConstant)
+  {
+    return $resource(httpConstant.coreServerUrl + '/users/user/:id', {},
+    {
+      query:
+      {
+        method: 'GET'
+      },
+      delete:
+      {
+        method: 'DELETE'
+      }
     });
   })
-  .factory("Event", function($resource, httpConstant)
+  .factory("OAuthUsers", function($resource, httpConstant)
   {
-    return $resource(httpConstant.apiUrl + '/events/event', {},
+    return $resource(httpConstant.casServerUrl + '/oauth/user', {},
+    {
+      query:
+      {
+        isArray: false
+      },
+      save:
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      },
+      update:
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      }
+    })
+  })
+  .factory("OAuthUser", function($resource, httpConstant)
+  {
+    return $resource(httpConstant.casServerUrl + '/oauth/user/:id', {},
+    {
+      query:
+      {
+        method: 'GET'
+      },
+      delete:
+      {
+        method: 'DELETE'
+      }
+    });
+  })
+  .factory("SignupTypeUsers", function($resource, httpConstant)
+  {
+    return $resource(httpConstant.casServerUrl + '/oauth/signuptype/:signupType', {},
+      {
+        query:
+        {
+          isArray: false
+        }
+      })
+  })
+.factory("Event", function($resource, httpConstant)
+  {
+    return $resource(httpConstant.coreServerUrl + '/events/event', {},
       {
         save:
         {
@@ -88,19 +140,4 @@ angular.module('archCore')
           isArray: false
         }
       });
-  })
-  .factory("OauthUser", function($resource, httpConstant)
-  {
-    return $resource(httpConstant.apiUrl + '/users/user/:id', {},
-    {
-      query:
-      {
-        method: 'GET'
-      },
-      delete:
-      {
-        method: 'DELETE'
-      }
-    });
   });
-

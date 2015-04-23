@@ -6,6 +6,6 @@
  */
 
 module.exports = {
-    dependencies: ['oauth'],
+    dependencies: [],
     priority: 2
 };

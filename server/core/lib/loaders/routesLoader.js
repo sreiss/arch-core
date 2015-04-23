@@ -37,9 +37,9 @@ exports.init = function(done) {
 
                 var routeRequire = require(routePath);
 
-                var routeSingature = routeRequire.toString();
-                var dependencyNames = routeSingature
-                    .substring(routeSingature.indexOf('(') + 1, routeSingature.indexOf(')'))
+                var routeSignature = routeRequire.toString();
+                var dependencyNames = routeSignature
+                    .substring(routeSignature.indexOf('(') + 1, routeSignature.indexOf(')'))
                     .split(',');
 
                 for (var i = 2; i < dependencyNames.length; i++) {
@@ -53,6 +53,7 @@ exports.init = function(done) {
                                     throw new Error("Plugin " + otherPluginName + " doesn't exist! Please remove it form " + pluginName + " plugin dependencies");
 
                                 var otherPlugin = plugins[otherPluginName];
+                                console.log(otherPlugin);
                                 if (otherPlugin.middlewares[dependencyName]) {
                                     args.push(otherPlugin.middlewares[dependencyName]);
                                 } else {
