@@ -378,3 +378,22 @@ blockquote {
 {
   display:none;
 }
+.fc-ltr .fc-event-hori.fc-event-end, .fc-rtl .fc-event-hori.fc-event-start{
+  border-right-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.fc-ltr .fc-event-hori.fc-event-end, .fc-rtl .fc-event-hori.fc-event-start{
+  border-left-width: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+}
+
+.fc-day {
+  cursor: pointer;
+}
+
+.fc-day:hover {
+  background-color: #ecf0f1;
+}

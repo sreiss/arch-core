@@ -1,0 +1,9 @@
+<div layout="row">
+  <md-icon class="fa fa-envelope-o"></md-icon>
+  <md-input-container flex>
+    <label>{{'EVENT_FORM_PROGRAM' | translate}}</label>
+    <input type="text" ng-model="event.program" required>
+  </md-input-container>
+</div>
+<!--"runs" de type OfficialRun (il peut y en avoir plusieurs),
+"course" de type Course (il s'agit d'une référence à un parcours du plugin cartho et non à un officialRun)-->

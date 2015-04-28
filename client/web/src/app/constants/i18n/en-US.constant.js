@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 angular.module('archCore')
   .constant('i18nenUSConstant', {
     'NAVBAR_TITLE' : "ASCPA Administration",
@@ -43,10 +43,22 @@ angular.module('archCore')
     'USER_FORM_FFA' : "FFA licence",
     'USER_FORM_CHOOSE' : "Choose ...",
 
+
     'EVENTS_TITLE' : "Events",
-    'EVENTS_ADD_TITLE': "New event",
-    'EVENTS_ADD_EVENT' : "Add event",
-    'EVENTS_EDIT_EVENT' : "Edit event",
+    'DISCOVERIES_TITLE' : "Discoveries",
+    'OFFICIAL_RUNS_TITLE' : "Officials races",
+    'PERSONAL_TRAININGS_TITLE' : "Personals trainings",
+    'TRAININGS_TITLE' : "Trainings",
+
+    'EVENT_TITLE_ADD' : "New event",
+    'DISCOVERY_TITLE_ADD' : "New discovery",
+    'OFFICIAL_RUN_TITLE_ADD' : "New official race",
+    'PERSONAL_TRAINING_TITLE_ADD' : "New personal training",
+    'TRAINING_TITLE_ADD' : "New training",
+
+    'EVENT_ADD_TITLE': "New event",
+    'EVENT_ADD_EVENT' : "Add event",
+    'EVENT_EDIT_EVENT' : "Edit event",
     'EVENT_FORM_NAME' : "Name",
     'EVENT_FORM_TYPE' : "Type",
     'EVENT_FORM_TYPE_RACE' : "Run",
@@ -55,13 +67,17 @@ angular.module('archCore')
     'EVENT_FORM_BEGIN' : "Begin",
     'EVENT_FORM_END' : "End",
     'EVENT_FORM_DESCRIPTION' : "Description",
-    'EVENT_FORM_ADDRESS' : "Address",
-    'EVENT_FORM_COUNTRY' : "Country",
+    'EVENT_FORM_LOCATION' : "Address",
     'EVENT_FORM_ZIP' : "Zip code",
+    'EVENT_FORM_RUN' : "Track",
+    'EVENT_FORM_WEBSITE' : "Website",
+    'EVENT_FORM_INFORMATIONS' : "Information",
 
     'TRACKS_TITLE': "Tracks",
     'TRACKS_ADD_TRACK': "Nouveau track",
     'TRACKS_NO_TRACK': "Vous n'avez à ce jour ajouté aucun track.",
     'TRACKS_ADD_TITLE': "Add track",
-    'TRACKS_EDIT_TITLE': "Edit track"
+    'TRACKS_EDIT_TITLE': "Edit track",
+
+    'CALENDAR_TITLE' : "Calendar"
   });
