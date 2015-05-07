@@ -83,27 +83,32 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
     * creator
     * program
     * runs : tableau d'objet:
-    * {
-         "name": "Training",
-         "label": "training",
-         "description": "entrainement"
-       }
-    * Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
-    * {
-       "dtstart": "10/05/2015",
-       "dtend": "11/05/2015",
-       "summary": "testevent",
-       "location": "colmar",
-       "description": "test",
-       "transp" : "idk",
-       "sequence" : "0",
-       "category": "5547a7bfbe6fe65c144d2d6d",
-       "participants": [{"guest":"5547a7bfbe6fe65c144d2d6d", "status":"pd"}],
-       "course": "",
-       "website": "",
-       "information": "",
-       "trainings": [{"training":"5547a7bfbe6fe65c144d2d6d"}],
-       "creator": "5547a7bfbe6fe65c144d2d6d",
-       "program": "",
-       "runs": [{"run":"5547a7bfbe6fe65c144d2d6d"}]
-      }
+    
+###Exemple de JSON
+
+## Créer une categorie
+{
+   "name": "Training",
+   "label": "training",
+   "description": "entrainement"
+}
+
+## Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
+{
+   "dtstart": "10/05/2015",
+   "dtend": "11/05/2015",
+   "summary": "testevent",
+   "location": "colmar",
+   "description": "test",
+   "transp" : "idk",
+   "sequence" : "0",
+   "category": "5547a7bfbe6fe65c144d2d6d",
+   "participants": [{"guest":"5547a7bfbe6fe65c144d2d6d", "status":"pd"}],
+   "course": "",
+   "website": "",
+   "information": "",
+   "trainings": [{"training":"5547a7bfbe6fe65c144d2d6d"}],
+   "creator": "5547a7bfbe6fe65c144d2d6d",
+   "program": "",
+   "runs": [{"run":"5547a7bfbe6fe65c144d2d6d"}]
+}
