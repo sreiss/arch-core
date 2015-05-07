@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('archCore')
-  .factory('archUserService', function($q, httpConstant, SignupTypeUsers, OAuthUser, CoreUser)
+  .factory('archUserService', function($q, httpConstant, SignupTypeUsers, OAuthUser, OAuthUsers, CoreUser, CoreUsers)
   {
     return {
       /** Get users. */
@@ -22,6 +22,32 @@ angular.module('archCore')
           coreUser.oauth = result.data._id;
           coreUser.$save(function(result)
           {
+            deferred.resolve(result);
+          },
+          function(err)
+          {
+            deferred.reject(err);
+          });
+        },
+        function(err)
+        {
+          deferred.reject(err);
+        });
+
+        return deferred.promise;
+      },
+
+      /** Edit user. */
+      editUser: function(oauthUser, coreUser)
+      {
+        var deferred = $q.defer();
+
+        // Add OAuth user.
+        OAuthUsers.update({user:oauthUser}, function(result)
+        {
+          CoreUsers.update({user:coreUser}, function(result)
+          {
+            console.log(result);
             deferred.resolve(result);
           },
           function(err)
