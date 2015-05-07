@@ -82,21 +82,14 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
       * training
     * creator
     * program
-    * runs : tableau d'objet
-      * run
-  * DELETE /events/event/:idevent : suppresion d'un événement
-  * GET /events/event/:idevent : récupération d'un événement
-  * GET /event/event/ : récupération de l'ensemble des événements
-
-  * Exemple de JSON
-    * Pour créer une categ
-      {
+    * runs : tableau d'objet:
+    * {
          "name": "Training",
          "label": "training",
          "description": "entrainement"
        }
-    * Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler)
-      {
+    * Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
+    * {
        "dtstart": "10/05/2015",
        "dtend": "11/05/2015",
        "summary": "testevent",
