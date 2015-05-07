@@ -10,7 +10,7 @@ Tout est sur le [wiki](https://github.com/sreiss/arch-core/wiki).
 
 
 
-#### Gestion des événements
+## Gestion des événements
 
 Il existe 5 catégories d'événements: officialRun, personalTraining, training, discovery et event. Ces 5 catégories se partagent 9 champs identiques: leur catégorie et 7 autres correspondant aux champs utilisés pour générer un fichier ics (icalendar): dtstart (date de début), dtend (date de fin), summary (titre de l'événement), location (lieu de l'événement), description (description de l'événement), transp (visibilité de l'événement) et sequence (nombre de màj). Le neuvième champ correspond à la liste des participants couplé avec leur statut.
 
@@ -86,14 +86,14 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
     
 ###Exemple de JSON
 
-## Créer une categorie
+#### Créer une categorie
 {
    "name": "Training",
    "label": "training",
    "description": "entrainement"
 }
 
-## Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
+#### Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
 {
    "dtstart": "10/05/2015",
    "dtend": "11/05/2015",
