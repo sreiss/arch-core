@@ -102,7 +102,7 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
    "description": "test",
    "transp" : "idk",
    "sequence" : "0",
-   "category": "5547a7bfbe6fe65c144d2d6d",
+   "category": "5547a7bfbe6fe65c144d2d6d",  //à changer pour qu'il correspond à une category existante
    "participants": [{"guest":null, "status":}],
    "course": "",
    "website": "",
