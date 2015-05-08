@@ -93,7 +93,7 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
    "description": "entrainement"
 }
 
-#### Pour créer une event avec des objectid bidons sinon ça marche pas (problème à régler) :
+#### Pour créer une event :
 {
    "dtstart": "10/05/2015",
    "dtend": "11/05/2015",
@@ -103,12 +103,12 @@ Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par
    "transp" : "idk",
    "sequence" : "0",
    "category": "5547a7bfbe6fe65c144d2d6d",
-   "participants": [{"guest":"5547a7bfbe6fe65c144d2d6d", "status":"présent"}],
+   "participants": [{"guest":null, "status":}],
    "course": "",
    "website": "",
    "information": "",
-   "trainings": [{"training":"5547a7bfbe6fe65c144d2d6d"}],
-   "creator": "5547a7bfbe6fe65c144d2d6d",
+   "trainings": [{"training":null}],
+   "creator": null,
    "program": "",
-   "runs": [{"run":"5547a7bfbe6fe65c144d2d6d"}]
+   "runs": [{"run":null}]
 }
