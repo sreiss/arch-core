@@ -18,24 +18,25 @@ module.exports = function(Types) {
             description: {type: String, required: true},
             transp: {type: String, required: true},
             sequence: {type: Number, required: true},
+            //category: {type:String},
             category: {type: Types.ObjectId, ref: 'Category', required: true},
             participants:
             [{
-                guest: {type: Types.ObjectId, ref: 'User', required: true},
-                status: {type: String, required: true}
+                guest: {type: Types.ObjectId, ref: 'User'},
+                status: {type: String}
             }],
-            course: {type: Types.ObjectId, ref: 'Course'},
+            course: {type: String},
             website: {type:String},
             information: {type:String},
             trainings:
             [{
-                training: {type: Types.ObjectId, ref: 'Training'}
+                training: {type: Types.ObjectId, ref: 'Event'}
             }],
             creator: {type: Types.ObjectId, ref: 'User'},
             program: {type: String},
             runs:
             [{
-                run: {type: Types.ObjectId, ref: 'OfficialRun'}
+                run: {type: Types.ObjectId, ref: 'Event'}
             }]
         },
         priority: 2

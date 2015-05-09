@@ -17,6 +17,9 @@ module.exports = function(Event)
             var deferred = q.defer();
             var event = new Event();
 
+            //console.log(eventData);
+            console.log(event);
+
             // Assign data.
             event.dtstart = eventData.dtstart;
             event.dtend = eventData.dtend;
@@ -31,7 +34,7 @@ module.exports = function(Event)
             event.website = eventData.website;
             event.information = eventData.information;
             event.trainings = [];
-            event.creator = eventData.creator;
+            //event.creator = eventData.creator;
             event.program = eventData.program;
             event.runs = [];
 
@@ -43,7 +46,7 @@ module.exports = function(Event)
                 };
 
                 event.participants.push(guest);
-            }
+            };
 
             for(var j=0; j<eventData.trainings.length; j++)
             {
@@ -52,7 +55,7 @@ module.exports = function(Event)
                 };
 
                 event.trainings.push(training);
-            }
+            };
 
             for(var k=0; k<eventData.runs.length; k++)
             {
@@ -61,7 +64,9 @@ module.exports = function(Event)
                 };
 
                 event.runs.push(run);
-            }
+            };
+
+            //console.log(event);
 
             event.save(function(err)
             {
@@ -107,7 +112,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({_id: eventId}).populate('category participants.guest course trainings.training creator runs.run').exec(function (err, event)
+            Event.findOne({_id: eventId}).populate('category participants.guest trainings.training creator runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -131,7 +136,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.find().populate('category participants.guest course trainings.training creator runs.run').exec(function (err, events)
+            Event.find().populate('category participants.guest trainings.training creator runs.run').exec(function (err, events)
             {
                 if(err)
                 {
@@ -149,14 +154,5 @@ module.exports = function(Event)
 
             return deferred.promise;
         }
-        //,
-        //
-        //getGuests: function()
-        //{
-        //
-        //},
-        //
-        //deleteGuest: function()
-        //{}
     };
 };
