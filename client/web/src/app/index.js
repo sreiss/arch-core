@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate','ui.bootstrap','ui.calendar','angular-md5', 'base64', 'angular-datepicker'])
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate', 'ui.bootstrap','ui.calendar','angular-md5', 'base64', 'angular-datepicker','mdDateTime'])
   .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
 {
   $mdThemingProvider
@@ -35,18 +35,6 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       templateUrl: "components/user/arch-user-edit.html",
       controller: "archUserEditController"
     })
-    .state('events',
-    {
-      url: "/events",
-      templateUrl: "components/event/arch-event.html",
-      controller : "archEventController"
-    })
-    .state('eventAdd',
-    {
-      url: "/event/add",
-      templateUrl: "components/event/arch-event-add.html",
-      controller : "archEventAddController"
-    })
     .state('calendar',
     {
       url: "/calendar",
@@ -70,6 +58,19 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       url: "/tracks/edit/:id",
       templateUrl: "components/track/arch-track-edit.html",
       controller: "archTrackEditController"
+    })
+    .state('events',
+    {
+      url: "/events",
+      templateUrl: "components/events/arch-type-event.html",
+      controller : "archEventController"
+    })
+    .state('eventAdd',
+    {
+      url: "/event/:category/add",
+      templateUrl: "components/events/event/arch-event-add.html",
+      controller : "archEventAddController",
+      params : {"date": null}
     });
 
   $urlRouterProvider

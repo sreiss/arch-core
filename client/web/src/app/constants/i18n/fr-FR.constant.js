@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 angular.module('archCore')
   .constant('i18nfrFRConstant', {
     'CUSTOMER_NAME' : "ArchCore",
@@ -43,27 +43,42 @@ angular.module('archCore')
     'USER_FORM_AVATAR' : "Avatar",
     'USER_FORM_FFA' : "Licence FFA",
     'USER_FORM_CHOOSE' : "Choisir ...",
+    'EVENT_FORM_RUN' : "Course",
 
     'EVENTS_TITLE' : "Evènements",
-    'EVENTS_ADD_TITLE': "Nouvel évènement",
-    'EVENTS_ADD_EVENT' : "Ajout d'un évènement",
-    'EVENTS_EDIT_EVENT' : "Modification d'un évenement",
+    'DISCOVERIES_TITLE' : "Sorties découvertes",
+    'OFFICIAL_RUNS_TITLE' : "Courses officielles",
+    'PERSONAL_TRAININGS_TITLE' : "Entraînements personnelles",
+    'TRAININGS_TITLE' : "Entraînements",
+
+    'EVENT_TITLE_ADD' : "Nouvel évènement",
+    'DISCOVERY_TITLE_ADD' : "Nouvelle sortie découverte",
+    'OFFICIAL_RUN_TITLE_ADD' : "Nouvelle course officielle",
+    'PERSONAL_TRAINING_TITLE_ADD' : "Nouvel entraînement personnel",
+    'TRAINING_TITLE_ADD' : "Nouvel entraînement",
+
+    'EVENT_ADD_TITLE': "Nouvel évènement",
+    'EVENT_ADD_EVENT' : "Ajout d'un évènement",
+    'EVENT_EDIT_EVENT' : "Modification d'un évenement",
     'EVENT_FORM_NAME' : "Nom de l'évènement",
     'EVENT_FORM_TYPE' : "Type de l'évènement",
     'EVENT_FORM_TYPE_RACE' : "Course",
     'EVENT_FORM_TYPE_DISCOVERY' : "Découverte",
     'EVENT_FORM_TYPE_TRAINING' : "Entrainement",
-    'EVENT_FORM_BEGIN' : "Date de l'évènement",
+    'EVENT_FORM_BEGIN' : "Date de début de l'évènement",
     'EVENT_FORM_END' : "Date de fin de l'évènement",
     'EVENT_FORM_DESCRIPTION' : "Description",
-    'EVENT_FORM_ADDRESS' : "Addresse",
-    'EVENT_FORM_COUNTRY' : "Pays",
+    'EVENT_FORM_LOCATION' : "Adresse",
     'EVENT_FORM_ZIP' : "Code postal",
+    'EVENT_FORM_WEBSITE' : "Site internet",
+    'EVENT_FORM_INFORMATIONS' : "Informations",
 
 
     'TRACKS_TITLE': "Parcours",
     'TRACKS_ADD_TRACK': "Nouveau parcours",
     'TRACKS_NO_TRACK': "Vous n'avez à ce jour ajouté aucun parcours.",
     'TRACKS_ADD_TITLE': "Ajout d'un parcours",
-    'TRACKS_EDIT_TITLE': "Modification d'un parcours"
+    'TRACKS_EDIT_TITLE': "Modification d'un parcours",
+
+    'CALENDAR_TITLE' : "Calendrier"
   });

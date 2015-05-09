@@ -1,0 +1,16 @@
+<div layout="row">
+  <md-icon class="fa fa-envelope-o"></md-icon>
+  <md-input-container flex>
+    <label>{{'EVENT_FORM_WEBSITE' | translate}}</label>
+    <input type="text" ng-model="event.website" required>
+  </md-input-container>
+</div>
+<div layout="row">
+  <md-icon class="fa fa-envelope-o"></md-icon>
+  <md-input-container flex>
+    <label>{{'EVENT_FORM_INFORMATIONS' | translate}}</label>
+    <input type="text" ng-model="event.informations" required>
+  </md-input-container>
+</div>
+<!-- "trainings" de type Training (il peut y en avoir plusieurs),
+"course" de type Course (il s'agit d'une référence à un parcours du plugin cartho et non à un officialRun) -->

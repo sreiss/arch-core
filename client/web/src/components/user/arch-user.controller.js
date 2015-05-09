@@ -59,31 +59,31 @@ angular.module('archCore')
           .hideDelay(3000)
         );
       });
-   }
+    }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, OAuthUser, CoreUser)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5)
   {
     var id = $stateParams.id;
 
-    OAuthUser.query({id:id}, function(result)
+    OAuthUser.query({id:id}, function(oauthUser)
     {
       $scope.oauthUser = new OAuthUsers();
-      $scope.oauthUser.id = result.data._id;
-      $scope.oauthUser.fname = result.data.fname || '';
-      $scope.oauthUser.lname = result.data.lname  || '';
-      $scope.oauthUser.email = result.data.email  || '';
-      $scope.oauthUser.password = result.data.password  || '';
+      $scope.oauthUser.id = oauthUser.data._id;
+      $scope.oauthUser.fname = oauthUser.data.fname || '';
+      $scope.oauthUser.lname = oauthUser.data.lname  || '';
+      $scope.oauthUser.email = oauthUser.data.email  || '';
+      $scope.oauthUser.password = oauthUser.data.password  || '';
       $scope.oauthUser.newPassword = '';
       $scope.oauthUser.confirmPassword = '';
 
-      CoreUser.query({id:id}, function(result)
+      CoreUser.query({id:id}, function(coreUser)
       {
         $scope.coreUser = new CoreUsers();
-        $scope.coreUser.role = result.data.role  || '';
-        $scope.coreUser.birthdate = result.data.birthdate  || '';
-        $scope.coreUser.phone = result.data.phone  || '';
-        $scope.coreUser.licenceffa = result.data.licenceffa  || '';
-        $scope.coreUser.avatar = result.data.avatar  || '';
+        $scope.coreUser.role = coreUser.data.role  || '';
+        $scope.coreUser.birthdate = coreUser.data.birthdate  || '';
+        $scope.coreUser.phone = coreUser.data.phone  || '';
+        $scope.coreUser.licenceffa = coreUser.data.licenceffa  || '';
+        $scope.coreUser.avatar = coreUser.data.avatar  || '';
 
         if($scope.coreUser.avatar.length > 0)
         {
@@ -147,7 +147,7 @@ angular.module('archCore')
 
     $scope.editUser = function()
     {
-      if(($scope.user.newPassword.length > 0 || $scope.user.confirmPassword.length > 0) && $scope.user.newPassword != $scope.user.confirmPassword)
+      if(($scope.oauthUser.newPassword.length > 0 || $scope.oauthUser.confirmPassword.length > 0) && $scope.oauthUser.newPassword != $scope.oauthUser.confirmPassword)
       {
         $mdToast.show($mdToast.simple()
             .content("Les deux mots de passes ne sont pas identiques.")
@@ -157,33 +157,22 @@ angular.module('archCore')
       }
       else
       {
-        if($scope.user.newPassword.length > 0)
+        if($scope.oauthUser.newPassword.length > 0)
         {
-          $scope.user.password = $scope.user.newPassword;
+          $scope.oauthUser.password = md5.createHash($scope.oauthUser.newPassword);
         }
 
-        User.update({user:$scope.user}, function(result)
+        archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
-          if(result.count > 0)
-          {
-            $mdToast.show($mdToast.simple()
-                .content("Membre modifié avec succés.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+          $mdToast.show($mdToast.simple()
+              .content("Membre ajouté avec succés.")
+              .position('top right')
+              .hideDelay(3000)
+          );
 
-            $state.go('users');
-          }
-          else
-          {
-            $mdToast.show($mdToast.simple()
-                .content("Une erreur est survenue lors de la modification du membre.")
-                .position('top right')
-                .hideDelay(3000)
-            );
-          }
-        },
-        function(responseError)
+          $state.go('users');
+        })
+        .catch(function(err)
         {
           $mdToast.show($mdToast.simple()
               .content("Une erreur est survenue lors de la modification du membre.")

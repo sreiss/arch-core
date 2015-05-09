@@ -1,0 +1,35 @@
+  <div layout="row">
+    <md-icon class="fa fa-user"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_NAME' | translate}}</label>
+      <input type="text" ng-model="event.summary" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_BEGIN' | translate}}</label>
+      <input type="text" ng-model="event.dtstart" required="true" ng-click="startDate()">
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_END' | translate}}</label>
+      <input type="text" ng-model="event.dtend" ng-click="endDate()">
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-calendar"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_DESCRIPTION' | translate}}</label>
+      <input type="text" ng-model="event.description" required>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-icon class="fa fa-envelope-o"></md-icon>
+    <md-input-container flex>
+      <label>{{'EVENT_FORM_LOCATION' | translate}}</label>
+      <input type="text" ng-model="event.location" required>
+    </md-input-container>
+  </div>
