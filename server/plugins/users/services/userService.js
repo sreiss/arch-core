@@ -47,7 +47,7 @@ module.exports = function(User, userService, config)
             User.update({oauth: userData.id},
             {
                 role: userData.role,
-                birthdate: userData.birthdate,
+                //birthdate: userData.birthdate,
                 phone: userData.phone,
                 licenceffa: userData.licenceffa,
                 avatar: userData.avatar
@@ -62,10 +62,6 @@ module.exports = function(User, userService, config)
                 {
                     deferred.resolve(rawResponse);
                 }
-            })
-            .catch(function(err)
-            {
-                deferred.reject(err);
             });
 
             return deferred.promise;

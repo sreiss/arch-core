@@ -165,7 +165,7 @@ angular.module('archCore')
         archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
           $mdToast.show($mdToast.simple()
-              .content("Membre ajouté avec succés.")
+              .content("Membre modifié avec succés.")
               .position('top right')
               .hideDelay(3000)
           );

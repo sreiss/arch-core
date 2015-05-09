@@ -45,9 +45,9 @@ angular.module('archCore')
         // Add OAuth user.
         OAuthUsers.update({user:oauthUser}, function(result)
         {
+          coreUser.id = oauthUser.id;
           CoreUsers.update({user:coreUser}, function(result)
           {
-            console.log(result);
             deferred.resolve(result);
           },
           function(err)
