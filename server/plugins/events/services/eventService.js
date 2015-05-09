@@ -34,7 +34,7 @@ module.exports = function(Event)
             event.website = eventData.website;
             event.information = eventData.information;
             event.trainings = [];
-            //event.creator = eventData.creator;
+            event.creator = eventData.creator;
             event.program = eventData.program;
             event.runs = [];
 
