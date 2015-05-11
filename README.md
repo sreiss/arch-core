@@ -50,9 +50,6 @@ Toutes ces catégories sont représentées dans un même model qui est composé 
 
 ### Routes
 
-Les URL pour ajouter/supprimer/récupérer un événement sont crées de la manière suivante: /events/type événement/(id)
-Pour créer un training (POST) ou récupèrer l'ensemble des trainings (GET) par exemple, l'url sera: /events/training, pour récupérer (GET) ou supprimer le training (POST) d'id 84322: /events/training/84322
-
 * Catégories
   * POST /events/category : ajout d'une catégorie
     * name : nom de la categ
