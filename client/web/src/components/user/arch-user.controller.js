@@ -61,9 +61,10 @@ angular.module('archCore')
       });
     }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5)
   {
     var id = $stateParams.id;
+    $scope.currentUser = archAccountService.getCurrentUser();
 
     OAuthUser.query({id:id}, function(oauthUser)
     {

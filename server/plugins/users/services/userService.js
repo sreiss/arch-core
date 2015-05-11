@@ -30,7 +30,7 @@ module.exports = function(User, userService, config)
                 }
                 else
                 {
-                   // userService.sendMail(user);
+                    userService.sendMail(user);
 
                     deferred.resolve(user);
                 }
@@ -50,7 +50,8 @@ module.exports = function(User, userService, config)
                 //birthdate: userData.birthdate,
                 phone: userData.phone,
                 licenceffa: userData.licenceffa,
-                avatar: userData.avatar
+                avatar: userData.avatar,
+                firstconnexion: false
             },
             function(err, numberAffected, rawResponse)
             {

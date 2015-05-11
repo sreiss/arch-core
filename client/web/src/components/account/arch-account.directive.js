@@ -47,10 +47,9 @@ angular.module('archCore')
           else
           {
             console.log('INIT : Already connected.');
+
             $scope.token = token;
             $scope.user = token.user;
-
-            console.log($scope.user.profile);
 
             // Get current user's profile um die Role zu haben !
             if(!$scope.user.profile)
@@ -59,15 +58,31 @@ angular.module('archCore')
 
               archAccountService.getProfile($scope.user._id).then(function(result)
               {
-                $scope.user.profile = result.data;
+                token.user.profile = result.data;
+                $cookieStore.put('token', token);
+                $scope.user = token.user;
+
+                if(token.user.profile.firstconnexion)
+                {
+                  $state.go('userEdit', {'id' : token.user._id});
+                }
               })
               .catch(function(err)
               {
-                console.log(err);
+                $mdToast.show($mdToast.simple()
+                  .content("Une erreur est survenue lors de la récupération du profile de l'utilisateur.")
+                  .position('top right')
+                  .hideDelay(3000)
+                );
               });
             }
-
-            console.log($scope.user.profile);
+            else
+            {
+              if(token.user.profile.firstconnexion)
+              {
+                $state.go('userEdit', {'id' : token.user._id});
+              }
+            }
           }
         }();
 

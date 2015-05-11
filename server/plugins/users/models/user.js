@@ -15,7 +15,6 @@ module.exports = function(Types) {
             phone: {type: String},
             licenceffa: {type: String},
             avatar: {type: String},
-            token: {type: String},
             firstconnexion: {type: Boolean, default: true}
         },
         priority: 1

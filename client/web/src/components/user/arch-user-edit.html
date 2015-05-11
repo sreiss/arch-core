@@ -1,4 +1,5 @@
-<h1>{{'USERS_EDIT_TITLE' | translate}}</h1>
+<h1 ng-show="currentUser._id == oauthUser.id">{{'USERS_PROFILE' | translate}}</h1>
+<h1 ng-hide="currentUser._id == oauthUser.id">{{'USERS_EDIT_TITLE' | translate}}</h1>
 
 <form name="userForm" role="form" ng-submit="editUser()">
   <div layout="column">

@@ -26,6 +26,7 @@ angular.module('archCore')
 
     'USERS_ADD_TITLE': "Add member",
     'USERS_EDIT_TITLE': "Edit member",
+    'USERS_PROFILE' : "My profile",
     'USER_FORM_BACK' : "Back",
     'USER_FORM_SUBMIT': "Save",
     'USER_FORM_FNAME': "Firstname",
