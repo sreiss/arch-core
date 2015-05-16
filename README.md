@@ -50,15 +50,6 @@ Toutes ces catégories sont représentées dans un même model qui est composé 
 
 ### Routes
 
-* Catégories
-  * POST /events/category : ajout d'une catégorie
-    * name : nom de la categ
-    * label : label de la categ
-    * description : description de la categ
-  * DELETE /events/category/:idcateg : suppresion d'une catégorie
-  * GET /events/category/:idcateg : récupération d'une catégorie
-  * GET /event/category/ : récupération de l'ensemble des catégories
-
 * Evénements
   * POST /events/event : ajout d'un événement
     * dtstart
@@ -83,13 +74,6 @@ Toutes ces catégories sont représentées dans un même model qui est composé 
     
 ###Exemple de JSON
 
-#### Créer une categorie
-{
-   "name": "Training",
-   "label": "training",
-   "description": "entrainement"
-}
-
 #### Pour créer une event :
 {
    "dtstart": "10/05/2015",
@@ -99,7 +83,7 @@ Toutes ces catégories sont représentées dans un même model qui est composé 
    "description": "test",
    "transp" : "idk",
    "sequence" : "0",
-   "category": "5547a7bfbe6fe65c144d2d6d",  //à changer pour qu'il correspond à une category existante
+   "category": "training",
    "participants": [{"guest":null, "status":}],
    "course": "",
    "website": "",
