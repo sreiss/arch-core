@@ -79,6 +79,12 @@ angular.module('archCore')
         });
 
         return deferred.promise;
+      },
+
+      logout: function()
+      {
+        $cookieStore.remove('token');
+        window.location.reload();
       }
     };
   });
