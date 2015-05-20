@@ -18,7 +18,7 @@ module.exports = function(Event)
             var event = new Event();
 
             //console.log(eventData);
-            console.log(event);
+            //console.log(event);
 
             // Assign data.
             event.dtstart = eventData.dtstart;
@@ -83,6 +83,45 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
+        /** Update existing event. */
+        updateEvent: function(eventData)
+        {
+            var deferred = q.defer();
+
+            Event.update({_id: eventData.id},
+            {
+                dtstart: eventData.dtstart,
+                dtend: eventData.dtend,
+                summary: eventData.summary,
+                location: eventData.location,
+                description: eventData.description,
+                transp: eventData.transp,
+                sequence: eventData.sequence,
+                category: eventData.category,
+                participants: eventData.participants,
+                course:  eventData.course,
+                website: eventData.website,
+                information: eventData.information,
+                trainings: eventData.trainings,
+                creator: eventData.creator,
+                program: eventData.program,
+                runs: eventData.runs
+            },
+            function(err, numberAffected, rawResponse)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(rawResponse);
+                }
+            });
+
+            return deferred.promise;
+        },
+
         /** Delete existing event. */
         deleteEvent: function(eventId)
         {
@@ -112,7 +151,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({_id: eventId}).populate('category participants.guest trainings.training creator runs.run').exec(function (err, event)
+            Event.findOne({_id: eventId}).populate('participants.guest trainings.training creator runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -136,7 +175,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.find().populate('category participants.guest trainings.training creator runs.run').exec(function (err, events)
+            Event.find().populate('participants.guest trainings.training creator runs.run').exec(function (err, events)
             {
                 if(err)
                 {

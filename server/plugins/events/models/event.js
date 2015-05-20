@@ -18,7 +18,7 @@ module.exports = function(Types) {
             description: {type: String, required: true},
             transp: {type: String, required: true},
             sequence: {type: Number, required: true},
-            category: {type: Types.ObjectId, ref: 'Category', required: true},
+            category: {type: String, required: true},
             participants:
             [{
                 guest: {type: Types.ObjectId, ref: 'User'},

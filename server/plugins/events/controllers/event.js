@@ -8,8 +8,9 @@
 var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
-var ics = require('ics');
-var moment = require('moment');
+//var moment = require('moment');
+var VCalendar = require('cozy-ical').VCalendar;
+var VEvent = require('cozy-ical').VEvent;
 
 module.exports = function(eventService)
 {
@@ -22,6 +23,21 @@ module.exports = function(eventService)
 
             // Saving event.
             eventService.saveEvent(event).then(function(event)
+            {
+                res.status(200).json({"count": (event ? 1 : 0), "data": event});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
+            });
+        },
+
+        /** Update existing event */
+        updateEvent: function(req, res)
+        {
+            var event = req.body;
+
+            eventService.updateEvent(event).then(function(event)
             {
                 res.status(200).json({"count": (event ? 1 : 0), "data": event});
             })
@@ -80,10 +96,59 @@ module.exports = function(eventService)
 
         getIcal: function(req, res)
         {
-            var event = new icalendar.VEvent('okozfizegz');
-            event.setDate(moment().toDate(), moment().toDate());
-            event.setLocation("Jacksonville");
-            event.setSummary('eogieoib');
+            // Avec icalendar
+            //var ical = new icalendar.iCalendar();
+            //
+            //eventService.getEvents().then(function(events)
+            //{
+            //    for(var i=0; i<events.length; i++)
+            //    {
+            //        var event = new icalendar.VEvent(i);
+            //        event.setDate(events[i].dtstart, events[i].dtend);
+            //        event.setSummary(events[i].summary);
+            //        event.setLocation(events[i].location);
+            //        //event.setCategories(events[i].category);
+            //        event.setDescription(events[i].description);
+            //        //event.setTransp(events[i].transp);
+            //        //event.setSequence(events[i].sequence);
+            //        ical.addComponent(event);
+            //    }
+            //})
+            //.catch(function(err)
+            //{
+            //    res.status(500).json({"error" : new ArchFindError(err.message)});
+            //});
+
+            //var cal = new VCalendar({
+            //    organization:'ArchTailors',
+            //    title:'Trail events'
+            //});
+            //
+            //eventService.getEvents().then(function(events)
+            //{
+            //    for(var i=0; i<events.length; i++)
+            //    {
+            //        var vevent = new VEvent({
+            //            startDate: events[i].dtstart,
+            //            endDate: events[i].dtend,
+            //            summary: events[i].summary,
+            //            location: events[i].location,
+            //            description: events[i].description,
+            //            transp: events[i].transp,
+            //            sequence: events[i].sequence,
+            //            categories: events[i].category,
+            //            stampDate: '2014-04-25T01:32:21.196Z',
+            //            uid: i
+            //        });
+            //        cal.add(vevent);
+            //    }
+            //})
+            //.catch(function(err)
+            //{
+            //    res.status(500).json({"error" : new ArchFindError(err.message)});
+            //});
+            //console.log(cal.toString());
+            console.log('lol');
         }
     }
 };
