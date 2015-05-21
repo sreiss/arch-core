@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate', 'ui.bootstrap','ui.calendar','angular-md5', 'base64', 'angular-datepicker','mdDateTime'])
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial','ui.router', 'pascalprecht.translate', 'ui.bootstrap','ui.calendar','angular-md5', 'base64'])
   .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant)
 {
   $mdThemingProvider
