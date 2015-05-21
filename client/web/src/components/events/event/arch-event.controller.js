@@ -3,7 +3,19 @@ angular.module('archCore')
     //$scope.events = Event.query();
     $scope.currentUser = archAccountService.getCurrentUser();
   })
-  .controller('archEventAddController', function($scope, $stateParams, $location, $mdToast, $state, Event,$mdDialog)
+  .controller('archEventViewController', function($scope, $stateParams, $location, $mdToast, $state,Event, archAccountService) {
+    Event.get($stateParams.id, function(result){
+      console.log(result.data[0]);
+      $scope.event = result.data[0];
+    });
+    $scope.currentUser = archAccountService.getCurrentUser();
+
+    $scope.deleteEvent = function(id){
+      Event.delete({id:id});
+      $state.go('calendar');
+    }
+  })
+  .controller('archEventAddController', function($scope, $stateParams, $location, $mdToast, $state, Event,$mdDialog,archAccountService)
   {
 
     function DialogController($scope, $mdDialog) {
@@ -26,7 +38,7 @@ angular.module('archCore')
     $scope.event.transp = "false";
     $scope.event.sequence = "0";
     $scope.event.participants = [{guest : null, status:""}];
-    $scope.event.course = "";
+    $scope.event.course = null;
     $scope.event.website = "";
     $scope.event.information = "";
     $scope.event.trainings = [{training:null}];
@@ -34,6 +46,7 @@ angular.module('archCore')
     $scope.event.program = "";
     $scope.event.runs = [{run:null}];
     $scope.dtstart= {};
+    $scope.dtend= {};
 
     if($stateParams.category){
       $scope.event.category = $stateParams.category;
@@ -42,7 +55,10 @@ angular.module('archCore')
       $scope.event.category = "event";
     }
     if($stateParams.date != null){
-      //$scope.event.dtstart = moment($stateParams.date);
+      var dateParam = moment($stateParams.date);
+      //$scope.dtstart.day = dateParam.date();
+      //$scope.dtstart.month = dateParam.month();
+      //$scope.dtstart.year = dateParam.year();
     }
     $scope.day = 31;
     $scope.month = 12;
@@ -57,13 +73,16 @@ angular.module('archCore')
     $scope.getNumber = function(num) {
       return new Array(num);
     };
-
+    console.log(archAccountService.getCurrentUser());
     $scope.addEvent = function()
     {
-      var arrayStart = $scope.dtstart.date.split("/");
+      //var arrayStart = $scope.dtstart.date.split("/");
       //.minute($scope.dtsart.minute).heure($scope.dtstart.heure)
-      var tmpStart = moment().date(arrayStart[0]).month(arrayStart[1]).year(arrayStart[2]);
+      var tmpStart = moment().date($scope.dtstart.day).month($scope.dtstart.month).year($scope.dtstart.year);
+      var tmpEnd = moment().date($scope.dtend.day).month($scope.dtend.month).year($scope.dtend.year);
       $scope.event.dtstart = tmpStart;
+      $scope.event.dtend = tmpEnd;
+      $scope.event.creator = archAccountService.getCurrentUser()._id;
       console.log($scope.event);
       $scope.event.$save(function (result)
       {

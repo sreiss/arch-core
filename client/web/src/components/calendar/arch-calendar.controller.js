@@ -2,7 +2,7 @@
  * Created by Brian on 07/04/2015.
  */
 angular.module('archCore')
-  .controller('archCalendarController', function($scope,$mdDialog, Event) {
+  .controller('archCalendarController', function($scope,$mdDialog, Event,$state) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -13,15 +13,18 @@ angular.module('archCore')
 
 
     var dataEvents = Event.query(function() {
-      dataEvents.data.forEach(function(item){
+      console.log(dataEvents.data);
+      if (dataEvents.data != null) {
+      dataEvents.data.forEach(function (item) {
         var event = {};
         event.title = item.summary;
         event.start = item.dtstart;
         event.end = item.dtend;
         event.editable = false;
+        event.id = item._id;
         $scope.events.push(event);
       });
-
+      }
     });
 
     /* event source that contains custom events on the scope */
@@ -47,15 +50,9 @@ angular.module('archCore')
       };
     }
 
-    $scope.showAlert = function(ev) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .title('This is an alert title')
-          .content('You can specify some description text in here.')
-          .ariaLabel('Alert Dialog Demo')
-          .ok('Got it!')
-          .targetEvent(ev)
-      );
+    $scope.showAlert = function(ev,jsEvent,view) {
+      console.log(ev);
+      $state.go('eventView',{id:ev.id});
     };
 
     $scope.typeEvent = function(ev) {
@@ -70,8 +67,8 @@ angular.module('archCore')
           //cancel
       });
     };
-    $scope.alertOnEventClick = function(){
-      $scope.showAlert();
+    $scope.alertOnEventClick = function(ev,jsEvent,view){
+      $scope.showAlert(ev,jsEvent,view);
     };
     $scope.alertOnDayClick = function( date){
       $scope.typeEvent();

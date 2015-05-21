@@ -71,6 +71,13 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       templateUrl: "components/events/event/arch-event-add.html",
       controller : "archEventAddController",
       params : {"date": null}
+    })
+    .state('eventView',
+    {
+      url: "/event/event/:id",
+      templateUrl : "components/events/event/arch-event-view.html",
+      controller : "archEventViewController"
+
     });
 
   $urlRouterProvider

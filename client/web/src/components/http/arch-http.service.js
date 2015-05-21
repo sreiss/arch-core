@@ -123,7 +123,7 @@ angular.module('archCore')
   })
 .factory("Event", function($resource, httpConstant)
   {
-    return $resource(httpConstant.coreServerUrl + '/events/event', {},
+    return $resource(httpConstant.coreServerUrl + '/events/event/:id', {},
       {
         save:
         {
@@ -138,6 +138,10 @@ angular.module('archCore')
         query:
         {
           isArray: false
+        },
+        delete:
+        {
+          method: 'DELETE'
         }
       });
   });
