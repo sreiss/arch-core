@@ -37,6 +37,7 @@ module.exports = function(Event)
             event.creator = eventData.creator;
             event.program = eventData.program;
             event.runs = [];
+            event.kidoikoiaki = eventData.kidoikoiaki;
 
             for(var i=0; i<eventData.participants.length; i++)
             {
@@ -87,6 +88,37 @@ module.exports = function(Event)
         updateEvent: function(eventData)
         {
             var deferred = q.defer();
+            var participants = [];
+            var trainings = [];
+            var runs = [];
+
+            for(var i=0; i<eventData.participants.length; i++)
+            {
+                var guest = {
+                    guest : eventData.participants[i].guest,
+                    status : eventData.participants[i].status
+                };
+
+                participants.push(guest);
+            };
+
+            for(var j=0; j<eventData.trainings.length; j++)
+            {
+                var training = {
+                    training : eventData.trainings[j].training
+                };
+
+                trainings.push(training);
+            };
+
+            for(var k=0; k<eventData.runs.length; k++)
+            {
+                var run = {
+                    run : eventData.runs[k].run
+                };
+
+                runs.push(run);
+            };
 
             Event.update({_id: eventData.id},
             {
@@ -98,14 +130,15 @@ module.exports = function(Event)
                 transp: eventData.transp,
                 sequence: eventData.sequence,
                 category: eventData.category,
-                participants: eventData.participants,
+                participants: participants,
                 course:  eventData.course,
                 website: eventData.website,
                 information: eventData.information,
-                trainings: eventData.trainings,
+                trainings: trainings,
                 creator: eventData.creator,
                 program: eventData.program,
-                runs: eventData.runs
+                runs: runs,
+                kidoikoiaki: eventData.kidoikoiaki
             },
             function(err, numberAffected, rawResponse)
             {
