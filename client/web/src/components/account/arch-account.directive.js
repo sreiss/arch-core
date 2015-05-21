@@ -18,7 +18,10 @@ angular.module('archCore')
             {
               console.log('INIT : Current signup type not public.');
 
-              window.location = archAccountService.getLoginUrl();
+              archAccountService.getLoginUrl().then(function(loginUrl)
+              {
+                window.location = loginUrl;
+              });
             }
             else
             {
@@ -53,7 +56,10 @@ angular.module('archCore')
           }
           else
           {
-            window.location = archAccountService.getLoginUrl();
+            archAccountService.getLoginUrl().then(function(loginUrl)
+            {
+              window.location = loginUrl;
+            });
           }
         }();
 

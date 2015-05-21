@@ -1,6 +1,7 @@
 angular.module('archCore')
-  .controller('archEventController', function($scope, $stateParams, $location, $mdToast, $state,Event) {
+  .controller('archEventController', function($scope, $stateParams, $location, $mdToast, $state,Event, archAccountService) {
     //$scope.events = Event.query();
+    $scope.currentUser = archAccountService.getCurrentUser();
   })
   .controller('archEventAddController', function($scope, $stateParams, $location, $mdToast, $state, Event,$mdDialog)
   {

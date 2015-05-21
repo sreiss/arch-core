@@ -1,6 +1,8 @@
 angular.module('archCore')
-  .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state)
+  .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state, archAccountService)
   {
+    $scope.currentUser = archAccountService.getCurrentUser();
+
     $scope.tracks = [];
 
     $scope.deleteTrack = function(id)

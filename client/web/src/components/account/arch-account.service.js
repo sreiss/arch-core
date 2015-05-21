@@ -93,6 +93,8 @@ angular.module('archCore')
 
       getLoginUrl: function()
       {
+        var deferred = $q.defer();
+
         var cookieClientId = $cookieStore.get('ASCPA_clientId') || '';
         var cookieClientSecret = $cookieStore.get('ASCPA_clientSecret') || '';
         var cookieClientRedirectUri = $cookieStore.get('ASCPA_clientRedirectUri') || '';
@@ -113,15 +115,17 @@ angular.module('archCore')
             $cookieStore.put('ASCPA_clientRedirectUri', result.data.clientRedirectUri);
             $cookieStore.put('ASCPA_clientHash', clientHash);
 
-            return httpConstant.casClientUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri);
+            deferred.resolve(httpConstant.casClientUrl + '/#/?client=' + clientHash + '&return=' + $base64.encode(result.data.clientRedirectUri));
           });
         }
         else
         {
           console.log('INIT : Params found in cookies.');
 
-          return httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri);
+          deferred.resolve(httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(cookieClientRedirectUri));
         }
+
+        return deferred.promise;
       }
     };
   });
