@@ -123,6 +123,8 @@ module.exports = function(User, userService, config)
                 debug:true
             }));
 
+            console.log(oauthUser);
+
             var mailOptions =
             {
                 from: config.get('mail:noreply'),
