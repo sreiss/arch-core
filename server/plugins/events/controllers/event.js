@@ -35,7 +35,7 @@ module.exports = function(eventService)
         /** Update existing event */
         updateEvent: function(req, res)
         {
-            var event = req.body;
+            var event = req.body.event;
 
             eventService.updateEvent(event).then(function(event)
             {
