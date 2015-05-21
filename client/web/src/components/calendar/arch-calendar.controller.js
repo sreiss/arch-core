@@ -1,6 +1,5 @@
-/**
- * Created by Brian on 07/04/2015.
- */
+'use strict';
+
 angular.module('archCore')
   .controller('archCalendarController', function($scope,$mdDialog, Event,$state) {
     var date = new Date();

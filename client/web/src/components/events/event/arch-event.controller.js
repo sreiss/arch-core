@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('archCore')
   .controller('archEventController', function($scope, $stateParams, $location, $mdToast, $state,Event, archAccountService) {
     //$scope.events = Event.query();

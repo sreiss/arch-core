@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('archCore')
   .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state, archAccountService)
   {

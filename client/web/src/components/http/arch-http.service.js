@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('archCore')
   .factory('archHttpService', function($http, $q)
   {
