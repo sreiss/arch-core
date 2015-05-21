@@ -7,17 +7,21 @@
   </div>
   <div layout="row">
     <md-icon class="fa fa-calendar"></md-icon>
-    <md-input-container flex>
-      <label>{{'EVENT_FORM_BEGIN' | translate}}</label>
-      <input type="text" ng-model="event.dtstart" required="true" ng-click="startDate()">
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-icon class="fa fa-calendar"></md-icon>
-    <md-input-container flex>
-      <label>{{'EVENT_FORM_END' | translate}}</label>
-      <input type="text" ng-model="event.dtend" ng-click="endDate()">
-    </md-input-container>
+    <md-select ng-model="dtstart.day" placeholder="{{'EVENT_FORM_START_DAY' | translate}}" class="select-add" flex="1" required="">
+      <md-option ng-repeat="i in getNumber(day) track by $index" value="{{$index+1}}" >{{$index+1}}</md-option>
+    </md-select>
+    <md-select ng-model="dtstart.month" placeholder="{{'EVENT_FORM_START_MONTH' | translate}}" class="select-add" flex required="">
+      <md-option ng-repeat="i in getNumber(month) track by $index" value="{{$index+1}}" >{{$index+1}}</md-option>
+    </md-select>
+    <md-select ng-model="dtstart.hour" placeholder="{{'EVENT_FORM_START_YEAR' | translate}}" class="select-add" flex required="">
+      <md-option ng-repeat="(key, value) in years" value="{{value}}" >{{value}}</md-option>
+    </md-select>
+    <md-select ng-model="dtstart.hour" placeholder="{{'EVENT_FORM_START_HOUR' | translate}}" class="select-add" flex required="">
+      <md-option ng-repeat="i in getNumber(hour) track by $index" value="{{$index+1}}" >{{$index+1}}</md-option>
+    </md-select>
+    <md-select ng-model="dtstart.minute" placeholder="{{'EVENT_FORM_START_MINUTE' | translate}}" class="select-add" flex required="">
+      <md-option ng-repeat="i in getNumber(minute) track by $index" value="{{$index+1}}" >{{$index+1}}</md-option>
+    </md-select>
   </div>
   <div layout="row">
     <md-icon class="fa fa-calendar"></md-icon>

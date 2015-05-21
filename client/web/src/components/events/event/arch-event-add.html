@@ -2,7 +2,7 @@
 
 <md-button class="md-raised" ui-sref="calendar">{{'USER_FORM_BACK' | translate}}</md-button>
 
-<form  role="form" ng-submit="addEvent()">
+<form name="eventForm" role="form" ng-submit="addEvent()">
   <div layout="column">
     <div ng-include="'components/events/event/arch-event-form.html'"></div>
     <div ng-switch on="category">
