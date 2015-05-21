@@ -6,10 +6,8 @@
  */
 
 var Q = require('q');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
 
-module.exports = function(User, userService, config)
+module.exports = function(User)
 {
     return {
         /** Save user. */
@@ -30,8 +28,6 @@ module.exports = function(User, userService, config)
                 }
                 else
                 {
-                    userService.sendMail(user);
-
                     deferred.resolve(user);
                 }
             });
@@ -106,42 +102,6 @@ module.exports = function(User, userService, config)
             });
 
             return deferred.promise;
-        },
-
-        /** Send Mail. */
-        sendMail: function(oauthUser)
-        {
-            var transporter = nodemailer.createTransport(smtpTransport(
-            {
-                host: config.get('mail:smtp'),
-                port: config.get('mail:port'),
-                auth: {
-                    user: config.get('mail:username'),
-                    pass: config.get('mail:password')
-                },
-                tls: {rejectUnauthorized: false},
-                debug:true
-            }));
-
-            var mailOptions =
-            {
-                from: config.get('mail:noreply'),
-                to: oauthUser.email,
-                subject: 'ASCPA - Inscription réussie ✔', // Subject line
-                html: '<b>Mot de passe : ' + oauthUser.password + '</b>' // html body
-            };
-
-            transporter.sendMail(mailOptions, function(error, info)
-            {
-                if(error)
-                {
-                    console.log(error);
-                }
-                else
-                {
-                    console.log(info);
-                }
-            });
         }
     };
 };

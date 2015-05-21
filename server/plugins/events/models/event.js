@@ -24,7 +24,7 @@ module.exports = function(Types) {
                 guest: {type: Types.ObjectId, ref: 'User'},
                 status: {type: String}
             }],
-            course: {type: String},
+            course: {type: Types.ObjectId},
             website: {type:String},
             information: {type:String},
             trainings:
@@ -36,7 +36,8 @@ module.exports = function(Types) {
             runs:
             [{
                 run: {type: Types.ObjectId, ref: 'Event'}
-            }]
+            }],
+            kidoikoiaki: {type: Types.ObjectId}
         },
         priority: 2
     };
