@@ -1,6 +1,6 @@
 'use strict';
 
-('archCore')
+angular.module('archCore')
   .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService)
   {
     $scope.users = archUserService.getUsers();
