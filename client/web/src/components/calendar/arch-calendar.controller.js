@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archCalendarController', function($scope,$mdDialog, Event,$state) {
+  .controller('archCalendarController', function($scope,$mdDialog, Event,$state, archAccountService) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -9,6 +9,8 @@ angular.module('archCore')
 
     var selectedDate = null;
     $scope.events = [];
+
+    var currentUser = archAccountService.getCurrentUser();
 
 
     var dataEvents = Event.query(function() {
@@ -55,16 +57,18 @@ angular.module('archCore')
     };
 
     $scope.typeEvent = function(ev) {
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'components/events/arch-type-event.html',
-        targetEvent: ev
-      })
-      .then(function(answer) {
-        //apres traitement du dialog
-      }, function() {
-          //cancel
-      });
+      if (currentUser && currentUser.profile.role == 'admin') {
+        $mdDialog.show({
+          controller: DialogController,
+          templateUrl: 'components/events/arch-type-event.html',
+          targetEvent: ev
+        })
+          .then(function (answer) {
+            //apres traitement du dialog
+          }, function () {
+            //cancel
+          });
+      }
     };
     $scope.alertOnEventClick = function(ev,jsEvent,view){
       $scope.showAlert(ev,jsEvent,view);

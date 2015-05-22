@@ -68,7 +68,7 @@ angular.module('archCore')
     $scope.minute = 59;
     var dataYears = [];
     var currentYear = moment().year();
-    for (i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++) {
       dataYears.push(currentYear + i);
     }
     $scope.years = dataYears;
