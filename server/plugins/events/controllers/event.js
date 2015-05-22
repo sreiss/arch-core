@@ -11,6 +11,7 @@ var ArchDeleteError = GLOBAL.ArchDeleteError;
 //var moment = require('moment');
 var VCalendar = require('cozy-ical').VCalendar;
 var VEvent = require('cozy-ical').VEvent;
+//var icalendar = require('icalendar');
 
 module.exports = function(eventService)
 {
@@ -107,48 +108,47 @@ module.exports = function(eventService)
             //        event.setDate(events[i].dtstart, events[i].dtend);
             //        event.setSummary(events[i].summary);
             //        event.setLocation(events[i].location);
-            //        //event.setCategories(events[i].category);
             //        event.setDescription(events[i].description);
-            //        //event.setTransp(events[i].transp);
-            //        //event.setSequence(events[i].sequence);
             //        ical.addComponent(event);
             //    }
+            //    res.status(200);
+            //    console.log(ical.events());
             //})
             //.catch(function(err)
             //{
             //    res.status(500).json({"error" : new ArchFindError(err.message)});
             //});
 
-            //var cal = new VCalendar({
-            //    organization:'ArchTailors',
-            //    title:'Trail events'
-            //});
-            //
-            //eventService.getEvents().then(function(events)
-            //{
-            //    for(var i=0; i<events.length; i++)
-            //    {
-            //        var vevent = new VEvent({
-            //            startDate: events[i].dtstart,
-            //            endDate: events[i].dtend,
-            //            summary: events[i].summary,
-            //            location: events[i].location,
-            //            description: events[i].description,
-            //            transp: events[i].transp,
-            //            sequence: events[i].sequence,
-            //            categories: events[i].category,
-            //            stampDate: '2014-04-25T01:32:21.196Z',
-            //            uid: i
-            //        });
-            //        cal.add(vevent);
-            //    }
-            //})
-            //.catch(function(err)
-            //{
-            //    res.status(500).json({"error" : new ArchFindError(err.message)});
-            //});
-            //console.log(cal.toString());
-            console.log('lol');
+            var cal = new VCalendar({
+                organization:'ArchTailors',
+                title:'Trail events'
+            });
+
+            eventService.getEvents().then(function(events)
+            {
+                for(var i=0; i<events.length; i++)
+                {
+                    var vevent = new VEvent({
+                        startDate: events[i].dtstart,
+                        endDate: events[i].dtend,
+                        summary: events[i].summary,
+                        location: events[i].location,
+                        description: events[i].description,
+                        transp: events[i].transp,
+                        sequence: events[i].sequence,
+                        categories: events[i].category,
+                        stampDate: '2014-04-25T01:32:21.196Z',
+                        uid: i
+                    });
+                    cal.add(vevent);
+                }
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+            console.log(cal.toString());
+            //console.log('lol');
         }
     }
 };
