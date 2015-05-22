@@ -8,9 +8,11 @@ angular.module('archCore').constant('httpConstant',
   coreClientUrl: 'http://localhost:3011',
   coreServerUrl: 'http://localhost:3021',
   */
-  casClientUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3010',
+
+  /* PROD */
+  casClientUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
   casServerUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
-  coreClientUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3011',
+  coreClientUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
   coreServerUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
 
   signupType: {
