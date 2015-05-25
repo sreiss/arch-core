@@ -1,33 +1,49 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archEventController', function($scope, $stateParams, $location, $mdToast, $state,Event, archAccountService) {
+  .controller('archEventController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
     //$scope.events = Event.query();
     $scope.currentUser = archAccountService.getCurrentUser();
   })
-  .controller('archEventViewController', function($scope, $stateParams, $location, $mdToast, $state,Event, archAccountService) {
-    Event.get($stateParams.id, function(result){
-      console.log(result.data[0]);
-      $scope.event = result.data[0];
+  .controller('archEventViewController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
+    Event.get({id: $stateParams.id}, function (result) {
+      console.log(result.data);
+      $scope.event = result.data;
     });
     $scope.currentUser = archAccountService.getCurrentUser();
-
-    $scope.deleteEvent = function(id){
-      Event.delete({id:id});
-      $state.go('calendar');
+    console.log($scope.currentUser);
+    $scope.deleteEvent = function (id) {
+      if ($scope.currentUser == $scope.event.creator) {
+        Event.delete({id: id}, function (result) {
+          if (result.count > 0) {
+            $mdToast.show($mdToast.simple()
+                .content('Evénement supprimée avec succés.')
+                .position('top right')
+                .hideDelay(3000)
+            );
+            $state.go('calendar');
+          }
+          else {
+            $mdToast.show($mdToast.simple()
+                .content('Une erreur est survenue à la suppression de l\'événement.')
+                .position('top right')
+                .hideDelay(3000)
+            );
+          }
+        })
+      }
     }
   })
-  .controller('archEventAddController', function($scope, $stateParams, $location, $mdToast, $state, Event,$mdDialog,archAccountService)
-  {
+  .controller('archEventAddController', function ($scope, $stateParams, $location, $mdToast, $state, Event, $mdDialog, archAccountService) {
 
     function DialogController($scope, $mdDialog) {
-      $scope.hide = function() {
+      $scope.hide = function () {
         $mdDialog.hide();
       };
-      $scope.cancel = function() {
+      $scope.cancel = function () {
         $mdDialog.cancel();
       };
-      $scope.answer = function(answer) {
+      $scope.answer = function (answer) {
         $mdDialog.hide(answer);
       };
     }
@@ -39,28 +55,32 @@ angular.module('archCore')
     $scope.event.description = "";
     $scope.event.transp = "false";
     $scope.event.sequence = "0";
-    $scope.event.participants = [{guest : null, status:""}];
+    $scope.event.participants = [{guest: null, status: ""}];
     $scope.event.course = null;
     $scope.event.website = "";
     $scope.event.information = "";
-    $scope.event.trainings = [{training:null}];
+    $scope.event.trainings = [{training: null}];
     $scope.event.creator = null;
     $scope.event.program = "";
-    $scope.event.runs = [{run:null}];
-    $scope.dtstart= {};
-    $scope.dtend= {};
+    $scope.event.runs = [{run: null}];
+    $scope.dtstart = {};
+    $scope.dtend = {};
 
-    if($stateParams.category){
+    if ($stateParams.category) {
       $scope.event.category = $stateParams.category;
     }
-    else{
+    else {
       $scope.event.category = "event";
     }
-    if($stateParams.date != null){
+    if ($stateParams.date != null) {
       var dateParam = moment($stateParams.date);
-      //$scope.dtstart.day = dateParam.date();
-      //$scope.dtstart.month = dateParam.month();
-      //$scope.dtstart.year = dateParam.year();
+      $scope.dtstart.day = dateParam.date();
+      $scope.dtstart.month = (dateParam.month() + 1);
+      $scope.dtstart.year = dateParam.year();
+      $scope.dtend.day = dateParam.date();
+      $scope.dtend.month = (dateParam.month() + 1);
+      $scope.dtend.year = dateParam.year();
+
     }
     $scope.day = 31;
     $scope.month = 12;
@@ -72,12 +92,11 @@ angular.module('archCore')
       dataYears.push(currentYear + i);
     }
     $scope.years = dataYears;
-    $scope.getNumber = function(num) {
+    $scope.getNumber = function (num) {
       return new Array(num);
     };
     console.log(archAccountService.getCurrentUser());
-    $scope.addEvent = function()
-    {
+    $scope.addEvent = function () {
       //var arrayStart = $scope.dtstart.date.split("/");
       //.minute($scope.dtsart.minute).heure($scope.dtstart.heure)
       var tmpStart = moment().date($scope.dtstart.day).month($scope.dtstart.month).year($scope.dtstart.year);
@@ -86,33 +105,29 @@ angular.module('archCore')
       $scope.event.dtend = tmpEnd;
       $scope.event.creator = archAccountService.getCurrentUser()._id;
       console.log($scope.event);
-      $scope.event.$save(function (result)
-      {
-        if(result.count > 0)
-        {
-          $mdToast.show($mdToast.simple()
-              .content("Evènement ajouté avec succés.")
-              .position('top right')
-              .hideDelay(3000)
-          );
-          $state.go('calendar');
-        }
-        else
-        {
+      $scope.event.$save(function (result) {
+          if (result.count > 0) {
+            $mdToast.show($mdToast.simple()
+                .content("Evènement ajouté avec succés.")
+                .position('top right')
+                .hideDelay(3000)
+            );
+            $state.go('calendar');
+          }
+          else {
+            $mdToast.show($mdToast.simple()
+                .content("Une erreur est survenue lors de l'ajout de l'événement.")
+                .position('top right')
+                .hideDelay(3000)
+            );
+          }
+        },
+        function (responseError) {
           $mdToast.show($mdToast.simple()
               .content("Une erreur est survenue lors de l'ajout de l'événement.")
               .position('top right')
               .hideDelay(3000)
           );
-        }
-      },
-      function(responseError)
-      {
-        $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de l'ajout de l'événement.")
-            .position('top right')
-            .hideDelay(3000)
-        );
-      });
+        });
     }
   });

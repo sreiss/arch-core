@@ -1,9 +1,17 @@
-<h1>{{event.summary}}</h1>
+<md-button class="md-raised" ui-sref="calendar">{{'USER_FORM_BACK' | translate}}</md-button>
 
-<div layout="column">
-  <p>Catégorie : {{event.category}}</p>
-  <p>Description : {{event.description}}</p>
-  <p>Lieu : {{event.location}}</p>
+<h1>{{'EVENT_FORM_NAME' | translate}} : {{event.summary}}</h1>
 
+<div  layout="column" layout-fill>
+  <p>{{'EVENT_FORM_TYPE' | translate}} : {{event.category}}</p>
+  <p>{{'EVENT_FORM_DESCRIPTION' | translate}} : {{event.description}}</p>
+  <p>{{'EVENT_FORM_START' | translate}} : {{event.dtstart  | date:'dd/MM/yyyy - HH:mm' }}</p>
+  <p>{{'EVENT_FORM_END' | translate}} : {{event.dtend  | date:'dd/MM/yyyy - HH:mm' }}</p>
+  <p>{{'EVENT_FORM_LOCATION' | translate}} : {{event.location}}</p>
 </div>
-<md-button ng-click="deleteEvent(event._id)" class="md-raised md-accent">Supprimer</md-button>
+<div layout="row">
+  <md-button class="md-raised" ng-click="showUsersEvent(event._id)">{{'EVENT_LIST_GUEST' | translate}}</md-button>
+  <md-button class="md-raised" ng-click="takePartEvent(event._id)">{{'EVENT_TAKE_PART' | translate}}</md-button>
+  <md-button class="md-raised" ng-click="maybeEvent(event._id)">{{'EVENT_MAYBE' | translate}}</md-button>
+</div>
+<md-button ng-click="deleteEvent(event._id)" ng-show="if(currentUser == event.creator)" class="md-raised md-accent">Supprimer</md-button>

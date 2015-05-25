@@ -66,7 +66,7 @@ angular.module('archCore')
     'EVENT_FORM_TYPE_RACE' : "Course",
     'EVENT_FORM_TYPE_DISCOVERY' : "Découverte",
     'EVENT_FORM_TYPE_TRAINING' : "Entrainement",
-    'EVENT_FORM_BEGIN' : "Date de début de l'évènement",
+    'EVENT_FORM_START' : "Date de début de l'évènement",
     'EVENT_FORM_DAY' : "Jour",
     'EVENT_FORM_MONTH' : "Mois",
     'EVENT_FORM_YEAR' : "Année",
@@ -78,6 +78,9 @@ angular.module('archCore')
     'EVENT_FORM_ZIP' : "Code postal",
     'EVENT_FORM_WEBSITE' : "Site internet",
     'EVENT_FORM_INFORMATIONS' : "Informations",
+    'EVENT_TAKE_PART' : "Participer",
+    'EVENT_MAYBE' : "Peut-être",
+    'EVENT_LIST_GUEST' : "Liste des participants",
 
 
     'TRACKS_TITLE': "Parcours",
