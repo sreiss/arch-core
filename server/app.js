@@ -12,9 +12,10 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
-app.use(arch);
+
 app.use(allowCrossDomain);
- 
+app.use(arch);
+
 app.init(function (err)
 {
     if (err)
