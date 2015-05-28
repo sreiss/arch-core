@@ -48,7 +48,10 @@ exports.init = function(done)
     var config = app.arch.config;
     var port = config.get('http:port');
 
-    app.arch.server.listen(port);
-
-    return done();
+    app.arch.server.listen(port, function() {
+        var address = app.arch.server.address();
+        var port = address.port || '80';
+        console.log('[' + (new Date()) + '] Listening to port ' + port);
+        return done();
+    });
 };

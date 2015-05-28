@@ -5,7 +5,7 @@
 <form name="eventForm" role="form" ng-submit="addEvent()">
   <div layout="column">
     <div ng-include="'components/events/event/arch-event-form.html'"></div>
-    <div ng-switch on="category">
+    <div ng-switch on="event.category">
     <div ng-switch-when="discovery">
       <div ng-include="'components/events/discovery/arch-discovery-form.html'"></div>
     </div>

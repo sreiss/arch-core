@@ -23,6 +23,23 @@ angular.module('archCore')
         event.end = item.dtend;
         event.editable = false;
         event.id = item._id;
+        switch(item.category) {
+          case "officialRun":
+            event.color = "#ef5350";
+            break;
+          case "discovery":
+            event.color = "#81c784";
+            break;
+          case "training":
+            event.color = "#fdd835";
+            break;
+          case "personalTraining":
+            event.color = "#ffa726";
+            break;
+          default:
+            event.color = "#64b5f6";
+
+        }
         $scope.events.push(event);
       });
       }
