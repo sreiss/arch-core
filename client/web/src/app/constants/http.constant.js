@@ -22,7 +22,7 @@ angular.module('archCore').constant('httpConstant',
   },
 
   clientName: 'ARCH-ASCPA',
-  clientRedirectUri : 'http://acrobatt-vm11.psi.ad.unistra.fr:3011'
+  clientRedirectUri : 'http://acrobatt-vm11.psi.ad.unistra.fr:3021'
   /*
   clientRedirectUri : 'http://localhost:3011'
   */
