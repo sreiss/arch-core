@@ -10,7 +10,7 @@ module.exports = function(Types) {
         schema:
         {
             oauth: {type: Types.ObjectId, required: true},
-            role: {type: String},
+            role: {type: Types.ObjectId, required: true, ref: 'Role'},
             birthdate: {type: Date},
             phone: {type: String},
             licenceffa: {type: String},

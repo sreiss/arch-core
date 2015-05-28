@@ -49,7 +49,10 @@ exports.attach = function(opts)
                 {
                     schemaObjs[i].onSchemaReady(schema);
                 }
-                models[schemaObjs[i].modelName] = mongoose.model(schemaObjs[i].modelName, schema);
+                var model = models[schemaObjs[i].modelName] = mongoose.model(schemaObjs[i].modelName, schema);
+                if (schemaObjs[i].onModelReady) {
+                    schemaObjs[i].onModelReady(model);
+                }
             }
             catch (err)
             {
