@@ -15,112 +15,43 @@ module.exports = function(Event)
         saveEvent: function(eventData)
         {
             var deferred = q.defer();
-            var event = new Event();
 
-            //console.log(eventData);
-            //console.log(event);
-
-            // Assign data.
-            event.dtstart = eventData.dtstart;
-            event.dtend = eventData.dtend;
-            event.summary = eventData.summary;
-            event.location = eventData.location;
-            event.description = eventData.description;
-            event.transp = eventData.transp;
-            event.sequence = eventData.sequence;
-            event.category = eventData.category;
-            event.participants = [];
-            event.course = eventData.course;
-            event.website = eventData.website;
-            event.information = eventData.information;
-            event.trainings = [];
-            event.creator = eventData.creator;
-            event.program = eventData.program;
-            event.runs = [];
-            event.kidoikoiaki = eventData.kidoikoiaki;
-
-            for(var i=0; i<eventData.participants.length; i++)
+            if(eventData._id)
             {
-                var guest = {
-                    guest : eventData.participants[i].guest,
-                    status : eventData.participants[i].status
-                };
+                console.log('mdr');
+                var participants = [];
+                var trainings = [];
+                var runs = [];
 
-                event.participants.push(guest);
-            };
-
-            for(var j=0; j<eventData.trainings.length; j++)
-            {
-                var training = {
-                    training : eventData.trainings[j].training
-                };
-
-                event.trainings.push(training);
-            };
-
-            for(var k=0; k<eventData.runs.length; k++)
-            {
-                var run = {
-                    run : eventData.runs[k].run
-                };
-
-                event.runs.push(run);
-            };
-
-            //console.log(event);
-
-            event.save(function(err)
-            {
-                if(err)
+                for(var i=0; i<eventData.participants.length; i++)
                 {
-                    deferred.reject(err.message);
-                }
-                else
+                    var guest = {
+                        guest : eventData.participants[i].guest,
+                        status : eventData.participants[i].status
+                    };
+
+                    participants.push(guest);
+                };
+
+                for(var j=0; j<eventData.trainings.length; j++)
                 {
-                    deferred.resolve(event);
-                }
-            })
+                    var training = {
+                        training : eventData.trainings[j].training
+                    };
 
-            return deferred.promise;
-        },
-
-        /** Update existing event. */
-        updateEvent: function(eventData)
-        {
-            var deferred = q.defer();
-            var participants = [];
-            var trainings = [];
-            var runs = [];
-
-            for(var i=0; i<eventData.participants.length; i++)
-            {
-                var guest = {
-                    guest : eventData.participants[i].guest,
-                    status : eventData.participants[i].status
+                    trainings.push(training);
                 };
 
-                participants.push(guest);
-            };
+                for(var k=0; k<eventData.runs.length; k++)
+                {
+                    var run = {
+                        run : eventData.runs[k].run
+                    };
 
-            for(var j=0; j<eventData.trainings.length; j++)
-            {
-                var training = {
-                    training : eventData.trainings[j].training
+                    runs.push(run);
                 };
 
-                trainings.push(training);
-            };
-
-            for(var k=0; k<eventData.runs.length; k++)
-            {
-                var run = {
-                    run : eventData.runs[k].run
-                };
-
-                runs.push(run);
-            };
-
-            Event.update({_id:eventData.id},
+                Event.update({_id:eventData._id},
                 {
                     dtstart: eventData.dtstart,
                     dtend: eventData.dtend,
@@ -148,8 +79,103 @@ module.exports = function(Event)
                     }
                     else
                     {
-                        console.log(nbr);
-                        console.log(event);
+                        deferred.resolve(event);
+                    }
+                });
+            }
+            else
+            {
+                console.log('pas mdr');
+                var event = new Event();
+
+                event.dtstart = eventData.dtstart;
+                event.dtend = eventData.dtend;
+                event.summary = eventData.summary;
+                event.location = eventData.location;
+                event.description = eventData.description;
+                event.transp = eventData.transp;
+                event.sequence = eventData.sequence;
+                event.category = eventData.category;
+                event.participants = [];
+                event.course = eventData.course;
+                event.website = eventData.website;
+                event.information = eventData.information;
+                event.trainings = [];
+                event.creator = eventData.creator;
+                event.program = eventData.program;
+                event.runs = [];
+                event.kidoikoiaki = eventData.kidoikoiaki;
+
+                for (var i = 0; i < eventData.participants.length; i++) {
+                    var guest = {
+                        guest: eventData.participants[i].guest,
+                        status: eventData.participants[i].status
+                    };
+
+                    event.participants.push(guest);
+                }
+                ;
+
+                for (var j = 0; j < eventData.trainings.length; j++) {
+                    var training = {
+                        training: eventData.trainings[j].training
+                    };
+
+                    event.trainings.push(training);
+                }
+                ;
+
+                for (var k = 0; k < eventData.runs.length; k++) {
+                    var run = {
+                        run: eventData.runs[k].run
+                    };
+
+                    event.runs.push(run);
+                }
+                ;
+
+                event.save(function (err) {
+                    if (err)
+                    {
+                        deferred.reject(err.message);
+                    }
+                    else
+                    {
+                        deferred.resolve(event);
+                    }
+                })
+            }
+            return deferred.promise;
+        },
+
+        /** Update existing event. */
+        addGuest: function(eventData)
+        {
+            var deferred = q.defer();
+            var participants = [];
+
+            for(var i=0; i<eventData.participants.length; i++)
+            {
+                var guest = {
+                    guest : eventData.participants[i].guest,
+                    status : eventData.participants[i].status
+                };
+                
+                participants.push(guest);
+            };
+
+            Event.update({_id:eventData._id},
+                {
+                    $set: {participants: participants}
+                },
+                function(err, nbr, event)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
                         deferred.resolve(event);
                     }
                 });

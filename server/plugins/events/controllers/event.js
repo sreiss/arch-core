@@ -34,11 +34,11 @@ module.exports = function(eventService)
         },
 
         /** Update existing event */
-        updateEvent: function(req, res)
+        addGuest: function(req, res)
         {
             var event = req.body;
 
-            eventService.updateEvent(event).then(function(event)
+            eventService.addGuest(event).then(function(event)
             {
                 res.status(200).json({"count": (event ? 1 : 0), "data": event});
             })
