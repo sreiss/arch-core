@@ -19,10 +19,12 @@ module.exports = {
 
         var pluginsDir = path.join(__dirname, '..', '..', (config.get('pluginsDir') || 'plugins'));
         var httpPort = utils.normalizePort(config.get('http:port')) || 3001;
+        var allowedOrigins = config.get('http:allowedOrigins') || [];
         var dbUrl = config.get('db:url') || 'mongodb://localhost/archCore';
 
         config.set('pluginsDir', pluginsDir);
         config.set('http:port', httpPort);
+        config.set('http:allowedOrigins', allowedOrigins);
         config.set('db:url', dbUrl);
     },
     init: function (done) {
