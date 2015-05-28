@@ -1,9 +1,14 @@
 'use strict'
 
 angular.module('archCore')
-  .factory('archUserService', function($q, httpConstant, SignupTypeUsers, OAuthUser, OAuthUsers, CoreUser, CoreUsers)
+  .factory('archUserService', function($q, httpConstant, SignupTypeUsers, OAuthUser, OAuthUsers, CoreUser, CoreUsers, archHttpService)
   {
+    var _roleUrl = httpConstant.coreServerUrl + '/users/role';
+
     return {
+      getRoles: function() {
+        return archHttpService.get(_roleUrl);
+      },
       /** Get users. */
       getUsers: function()
       {

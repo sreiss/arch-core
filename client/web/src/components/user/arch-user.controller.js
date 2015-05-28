@@ -41,6 +41,12 @@ angular.module('archCore')
     $scope.oauthUser = new OAuthUsers();
     $scope.coreUser = new CoreUsers();
 
+    archUserService.getRoles()
+      .then(function(roles) {
+        $scope.roles = roles;
+      });
+
+
     $scope.addUser = function()
     {
       archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
