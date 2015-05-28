@@ -69,17 +69,19 @@ module.exports = function(User)
         {
             var deferred = Q.defer();
 
-            User.findOne({oauth: oauthUserId}).exec(function(err, result)
-            {
-                if(err)
+            User.findOne({oauth: oauthUserId})
+                .populate('role')
+                .exec(function(err, result)
                 {
-                    deferred.reject(err);
-                }
-                else
-                {
-                    deferred.resolve(result);
-                }
-            });
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(result);
+                    }
+                });
 
             return deferred.promise;
         },
