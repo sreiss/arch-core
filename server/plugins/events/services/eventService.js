@@ -120,37 +120,39 @@ module.exports = function(Event)
                 runs.push(run);
             };
 
-            Event.update({_id: eventData.id},
-            {
-                dtstart: eventData.dtstart,
-                dtend: eventData.dtend,
-                summary: eventData.summary,
-                location: eventData.location,
-                description: eventData.description,
-                transp: eventData.transp,
-                sequence: eventData.sequence,
-                category: eventData.category,
-                participants: participants,
-                course:  eventData.course,
-                website: eventData.website,
-                information: eventData.information,
-                trainings: trainings,
-                creator: eventData.creator,
-                program: eventData.program,
-                runs: runs,
-                kidoikoiaki: eventData.kidoikoiaki
-            },
-            function(err, numberAffected, rawResponse)
-            {
-                if(err)
+            Event.update({_id:eventData.id},
                 {
-                    deferred.reject(err);
-                }
-                else
+                    dtstart: eventData.dtstart,
+                    dtend: eventData.dtend,
+                    summary: eventData.summary,
+                    location: eventData.location,
+                    description: eventData.description,
+                    transp: eventData.transp,
+                    sequence: eventData.sequence,
+                    category: eventData.category,
+                    participants: participants,
+                    course: eventData.course,
+                    website: eventData.website,
+                    information: eventData.information,
+                    trainings: trainings,
+                    creator: eventData.creator,
+                    program: eventData.program,
+                    runs: runs,
+                    kidoikoiaki: eventData.kidoikoiaki
+                },
+                function(err, nbr, event)
                 {
-                    deferred.resolve(rawResponse);
-                }
-            });
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        console.log(nbr);
+                        console.log(event);
+                        deferred.resolve(event);
+                    }
+                });
 
             return deferred.promise;
         },
@@ -184,7 +186,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({_id: eventId}).populate('participants.guest trainings.training creator runs.run').exec(function (err, event)
+            Event.findOne({_id: eventId}).populate('trainings.training runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -208,7 +210,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.find().populate('participants.guest trainings.training creator runs.run').exec(function (err, events)
+            Event.find().populate('trainings.training runs.run').exec(function (err, events)
             {
                 if(err)
                 {

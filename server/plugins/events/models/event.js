@@ -21,7 +21,7 @@ module.exports = function(Types) {
             category: {type: String, required: true},
             participants:
             [{
-                guest: {type: Types.ObjectId, ref: 'User'},
+                guest: {type: Types.ObjectId},
                 status: {type: String}
             }],
             course: {type: Types.ObjectId},
@@ -31,7 +31,7 @@ module.exports = function(Types) {
             [{
                 training: {type: Types.ObjectId, ref: 'Event'}
             }],
-            creator: {type: Types.ObjectId, ref: 'User'},
+            creator: {type: Types.ObjectId},
             program: {type: String},
             runs:
             [{
