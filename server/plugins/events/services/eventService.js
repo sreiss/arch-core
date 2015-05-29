@@ -283,6 +283,54 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
+        /** Get event's informations by date. */
+        getEventsByDate: function(date)
+        {
+            var deferred = q.defer();
+
+            Event.findOne({dtstart: date}).populate('trainings.training runs.run').exec(function (err, event)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else if(!event)
+                {
+                    deferred.reject(new Error('No date matching [DTSTART] : ' + date + "."));
+                }
+                else
+                {
+                    deferred.resolve(event);
+                }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get event's informations by type. */
+        getEventsByCategory: function(category)
+        {
+            var deferred = q.defer();
+
+            Event.findOne({category: category}).populate('trainings.training runs.run').exec(function (err, event)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else if(!event)
+                {
+                    deferred.reject(new Error('No category matching [CATEGORY] : ' + category + "."));
+                }
+                else
+                {
+                    deferred.resolve(event);
+                }
+            });
+
+            return deferred.promise;
+        },
+
         /** Get all events' informations. */
         getEvents: function()
         {

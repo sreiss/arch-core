@@ -115,6 +115,40 @@ module.exports = function(eventService)
             });
         },
 
+        /** Get event's informations by date. */
+        getEventsByDate: function(req, res)
+        {
+            // Get event date.
+            var date = req.params.eventdate;
+
+            // Get event.
+            eventService.getEventsByDate(date).then(function(event)
+            {
+                res.status(event ? 200 : 204).json({"count": 1, "data": event});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        },
+
+        /** Get event's informations by type. */
+        getEventsByCategory: function(req, res)
+        {
+            // Get event type.
+            var category = req.params.eventcategory;
+
+            // Get event.
+            eventService.getEventsByCategory(category).then(function(event)
+            {
+                res.status(event ? 200 : 204).json({"count": 1, "data": event});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        },
+
         getEvents: function(req, res)
         {
             // Get all events.

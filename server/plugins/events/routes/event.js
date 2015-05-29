@@ -26,4 +26,10 @@ module.exports = function(eventController, eventRouter, eventMiddleware)
         //.all(eventMiddleware.checkEventId)
         .delete(eventController.deleteEvent)
         .get(eventController.getEvent);
+
+    eventRouter.route('/date/:eventdate')
+        .get(eventController.getEventsByDate);
+
+    eventRouter.route('/category/:eventcategory')
+        .get(eventController.getEventsByCategory);
 };
