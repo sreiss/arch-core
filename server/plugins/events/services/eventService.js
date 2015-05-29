@@ -208,17 +208,13 @@ module.exports = function(Event)
             {
                 var participants = event.participants;
                 var updatedParticipants = [];
+
                 for (var i =0; i < participants.length; i++)
                 {
                     if(participants[i].guest==eventData.participants.guest)
                     {
-                        participants[i].status=eventData.participants.status;
+                        participants[i].status = eventData.participants.status;
                     }
-                    else
-                    {
-                        deferred.reject(new Error('No guest matching [GUEST] : ' + eventData.participants.guest + ' in event [EVENT_ID] : ' + eventData._id + '.'));
-                    }
-
                     updatedParticipants.push(participants[i]);
                 }
 
