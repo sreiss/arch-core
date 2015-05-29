@@ -10,8 +10,13 @@ module.exports = function(eventController, eventRouter, eventMiddleware)
     eventRouter.route('/')
         //.post(eventMiddleware.checkEvent)
         .post(eventController.saveEvent)
-        .put(eventController.addGuest)
         .get(eventController.getEvents);
+
+    eventRouter.route('/addGuest')
+        .post(eventController.addGuest);
+
+    eventRouter.route('/changeStatus')
+        .post(eventController.changeStatus);
 
     eventRouter.route('/ical')
         .get(eventController.getIcal);

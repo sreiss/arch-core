@@ -11,14 +11,13 @@ var q = require('q');
 module.exports = function(Event)
 {
     return {
-        /** Save event. */
+        /** Save (create & update) event. */
         saveEvent: function(eventData)
         {
             var deferred = q.defer();
 
             if(eventData._id)
             {
-                console.log('mdr');
                 var participants = [];
                 var trainings = [];
                 var runs = [];
@@ -148,37 +147,88 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Update existing event. */
+        /** Add guest to an existing event. */
         addGuest: function(eventData)
         {
             var deferred = q.defer();
-            var participants = [];
 
-            for(var i=0; i<eventData.participants.length; i++)
+            Event.findOne({_id: eventData._id}, 'participants', function(err, event)
             {
-                var guest = {
-                    guest : eventData.participants[i].guest,
-                    status : eventData.participants[i].status
-                };
-                
-                participants.push(guest);
-            };
 
-            Event.update({_id:eventData._id},
+                if(err)
                 {
-                    $set: {participants: participants}
-                },
-                function(err, nbr, event)
+                    deferred.reject(err);
+                }
+                else
                 {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(event);
-                    }
-                });
+                    var participants = event.participants;
+
+                    for (var i = 0; i < eventData.participants.length; i++) {
+                        var guest = {
+                            guest: eventData.participants[i].guest,
+                            status: eventData.participants[i].status
+                        };
+
+                        participants.push(guest);
+                    };
+
+                    Event.update({_id: eventData._id},
+                        {
+                            $set: {participants: participants}
+                        },
+                        function (err, nbr, event) {
+                            if (err) {
+                                deferred.reject(err);
+                            }
+                            else {
+                                deferred.resolve(event);
+                            }
+                        });
+                }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Update guest's status */
+        changeStatus: function(eventData)
+        {
+            var deferred = q.defer();
+
+            Event.findOne({_id: eventData._id}, 'participants.status', function(err, event)
+            {
+
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    var participants = event.participants;
+
+                    for (var i = 0; i < eventData.participants.length; i++) {
+                        var guest = {
+                            guest: eventData.participants[i].guest,
+                            status: eventData.participants[i].status
+                        };
+
+                        participants.push(guest);
+                    };
+
+                    Event.update({_id: eventData._id},
+                        {
+                            $set: {participants: participants}
+                        },
+                        function (err, nbr, event) {
+                            if (err) {
+                                deferred.reject(err);
+                            }
+                            else {
+                                deferred.resolve(event);
+                            }
+                        });
+                }
+            });
 
             return deferred.promise;
         },
