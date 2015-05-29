@@ -18,73 +18,10 @@ module.exports = function(Event)
 
             if(eventData._id)
             {
-                var participants = [];
-                var trainings = [];
-                var runs = [];
 
-                for(var i=0; i<eventData.participants.length; i++)
-                {
-                    var guest = {
-                        guest : eventData.participants[i].guest,
-                        status : eventData.participants[i].status
-                    };
-
-                    participants.push(guest);
-                };
-
-                for(var j=0; j<eventData.trainings.length; j++)
-                {
-                    var training = {
-                        training : eventData.trainings[j].training
-                    };
-
-                    trainings.push(training);
-                };
-
-                for(var k=0; k<eventData.runs.length; k++)
-                {
-                    var run = {
-                        run : eventData.runs[k].run
-                    };
-
-                    runs.push(run);
-                };
-
-                Event.update({_id:eventData._id},
-                {
-                    dtstart: eventData.dtstart,
-                    dtend: eventData.dtend,
-                    summary: eventData.summary,
-                    location: eventData.location,
-                    description: eventData.description,
-                    transp: eventData.transp,
-                    sequence: eventData.sequence,
-                    category: eventData.category,
-                    participants: participants,
-                    course: eventData.course,
-                    website: eventData.website,
-                    information: eventData.information,
-                    trainings: trainings,
-                    creator: eventData.creator,
-                    program: eventData.program,
-                    runs: runs,
-                    kidoikoiaki: eventData.kidoikoiaki
-                },
-                function(err, nbr, event)
-                {
-                    if(err)
-                    {
-                        deferred.reject(err);
-                    }
-                    else
-                    {
-                        deferred.resolve(event);
-                    }
-                });
             }
             else
             {
-                console.log('pas mdr');
                 var event = new Event();
 
                 event.dtstart = eventData.dtstart;
@@ -173,19 +110,91 @@ module.exports = function(Event)
                     };
 
                     Event.update({_id: eventData._id},
-                        {
-                            $set: {participants: participants}
-                        },
-                        function (err, nbr, event) {
-                            if (err) {
-                                deferred.reject(err);
-                            }
-                            else {
-                                deferred.resolve(event);
-                            }
-                        });
+                    {
+                        $set: {participants: participants}
+                    },
+                    function (err, nbr, event) {
+                        if (err) {
+                            deferred.reject(err);
+                        }
+                        else {
+                            deferred.resolve(event);
+                        }
+                    });
                 }
             });
+
+            return deferred.promise;
+        },
+
+        /** Updating an existing event. */
+        updateEvent: function(eventData)
+        {
+            var deferred = q.defer();
+
+            var participants = [];
+            var trainings = [];
+            var runs = [];
+
+            for(var i=0; i<eventData.participants.length; i++)
+            {
+                var guest = {
+                    guest : eventData.participants[i].guest,
+                    status : eventData.participants[i].status
+                };
+
+                participants.push(guest);
+            };
+
+            for(var j=0; j<eventData.trainings.length; j++)
+            {
+                var training = {
+                    training : eventData.trainings[j].training
+                };
+
+                trainings.push(training);
+            };
+
+            for(var k=0; k<eventData.runs.length; k++)
+            {
+                var run = {
+                    run : eventData.runs[k].run
+                };
+
+                runs.push(run);
+            };
+
+            Event.update({_id:eventData._id},
+                {
+                    dtstart: eventData.dtstart,
+                    dtend: eventData.dtend,
+                    summary: eventData.summary,
+                    location: eventData.location,
+                    description: eventData.description,
+                    transp: eventData.transp,
+                    sequence: eventData.sequence,
+                    category: eventData.category,
+                    participants: participants,
+                    course: eventData.course,
+                    website: eventData.website,
+                    information: eventData.information,
+                    trainings: trainings,
+                    creator: eventData.creator,
+                    program: eventData.program,
+                    runs: runs,
+                    kidoikoiaki: eventData.kidoikoiaki
+                },
+                function(err, nbr, event)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(event);
+                    }
+                });
 
             return deferred.promise;
         },
@@ -195,39 +204,36 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({_id: eventData._id}, 'participants.status', function(err, event)
+            Event.findOne({_id: eventData._id}, 'participants', function(err, event)
             {
-
-                if(err)
+                var participants = event.participants;
+                var updatedParticipants = [];
+                for (var i =0; i < participants.length; i++)
                 {
-                    deferred.reject(err);
+                    if(participants[i].guest==eventData.participants.guest)
+                    {
+                        participants[i].status=eventData.participants.status;
+                    }
+                    else
+                    {
+                        deferred.reject(new Error('No guest matching [GUEST] : ' + eventData.participants.guest + ' in event [EVENT_ID] : ' + eventData._id + '.'));
+                    }
+
+                    updatedParticipants.push(participants[i]);
                 }
-                else
-                {
-                    var participants = event.participants;
 
-                    for (var i = 0; i < eventData.participants.length; i++) {
-                        var guest = {
-                            guest: eventData.participants[i].guest,
-                            status: eventData.participants[i].status
-                        };
-
-                        participants.push(guest);
-                    };
-
-                    Event.update({_id: eventData._id},
-                        {
-                            $set: {participants: participants}
-                        },
-                        function (err, nbr, event) {
-                            if (err) {
-                                deferred.reject(err);
-                            }
-                            else {
-                                deferred.resolve(event);
-                            }
-                        });
-                }
+                Event.update({_id: eventData._id},
+                    {
+                        $set: {participants: updatedParticipants}
+                    },
+                    function (err, nbr, event) {
+                        if (err) {
+                            deferred.reject(err);
+                        }
+                        else {
+                            deferred.resolve(event);
+                        }
+                    });
             });
 
             return deferred.promise;

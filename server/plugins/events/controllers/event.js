@@ -33,10 +33,27 @@ module.exports = function(eventService)
             });
         },
 
+        /** Updating event. */
+        updateEvent: function(req, res)
+        {
+            // Get posted event.
+            var event = req.body.event;
+
+            // Updating event.
+            eventService.updateEvent(event).then(function(event)
+            {
+                res.status(200).json({"count": (event ? 1 : 0), "data": event});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchSaveError(err.message)});
+            });
+        },
+
         /** Add guest to an existing event */
         addGuest: function(req, res)
         {
-            var event = req.body;
+            var event = req.body.event;
 
             eventService.addGuest(event).then(function(event)
             {
@@ -52,7 +69,7 @@ module.exports = function(eventService)
         /** Update guest's status */
         changeStatus: function(req, res)
         {
-            var event = req.body;
+            var event = req.body.event;
 
             eventService.changeStatus(event).then(function(event)
             {
