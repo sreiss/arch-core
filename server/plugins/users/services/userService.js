@@ -43,7 +43,7 @@ module.exports = function(User)
             User.update({oauth: userData.id},
             {
                 role: userData.role,
-                //birthdate: userData.birthdate,
+                birthdate: userData.birthdate,
                 phone: userData.phone,
                 licenceffa: userData.licenceffa,
                 avatar: userData.avatar,
