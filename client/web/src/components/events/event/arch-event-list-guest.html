@@ -1,0 +1,28 @@
+<md-dialog>
+  <md-content class="sticky-container">
+    <p >{{'USERS_NO_USERS' | translate}}</p>
+
+    <table class="responsive-table striped" >
+      <thead>
+      <tr>
+        <th data-field="nama">{{'EVENT_GUEST_LNAME' | translate}}</th>
+        <th data-field="lname">{{'EVENT_GUEST_FNAME' | translate}}</th>
+        <th data-field="state">{{'EVENT_GUEST_STATE' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="guest in listGuest">
+        <td>{{guest.lname}}</td>
+        <td>{{guest.fname}}</td>
+        <td>{{guest.state}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div layout="row" layout-wrap>
+
+      <md-button class="md-primary md-raised" ng-click="cancel()" >
+        Custom Dialog
+      </md-button>
+    </div>
+  </md-content>
+</md-dialog>

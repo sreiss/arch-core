@@ -401,3 +401,22 @@ blockquote {
 .fc-day:hover {
   background-color: #ecf0f1;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: black !important;
+  background:  #FAFAFA;
+  border: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: black !important;
+  background:  #FAFAFA;
+  border: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  outline: none;
+  color: black !important;
+  background:  #FAFAFA;
+  border: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}

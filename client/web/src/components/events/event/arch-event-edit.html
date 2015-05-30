@@ -1,0 +1,24 @@
+<h1>{{'EVENT_ADD_TITLE' | translate}}</h1>
+
+<md-button class="md-raised" ui-sref="calendar">{{'USER_FORM_BACK' | translate}}</md-button>
+
+<form name="eventForm" role="form" ng-submit="editEvent()">
+  <div layout="column">
+    <div ng-include="'components/events/event/arch-event-form.html'"></div>
+    <div ng-switch on="event.category">
+    <div ng-switch-when="discovery">
+      <div ng-include="'components/events/discovery/arch-discovery-form.html'"></div>
+    </div>
+    <div ng-switch-when="officialRun">
+      <div ng-include="'components/events/official-run/arch-official-run-form.html'"></div>
+    </div>
+    <div ng-switch-when="personalTraining">
+      <div ng-include="'components/events/personal-training-form.html'"></div>
+    </div>
+    <div ng-switch-when="training">
+      <div ng-include="'components/events/training/arch-training-form.html'"></div>
+    </div>
+  </div>
+    <div ng-include="'components/events/event/arch-event-form-footer.html'"></div>
+  </div>
+</form>

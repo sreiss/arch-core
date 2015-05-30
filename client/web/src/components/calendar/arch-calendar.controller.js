@@ -1,47 +1,38 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archCalendarController', function($scope,$mdDialog, Event,$state, archAccountService) {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
-
+  .controller('archCalendarController', function ($scope, $mdDialog, Event, $state) {
     var selectedDate = null;
     $scope.events = [];
 
-    var currentUser = archAccountService.getCurrentUser();
-
-
-    var dataEvents = Event.query(function() {
+    var dataEvents = Event.query(function () {
       console.log(dataEvents.data);
       if (dataEvents.data != null) {
-      dataEvents.data.forEach(function (item) {
-        var event = {};
-        event.title = item.summary;
-        event.start = item.dtstart;
-        event.end = item.dtend;
-        event.editable = false;
-        event.id = item._id;
-        switch(item.category) {
-          case "officialRun":
-            event.color = "#ef5350";
-            break;
-          case "discovery":
-            event.color = "#81c784";
-            break;
-          case "training":
-            event.color = "#fdd835";
-            break;
-          case "personalTraining":
-            event.color = "#ffa726";
-            break;
-          default:
-            event.color = "#64b5f6";
-
-        }
-        $scope.events.push(event);
-      });
+        dataEvents.data.forEach(function (item) {
+          var event = {};
+          event.title = item.summary;
+          event.start = item.dtstart;
+          event.end = item.dtend;
+          event.editable = false;
+          event.id = item._id;
+          switch (item.category) {
+            case "officialRun":
+              event.color = "#ef5350";
+              break;
+            case "discovery":
+              event.color = "#81c784";
+              break;
+            case "training":
+              event.color = "#fdd835";
+              break;
+            case "personalTraining":
+              event.color = "#ffa726";
+              break;
+            default:
+              event.color = "#64b5f6";
+          }
+          $scope.events.push(event);
+        });
       }
     });
 
@@ -56,51 +47,45 @@ angular.module('archCore')
     //];
 
     function DialogController($scope, $mdDialog, $state) {
-      $scope.hide = function() {
+      $scope.hide = function () {
         $mdDialog.hide();
       };
-      $scope.cancel = function() {
+      $scope.cancel = function () {
         $mdDialog.cancel();
       };
-      $scope.answer = function(answer) {
+      $scope.answer = function (answer) {
         $mdDialog.hide(answer);
-        $state.go('eventAdd', {'category' : answer, 'date': selectedDate})
+        $state.go('eventAdd', {'category': answer, 'date': selectedDate})
       };
     }
 
-    $scope.showAlert = function(ev,jsEvent,view) {
+    $scope.showEvent = function (ev, jsEvent, view) {
       console.log(ev);
-      $state.go('eventView',{id:ev.id});
+      $state.go('eventView', {id: ev.id});
     };
 
-    $scope.typeEvent = function(ev) {
-      if (currentUser && currentUser.profile.role == 'admin') {
-        $mdDialog.show({
-          controller: DialogController,
-          templateUrl: 'components/events/arch-type-event.html',
-          targetEvent: ev
-        })
-          .then(function (answer) {
-            //apres traitement du dialog
-          }, function () {
-            //cancel
-          });
-      }
+    $scope.typeEvent = function (ev) {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'components/events/arch-type-event.html',
+        targetEvent: ev
+      })
     };
-    $scope.alertOnEventClick = function(ev,jsEvent,view){
-      $scope.showAlert(ev,jsEvent,view);
+
+    $scope.alertOnEventClick = function (ev, jsEvent, view) {
+      $scope.showEvent(ev, jsEvent, view);
     };
-    $scope.alertOnDayClick = function( date){
+    $scope.alertOnDayClick = function (date) {
       $scope.typeEvent();
       selectedDate = date;
     };
 
     /* config object */
     $scope.uiConfig = {
-      calendar:{
+      calendar: {
         height: 450,
         editable: true,
-        header:{
+        header: {
           left: 'title',
           center: '',
           right: 'today prev,next'
@@ -110,18 +95,10 @@ angular.module('archCore')
       }
     };
 
-    $scope.changeLang = function() {
-      if($scope.changeTo === 'Francais'){
-        $scope.uiConfig.calendar.dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
-        $scope.changeTo= 'English';
-      } else {
-        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        $scope.changeTo = 'Francais';
-      }
-    };
-
+    $scope.uiConfig.calendar.monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août","Septembre","Octobre","Novembre","Decembre"]
+    $scope.uiConfig.calendar.buttonText = {today:'Aujourd\'hui'};
+    $scope.uiConfig.calendar.dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    $scope.uiConfig.calendar.dayNamesShort = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     /* event sources array*/
     $scope.eventSources = [$scope.events];
   });

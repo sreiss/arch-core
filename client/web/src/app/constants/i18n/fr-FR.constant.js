@@ -81,6 +81,8 @@ angular.module('archCore')
     'EVENT_TAKE_PART' : "Participer",
     'EVENT_MAYBE' : "Peut-être",
     'EVENT_LIST_GUEST' : "Liste des participants",
+    'EVENT_EDIT' : "Editer",
+    'EVENT_DELETE' : "Supprimer",
 
 
     'TRACKS_TITLE': "Parcours",

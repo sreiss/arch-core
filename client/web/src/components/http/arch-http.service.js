@@ -146,4 +146,15 @@ angular.module('archCore')
           method: 'DELETE'
         }
       });
+  })
+  .factory("EventGuest", function($resource, httpConstant)
+  {
+    return $resource(httpConstant.coreServerUrl + '/events/event/addGuest', {},
+      {
+        save:
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }
+      });
   });

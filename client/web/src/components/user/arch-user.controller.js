@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService)
+.controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService,DTOptionsBuilder, DTColumnDefBuilder)
   {
     $scope.users = archUserService.getUsers();
     $scope.currentUser = archAccountService.getCurrentUser();
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+      .withLanguageSource('/app/constants/i18n/French.json');
+    $scope.dtColumnDefs = [
+      DTColumnDefBuilder.newColumnDef(3).notSortable()
+    ];
 
     $scope.deleteUser = function(id)
     {
@@ -82,14 +87,12 @@ angular.module('archCore')
       $scope.oauthUser.lname = oauthUser.data.lname  || '';
       $scope.oauthUser.email = oauthUser.data.email  || '';
       $scope.oauthUser.password = oauthUser.data.password  || '';
-      $scope.oauthUser.newPassword = '';
-      $scope.oauthUser.confirmPassword = '';
 
       CoreUser.query({id:id}, function(coreUser)
       {
         $scope.coreUser = new CoreUsers();
         $scope.coreUser.role = coreUser.data.role  || '';
-        $scope.coreUser.birthdate = coreUser.data.birthdate  || '';
+        $scope.coreUser.birthdate = new Date(coreUser.data.birthdate)  || '';
         $scope.coreUser.phone = coreUser.data.phone  || '';
         $scope.coreUser.licenceffa = coreUser.data.licenceffa  || '';
         $scope.coreUser.avatar = coreUser.data.avatar  || '';
@@ -156,7 +159,7 @@ angular.module('archCore')
 
     $scope.editUser = function()
     {
-      if(($scope.oauthUser.newPassword.length > 0 || $scope.oauthUser.confirmPassword.length > 0) && $scope.oauthUser.newPassword != $scope.oauthUser.confirmPassword)
+      if($scope.oauthUser.newPassword && $scope.oauthUser.confirmPassword && ($scope.oauthUser.newPassword != $scope.oauthUser.confirmPassword))
       {
         $mdToast.show($mdToast.simple()
             .content("Les deux mots de passes ne sont pas identiques.")
@@ -166,11 +169,11 @@ angular.module('archCore')
       }
       else
       {
-        if($scope.oauthUser.newPassword.length > 0)
+        if($scope.oauthUser.newPassword)
         {
           $scope.oauthUser.password = md5.createHash($scope.oauthUser.newPassword);
         }
-
+        console.log($scope.coreUser.birthdate );
         archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
           $mdToast.show($mdToast.simple()
