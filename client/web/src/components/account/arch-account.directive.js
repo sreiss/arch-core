@@ -8,6 +8,10 @@ angular.module('archCore')
         var init = function()
         {
           // Check token in coockies.
+          function obtenirParametre (sVar) {
+            return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+          }
+          $cookieStore.put('token', obtenirParametre("token"));
           var token = archAccountService.getCurrentToken();
 
           if(token)
