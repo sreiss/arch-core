@@ -6,7 +6,7 @@ angular.module('archCore')
     $scope.users = archUserService.getUsers();
     $scope.currentUser = archAccountService.getCurrentUser();
     $scope.dtOptions = DTOptionsBuilder.newOptions()
-      .withLanguageSource('/app/constants/i18n/French.json');
+      .withLanguageSource('/app/constants/i18n/french.json');
     $scope.dtColumnDefs = [
       DTColumnDefBuilder.newColumnDef(3).notSortable()
     ];
