@@ -4,15 +4,16 @@ angular.module('archCore')
     return {
       restrict: 'E',
       templateUrl: 'components/account/arch-account.html',
-      controller: function($scope, $cookieStore, $base64) {
+      controller: function($scope, $cookieStore,$stateParams) {
         var init = function()
         {
-          // Check token in coockies.
-          function obtenirParametre (sVar) {
-            return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-          }
-          $cookieStore.put('token', obtenirParametre("token"));
           var token = archAccountService.getCurrentToken();
+
+          if(!token && $stateParams.token)
+          {
+            $cookieStore.put('token', atob($stateParams.token));
+            token = archAccountService.getCurrentToken();
+          }
 
           if(token)
           {

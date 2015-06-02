@@ -16,6 +16,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "app/main/main.html",
         controller: 'archHomeController'
       })
+      .state('homeToken',
+      {
+        url: "/token/:token",
+        templateUrl: "app/main/main.html",
+        controller: 'archHomeController'
+      })
       .state('users',
       {
         url: '/users',
