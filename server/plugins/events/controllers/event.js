@@ -50,28 +50,12 @@ module.exports = function(eventService)
             });
         },
 
-        /** Add guest to an existing event */
-        addGuest: function(req, res)
+        /** Add an event's guest */
+        updateGuest: function(req, res)
         {
             var event = req.body.event;
 
-            eventService.addGuest(event).then(function(event)
-            {
-                res.status(200).json({"count": (event ? 1 : 0), "data": event});
-            })
-            .catch(function(err)
-            {
-                res.status(500).json({"error" : new ArchSaveError(err.message)});
-            });
-        },
-
-
-        /** Update guest's status */
-        changeStatus: function(req, res)
-        {
-            var event = req.body.event;
-
-            eventService.changeStatus(event).then(function(event)
+            eventService.updateGuest(event).then(function(event)
             {
                 res.status(200).json({"count": (event ? 1 : 0), "data": event});
             })

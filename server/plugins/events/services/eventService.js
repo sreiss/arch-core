@@ -16,113 +16,64 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            if(eventData._id)
-            {
+            var event = new Event();
 
+            event.dtstart = eventData.dtstart;
+            event.dtend = eventData.dtend;
+            event.summary = eventData.summary;
+            event.location = eventData.location;
+            event.description = eventData.description;
+            event.transp = eventData.transp;
+            event.sequence = eventData.sequence;
+            event.category = eventData.category;
+            event.participants = [];
+            event.course = eventData.course;
+            event.website = eventData.website;
+            event.information = eventData.information;
+            event.trainings = [];
+            event.creator = eventData.creator;
+            event.program = eventData.program;
+            event.runs = [];
+            event.kidoikoiaki = eventData.kidoikoiaki;
+
+            for (var i = 0; i < eventData.participants.length; i++) {
+                var guest = {
+                    guest: eventData.participants[i].guest,
+                    status: eventData.participants[i].status
+                };
+
+                event.participants.push(guest);
             }
-            else
-            {
-                var event = new Event();
+            ;
 
-                event.dtstart = eventData.dtstart;
-                event.dtend = eventData.dtend;
-                event.summary = eventData.summary;
-                event.location = eventData.location;
-                event.description = eventData.description;
-                event.transp = eventData.transp;
-                event.sequence = eventData.sequence;
-                event.category = eventData.category;
-                event.participants = [];
-                event.course = eventData.course;
-                event.website = eventData.website;
-                event.information = eventData.information;
-                event.trainings = [];
-                event.creator = eventData.creator;
-                event.program = eventData.program;
-                event.runs = [];
-                event.kidoikoiaki = eventData.kidoikoiaki;
+            for (var j = 0; j < eventData.trainings.length; j++) {
+                var training = {
+                    training: eventData.trainings[j].training
+                };
 
-                for (var i = 0; i < eventData.participants.length; i++) {
-                    var guest = {
-                        guest: eventData.participants[i].guest,
-                        status: eventData.participants[i].status
-                    };
-
-                    event.participants.push(guest);
-                }
-                ;
-
-                for (var j = 0; j < eventData.trainings.length; j++) {
-                    var training = {
-                        training: eventData.trainings[j].training
-                    };
-
-                    event.trainings.push(training);
-                }
-                ;
-
-                for (var k = 0; k < eventData.runs.length; k++) {
-                    var run = {
-                        run: eventData.runs[k].run
-                    };
-
-                    event.runs.push(run);
-                }
-                ;
-
-                event.save(function (err) {
-                    if (err)
-                    {
-                        deferred.reject(err.message);
-                    }
-                    else
-                    {
-                        deferred.resolve(event);
-                    }
-                })
+                event.trainings.push(training);
             }
-            return deferred.promise;
-        },
+            ;
 
-        /** Add guest to an existing event. */
-        addGuest: function(eventData)
-        {
-            var deferred = q.defer();
+            for (var k = 0; k < eventData.runs.length; k++) {
+                var run = {
+                    run: eventData.runs[k].run
+                };
 
-            Event.findOne({_id: eventData._id}, 'participants', function(err, event)
-            {
+                event.runs.push(run);
+            }
+            ;
 
-                if(err)
+            event.save(function (err) {
+                if (err)
                 {
-                    deferred.reject(err);
+                    deferred.reject(err.message);
                 }
                 else
                 {
-                    var participants = event.participants;
-
-                    for (var i = 0; i < eventData.participants.length; i++) {
-                        var guest = {
-                            guest: eventData.participants[i].guest,
-                            status: eventData.participants[i].status
-                        };
-
-                        participants.push(guest);
-                    };
-
-                    Event.update({_id: eventData._id},
-                    {
-                        $set: {participants: participants}
-                    },
-                    function (err, nbr, event) {
-                        if (err) {
-                            deferred.reject(err);
-                        }
-                        else {
-                            deferred.resolve(event);
-                        }
-                    });
+                    deferred.resolve(event);
                 }
-            });
+            })
 
             return deferred.promise;
         },
@@ -199,28 +150,38 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Update guest's status */
-        changeStatus: function(eventData)
+        /** Update guest's information */
+        updateGuest: function(eventData)
         {
             var deferred = q.defer();
 
             Event.findOne({_id: eventData._id}, 'participants', function(err, event)
             {
                 var participants = event.participants;
-                var updatedParticipants = [];
 
                 for (var i =0; i < participants.length; i++)
                 {
+                    console.log(participants[i]);
+
                     if(participants[i].guest==eventData.participants.guest)
                     {
                         participants[i].status = eventData.participants.status;
+                        break;
                     }
-                    updatedParticipants.push(participants[i]);
+                    else
+                    {
+                        var guest = {
+                            guest: eventData.participants.guest,
+                            status: eventData.participants.status
+                        };
+                        participants.push(guest);
+                        break;
+                    }
                 }
 
                 Event.update({_id: eventData._id},
                     {
-                        $set: {participants: updatedParticipants}
+                        $set: {participants: participants}
                     },
                     function (err, nbr, event) {
                         if (err) {
