@@ -11,7 +11,7 @@ angular.module('archCore')
 
           if(!token && $stateParams.token)
           {
-            $cookieStore.put('token', atob($stateParams.token));
+            $cookieStore.put('token', JSON.parse(decodeURIComponent(atob($stateParams.token))));
             token = archAccountService.getCurrentToken();
           }
 
