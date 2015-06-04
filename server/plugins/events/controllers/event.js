@@ -37,7 +37,7 @@ module.exports = function(eventService)
         updateEvent: function(req, res)
         {
             // Get posted event.
-            var event = req.body.event;
+            var event = req.body;
 
             // Updating event.
             eventService.updateEvent(event).then(function(event)
@@ -53,7 +53,7 @@ module.exports = function(eventService)
         /** Add an event's guest */
         updateGuest: function(req, res)
         {
-            var event = req.body.event;
+            var event = req.body;
 
             eventService.updateGuest(event).then(function(event)
             {
