@@ -159,23 +159,34 @@ module.exports = function(Event)
             {
                 var participants = event.participants;
 
-                for (var i =0; i < participants.length; i++)
+                if(participants.length==0)
                 {
-                    console.log(participants[i]);
+                    var guest = {
+                    guest: eventData.participants.guest,
+                    status: eventData.participants.status
+                    };
+                    participants.push(guest);
+                }
+                else
+                {
+                    for (var i =0; i < participants.length; i++)
+                    {
+                        console.log(participants[i]);
 
-                    if(participants[i].guest==eventData.participants.guest)
-                    {
-                        participants[i].status = eventData.participants.status;
-                        break;
-                    }
-                    else
-                    {
-                        var guest = {
-                            guest: eventData.participants.guest,
-                            status: eventData.participants.status
-                        };
-                        participants.push(guest);
-                        break;
+                        if(participants[i].guest==eventData.participants.guest)
+                        {
+                            participants[i].status = eventData.participants.status;
+                            break;
+                        }
+                        else
+                        {
+                            var guest = {
+                                guest: eventData.participants.guest,
+                                status: eventData.participants.status
+                            };
+                            participants.push(guest);
+                            break;
+                        }
                     }
                 }
 
