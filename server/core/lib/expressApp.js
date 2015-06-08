@@ -23,16 +23,16 @@ exports.attach = function(opts)
     //expressApp.use(express.static(path.join(__dirname, '..', 'public')));
     expressApp.use('/', express.static(path.join(__dirname, '..', '..', 'public')));
 
-    // Allow Cross Origin
-    //var allowedOrigins = config.get('http:allowedOrigins');
+    //Allow Cross Origin
+    var allowedOrigins = config.get('http:allowedOrigins');
     expressApp.use(function(req, res, next) {
-        //var origin = req.headers.origin;
+        var origin = req.headers.origin;
 
-        //if (allowedOrigins.indexOf(origin) > -1) {
+        if (allowedOrigins.indexOf(origin) > -1) {
             res.header('Access-Control-Allow-Origin', "*");
             res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
             res.header('Access-Control-Allow-Headers', 'Content-Type');
-        //}
+        }
 
         return next();
     });
