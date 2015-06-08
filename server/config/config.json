@@ -7,6 +7,7 @@
       "http://acrobatt-vm11.psi.ad.unistra.fr:3021",
       "http://acrobatt-vm11.psi.ad.unistra.fr:3022",
       "http://acrobatt-vm11.psi.ad.unistra.fr:3023",
+      "http://acrobatt-vm11.psi.ad.unistra.fr:3024",
       "http://localhost:3010",
       "http://localhost:3020",
       "http://localhost:3011",
@@ -14,6 +15,7 @@
       "http://localhost:3012",
       "http://localhost:3022",
       "http://localhost:3013",
+      "http://localhost:3023",
       "http://localhost:3014",
       "http://localhost:3024"]
   },
