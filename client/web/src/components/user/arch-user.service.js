@@ -14,18 +14,15 @@ angular.module('archCore')
       {
         var deferred = $q.defer();
 
-        SignupTypeUsers.query({signupType : httpConstant.signupType.name}, function(err, users)
+        SignupTypeUsers.query({signupType : httpConstant.signupType.name}, function(result, err)
         {
-          console.log(err);
-          console.log(users);
-          
           if(err)
           {
             deferred.reject(err);
           }
           else
           {
-            deferred.resolve(users);
+            deferred.resolve(result.data);
           }
         });
 
