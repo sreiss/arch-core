@@ -12,7 +12,21 @@ angular.module('archCore')
       /** Get users. */
       getUsers: function()
       {
-        return SignupTypeUsers.query({signupType : httpConstant.signupType.name});
+        var deferred = $q.defer();
+
+        SignupTypeUsers.query({signupType : httpConstant.signupType.name}, function(err, users)
+        {
+          if(err)
+          {
+            deferred.reject(err);
+          }
+          else
+          {
+            deferred.resolve(users);
+          }
+        });
+
+        return deferred.promise;
       },
 
       /** Add user. */
