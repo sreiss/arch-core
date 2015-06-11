@@ -74,11 +74,6 @@ angular.module('archCore')
         return this.checkRole('ADMIN');
       },
 
-      isMember: function()
-      {
-        return this.checkRole('MEMBER');
-      },
-
       getProfile: function(id)
       {
         var deferred = $q.defer();

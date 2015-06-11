@@ -4,7 +4,7 @@ angular.module('archCore')
     return {
       restrict: 'E',
       templateUrl: 'components/account/arch-account.html',
-      controller: function($scope, $cookieStore,$stateParams) {
+      controller: function($scope, $cookieStore,$stateParams, $mdToast) {
         var init = function()
         {
           var token = archAccountService.getCurrentToken();
