@@ -29,4 +29,7 @@ module.exports = function(eventController, eventRouter, eventMiddleware)
 
     eventRouter.route('/category/:eventcategory')
         .get(eventController.getEventsByCategory);
+
+    eventRouter.route('/creator/:eventcreator')
+        .get(eventController.getEventsByCreator);
 };

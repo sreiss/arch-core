@@ -303,6 +303,30 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
+        /** Get event's informations by creator. */
+        getEventsByCreator: function(creator)
+        {
+            var deferred = q.defer();
+
+            Event.findOne({creator: creator}).populate('trainings.training runs.run').exec(function (err, event)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else if(!event)
+                {
+                    deferred.reject(new Error('No category matching [CREATOR] : ' + category + "."));
+                }
+                else
+                {
+                    deferred.resolve(event);
+                }
+            });
+
+            return deferred.promise;
+        },
+
         /** Get all events' informations. */
         getEvents: function()
         {

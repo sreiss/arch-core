@@ -8,10 +8,8 @@
 var ArchSaveError = GLOBAL.ArchSaveError;
 var ArchFindError = GLOBAL.ArchFindError;
 var ArchDeleteError = GLOBAL.ArchDeleteError;
-//var moment = require('moment');
-var VCalendar = require('cozy-ical').VCalendar;
-var VEvent = require('cozy-ical').VEvent;
-//var icalendar = require('icalendar');
+var fs = require('fs');
+var moment = require('moment');
 
 module.exports = function(eventService)
 {
@@ -133,6 +131,23 @@ module.exports = function(eventService)
             });
         },
 
+        /** Get event's informations by type. */
+        getEventsByCreator: function(req, res)
+        {
+            // Get event type.
+            var creator = req.params.eventcreator;
+
+            // Get event.
+            eventService.getEventsByCreator(creator).then(function(event)
+            {
+                res.status(event ? 200 : 204).json({"count": 1, "data": event});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
+        },
+
         getEvents: function(req, res)
         {
             // Get all events.
@@ -148,58 +163,43 @@ module.exports = function(eventService)
 
         getIcal: function(req, res)
         {
-            // Avec icalendar
-            //var ical = new icalendar.iCalendar();
-            //
-            //eventService.getEvents().then(function(events)
-            //{
-            //    for(var i=0; i<events.length; i++)
-            //    {
-            //        var event = new icalendar.VEvent(i);
-            //        event.setDate(events[i].dtstart, events[i].dtend);
-            //        event.setSummary(events[i].summary);
-            //        event.setLocation(events[i].location);
-            //        event.setDescription(events[i].description);
-            //        ical.addComponent(event);
-            //    }
-            //    res.status(200);
-            //    console.log(ical.events());
-            //})
-            //.catch(function(err)
-            //{
-            //    res.status(500).json({"error" : new ArchFindError(err.message)});
-            //});
-
-            var cal = new VCalendar({
-                organization:'ArchTailors',
-                title:'Trail events'
-            });
-
             eventService.getEvents().then(function(events)
             {
+                var ical= "BEGIN:VCALENDAR\r\n" +
+                    "METHOD:PUBLISH\r\n" +
+                    "VERSION:2.0\r\n" +
+                    "PRODID:-//ArchTailors//Acrobatt//FR\r\n";
+
                 for(var i=0; i<events.length; i++)
                 {
-                    var vevent = new VEvent({
-                        startDate: events[i].dtstart,
-                        endDate: events[i].dtend,
-                        summary: events[i].summary,
-                        location: events[i].location,
-                        description: events[i].description,
-                        transp: events[i].transp,
-                        sequence: events[i].sequence,
-                        categories: events[i].category,
-                        stampDate: '2014-04-25T01:32:21.196Z',
-                        uid: i
-                    });
-                    cal.add(vevent);
+                    var start = moment(events[i].dtstart).subtract(1, 'hours').format("YYYYMMDDTHHmmss") + "Z";
+                    var end = moment(events[i].dtend).subtract(1, 'hours').format("YYYYMMDDTHHmmss") + "Z";
+
+                    ical = ical + "BEGIN:VEVENT\r\n" +
+                        "SUMMARY:" + events[i].summary + "\r\n" +
+                        "UID:" + events[i]._id + "\r\n" +
+                        "DTSTART:" + start + "\r\n" +
+                        "DTEND:" + end + "\r\n" +
+                        "LOCATION:" + events[i].location + "\r\n" +
+                        "DESCRIPTION:" + events[i].description + "\r\n" +
+                        "TRANSP:" + events[i].transp + "\r\n" +
+                        "SEQUENCE:" + events[i].sequence + "\r\n" +
+                        "END:VEVENT\r\n";
                 }
+
+                ical = ical + "END:VCALENDAR";
+
+                fs.writeFile('archtailor.ics', ical, function(err)
+                {
+                    res.status(200).json({"twix": ical});
+                });
+
             })
             .catch(function(err)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
-            console.log(cal.toString());
-            //console.log('lol');
+
         }
     }
 };
