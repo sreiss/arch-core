@@ -20,9 +20,9 @@
       <td>{{user.fname}}</td>
       <td>{{user.email}}</td>
       <td class="text-right">
-        {{archAccountService.isAdmin()}}
-        <a ng-show="archAccountService.isAdmin()" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
-        <a ng-show="archAccountService.isAdmin()" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
+        {{currentUser.isAdmin}}
+        <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
+        <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
     </tr>
     </tbody>

@@ -3,8 +3,20 @@
 angular.module('archCore')
 .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService,DTOptionsBuilder, DTColumnDefBuilder)
   {
-    $scope.users = archUserService.getUsers();
+    $scope.users = {};
+
+    archUserService.getUsers().then(function(users)
+    {
+      $scope.users = users;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération des membres.").position('top right').hideDelay(3000));
+    });
+
     $scope.currentUser = archAccountService.getCurrentUser();
+    $scope.currentUser.isAdmin = archAccountService.isAdmin();
+
     $scope.dtOptions = DTOptionsBuilder.newOptions()
       .withLanguage({
         "sProcessing":     "Traitement en cours...",
