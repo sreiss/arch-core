@@ -59,9 +59,7 @@ angular.module('archCore')
       checkRole: function(role)
       {
         var currentUser = this.getCurrentUser();
-        console.log(currentUser);
-        //var currentRole = currentUser.profil.role || '';
-        var currentRole = "ADMIN";
+        var currentRole = currentUser.profile.role.name || '';
 
         if(role == currentRole)
         {
