@@ -56,17 +56,27 @@ angular.module('archCore')
         return null;
       },
 
-      isCurrentUserAdmin: function()
+      checkRole: function(role)
       {
         var currentUser = this.getCurrentUser();
-        var role = currentUser.profil.role || '';
+        var currentRole = currentUser.profil.role || '';
 
-        if(role == "admin")
+        if(role == currentRole)
         {
           return true;
         }
 
         return false;
+      },
+
+      isAdmin: function()
+      {
+        return this.checkRole('ADMIN');
+      },
+
+      isMember: function()
+      {
+        return this.checkRole('MEMBER');
       },
 
       getProfile: function(id)
