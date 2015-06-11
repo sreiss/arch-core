@@ -16,6 +16,9 @@ angular.module('archCore')
 
         SignupTypeUsers.query({signupType : httpConstant.signupType.name}, function(err, users)
         {
+          console.log(err);
+          console.log(users);
+          
           if(err)
           {
             deferred.reject(err);
