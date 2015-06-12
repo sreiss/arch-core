@@ -6,14 +6,18 @@ angular.module('archCore').constant('httpConstant',
   casClientUrl: 'http://localhost:3010',
   casServerUrl: 'http://localhost:3020',
   coreClientUrl: 'http://localhost:3011',
-  coreServerUrl: 'http://localhost:3021', */
-
+  coreServerUrl: 'http://localhost:3021',
+  kidClientUrl: 'http://localhost:3014',
+  kidServerUrl: 'http://localhost:3024', */
 
   /* PROD */
   casClientUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
   casServerUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
   coreClientUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
   coreServerUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
+  kidServerUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3024',
+  kidClientUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3024',
+
 
   signupType: {
     name: 'ASCPA',

@@ -29,7 +29,7 @@ exports.attach = function(opts)
         var origin = req.headers.origin;
 
         if (allowedOrigins.indexOf(origin) > -1) {
-            res.header('Access-Control-Allow-Origin', "*");
+            res.header('Access-Control-Allow-Origin', origin);
             res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
             res.header('Access-Control-Allow-Headers', 'Content-Type');
         }

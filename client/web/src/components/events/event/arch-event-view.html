@@ -18,3 +18,4 @@
   <md-button ng-click="deleteEvent(event._id)" ng-show="currentUser._id == event.creator" class="md-raised md-accent">{{'EVENT_DELETE' | translate}}</md-button>
   <md-button ui-sref="eventEdit({id:event._id})" ng-show="currentUser._id == event.creator" class="md-raised md-accent">{{'EVENT_EDIT' | translate}}</md-button>
 </div>
+{{listGuest}}

@@ -101,27 +101,20 @@ angular.module('archCore')
     {
       $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
     });
-
     $scope.event = {};
-
     Event.get({id: $stateParams.id}, function (result) {
-      console.log(result.data);
       $scope.event = result.data;
     });
-
     $scope.users = archUserService.getUsers();
     var temp = [];
-    $scope.users.$promise.then(function (item) {
-      // time = 1.000 sec. Request is completed.
-      // data is available, so you assign it to $scope.tasks
-      var usersData = item.data;
-      usersData.forEach(function (user) {
+    archUserService.getUsers().then(function (item) {
+      item.forEach(function (user) {
         $scope.event.participants.forEach(function (guest) {
           if (user._id == guest.guest) {
             temp.push(user);
           }
         })
-      })
+      });
       $scope.listGuest = temp;
     });
 
@@ -147,7 +140,7 @@ angular.module('archCore')
       }
     };
 
-    $scope.showUsersEvent = function (ev) {
+    /*$scope.showUsersEvent = function (ev) {
       $mdDialog.show({
         controller: DialogController,
         templateUrl: 'components/events/event/arch-event-list-guest.html',
@@ -159,14 +152,14 @@ angular.module('archCore')
         }, function () {
           //cancel
         });
-    };
+    };*/
 
     $scope.takePartEvent = function (id) {
-      var test = new EventGuest();
+      var guest = new EventGuest();
 
-      test._id = id;
-      test.participants = [{guest: $scope.currentUser._id, status: "takePart"}]
-      test.$save(function (result) {
+      guest._id = id;
+      guest.participants = [{guest: $scope.currentUser._id, status: "takePart"}];
+      guest.$save(function (result) {
           if (result.count > 0) {
             $mdToast.show($mdToast.simple()
                 .content("Evènement ajouté avec succés.")
@@ -190,10 +183,7 @@ angular.module('archCore')
               .hideDelay(3000)
           );
         });
-    }
-    $scope.listGuest = function () {
-
-    }
+    };
   })
   .controller('archEventAddController', function ($scope, $stateParams, $location, $mdToast, $state, Event, $mdDialog, archAccountService) {
 

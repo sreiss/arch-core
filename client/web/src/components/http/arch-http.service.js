@@ -149,7 +149,7 @@ angular.module('archCore')
   })
   .factory("EventGuest", function($resource, httpConstant)
   {
-    return $resource(httpConstant.coreServerUrl + '/events/event/addGuest', {},
+    return $resource(httpConstant.coreServerUrl + '/events/event/updateGuest', {},
       {
         save:
         {
@@ -157,4 +157,36 @@ angular.module('archCore')
           headers: { 'Content-Type': 'application/json' }
         }
       });
+  })
+  .factory("Participant", function ($resource,httpConstant) {
+    return $resource(httpConstant.kidServerUrl + '/kidoikoiaki/participant/:id', {  }, {
+      save: {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      update: {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    });
+  })
+  .factory("Sheet", function ($resource,httpConstant) {
+    return $resource(httpConstant.kidServerUrl + '/kidoikoiaki/sheet/:id', {}, {
+      save: {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      update: {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    });
   });
