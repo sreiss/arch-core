@@ -158,7 +158,7 @@ angular.module('archCore')
       var guest = new EventGuest();
 
       guest._id = id;
-      guest.participants = [{guest: $scope.currentUser._id, status: "takePart"}];
+      guest.participants = {guest: $scope.currentUser._id, status: "takePart"};
       guest.$save(function (result) {
           if (result.count > 0) {
             $mdToast.show($mdToast.simple()

@@ -101,4 +101,11 @@ angular.module('archCore')
     $scope.uiConfig.calendar.dayNamesShort = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     /* event sources array*/
     $scope.eventSources = [$scope.events];
+  })
+  .controller('icalCalendarController', function ($http){
+    $http.get("http://localhost:3021/events/event/ical")
+      .success(function(response){
+        console.log(response);
+        window.open( "data:text/calendar;charset=utf8," + escape(response));
+      });
   });
