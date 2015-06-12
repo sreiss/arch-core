@@ -1,6 +1,6 @@
 <h1>{{'USERS_TITLE' | translate}}</h1>
 
-<md-button ng-show="currentUser.profile.role == 'admin'" class="md-accent md-raised" ui-sref="userAdd">{{'USERS_ADD_USER' | translate}}</md-button>
+<md-button ng-show="currentUser.profile.role._is('ADMIN')" class="md-accent md-raised" ui-sref="userAdd">{{'USERS_ADD_USER' | translate}}</md-button>
 
 <div  class="table-list">
   <p ng-hide="users.length">{{'USERS_NO_USERS' | translate}}</p>
@@ -20,8 +20,8 @@
       <td>{{user.fname}}</td>
       <td>{{user.email}}</td>
       <td class="text-right">
-        <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
-        <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
+        <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
+        <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
     </tr>
     </tbody>

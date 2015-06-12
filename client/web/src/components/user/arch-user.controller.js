@@ -4,6 +4,16 @@ angular.module('archCore')
 .controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService,DTOptionsBuilder, DTColumnDefBuilder)
   {
     $scope.users = new Array();
+    $scope.currentUser = {};
+
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.currentUser = user;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+    });
 
     archUserService.getUsers().then(function(users)
     {
@@ -13,9 +23,6 @@ angular.module('archCore')
     {
       $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération des membres.").position('top right').hideDelay(3000));
     });
-
-    $scope.currentUser = archAccountService.getCurrentUser();
-    $scope.currentUser.isAdmin = archAccountService.isAdmin();
 
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
     {
@@ -109,7 +116,16 @@ angular.module('archCore')
   .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5)
   {
     var id = $stateParams.id;
-    $scope.currentUser = archAccountService.getCurrentUser();
+
+    $scope.currentUser = {};
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.event.creator = user._id;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+    });
 
     OAuthUser.query({id:id}, function(oauthUser)
     {

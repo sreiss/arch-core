@@ -10,21 +10,6 @@ angular.module('archCore')
       ADMIN: ['AUTHENTICATED', 'MEMBER', 'CARTOGRAPHER', 'ADMIN']
     };
 
-    var _is = function(roleName)
-    {
-      var currentUser = this.getCurrentUser();
-      var role;
-
-      if(currentUser && currentUser.profile && (role = currentUser.profile.role))
-      {
-        return _roles[roleName].indexOf(role.name) > -1;
-      }
-      else
-      {
-        return false;
-      }
-    };
-
     return {
       saveClient: function()
       {
@@ -68,30 +53,60 @@ angular.module('archCore')
 
       getCurrentUser: function()
       {
+        var deferred = $q.defer();
         var token = this.getCurrentToken();
 
         if(token)
         {
-          return token.user || null;
+          var currentUser = token.user || null;
+
+          if(currentUser)
+          {
+            this.getProfile(currentUser._id).then(function(profile)
+            {
+              if(profile)
+              {
+                currentUser.profile = profile;
+              }
+              else
+              {
+                currentUser.profile = {role : {}};
+              }
+            })
+            .then(function()
+            {
+              var currentRoleName = currentUser.profile.role.name || '';
+              var assets = {};
+
+              for(var role in _roles)
+              {
+                assets[role] = _roles[role].indexOf(currentRoleName) > -1;
+              };
+
+              currentUser.profile.role._is = function(roleName)
+              {
+                return currentUser.profile.role.assets[roleName] || false;
+              };
+
+              currentUser.profile.role.assets = assets;
+              deferred.resolve(currentUser);
+            })
+            .catch(function()
+            {
+              deferred.resolve(currentUser);
+            });
+          }
+          else
+          {
+            deferred.reject(new Error('NO_CURRENT_USER_FOUND'));
+          }
+        }
+        else
+        {
+          deferred.reject(new Error('NO_TOKEN_FOUND'));
         }
 
-        return null;
-      },
-
-      isCartographer: function() {
-        return _is('CARTOGRAPHER');
-      },
-
-      isAuthenticated: function() {
-        return _is('AUTHENTICATED');
-      },
-
-      isMember: function() {
-        return _is('MEMBER');
-      },
-
-      isAdmin: function() {
-        return _is('ADMIN');
+        return deferred.promise;
       },
 
       getProfile: function(id)
@@ -104,7 +119,7 @@ angular.module('archCore')
         })
         .catch(function(err)
         {
-          deferred.reject(err.message);
+          deferred.reject(err);
         });
 
         return deferred.promise;

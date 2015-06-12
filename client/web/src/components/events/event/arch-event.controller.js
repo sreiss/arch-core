@@ -2,11 +2,29 @@
 
 angular.module('archCore')
   .controller('archEventController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
-    //$scope.events = Event.query();
-    $scope.currentUser = archAccountService.getCurrentUser();
+    $scope.currentUser = {};
+
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.currentUser = user;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+    });
   })
   .controller('archEventEditController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
-    $scope.currentUser = archAccountService.getCurrentUser();
+    $scope.currentUser = {};
+
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.currentUser = user;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+    });
+
     $scope.event = new Event;
     Event.get({id: $stateParams.id}, function (result) {
       console.log(result.data);
@@ -73,8 +91,16 @@ angular.module('archCore')
       };
     }
 
-    $scope.currentUser = archAccountService.getCurrentUser();
-    console.log($scope.currentUser);
+    $scope.currentUser = {};
+
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.currentUser = user;
+    })
+    .catch(function()
+    {
+      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+    });
 
     $scope.event = {};
 
@@ -211,7 +237,18 @@ angular.module('archCore')
 
       $scope.event.dtstart = dateStart;
       $scope.event.dtend = dateEnd;
-      $scope.event.creator = archAccountService.getCurrentUser()._id;
+
+      $scope.currentUser = {};
+
+      archAccountService.getCurrentUser().then(function(user)
+      {
+        $scope.event.creator = user._id;
+      })
+      .catch(function()
+      {
+        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+      });
+
       console.log($scope.event);
       $scope.event.$save(function (result) {
         if (result.count > 0) {

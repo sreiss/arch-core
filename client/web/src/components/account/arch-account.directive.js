@@ -31,32 +31,6 @@ angular.module('archCore')
             else
             {
               $scope.alreadyLogged = true;
-
-              $scope.token = token;
-              $scope.user = token.user;
-
-              // Get current user's profile um die Role zu haben !
-              if(!$scope.user.profile)
-              {
-                console.log('INIT : Get profil of current user.');
-
-                archAccountService.getProfile($scope.user._id).then(function(result)
-                {
-                  token.user.profile = result.data;
-                  $cookieStore.put('token', token);
-                  $scope.user = token.user;
-                })
-                .catch(function(err)
-                {
-                  $scope.alreadyLogged = false;
-
-                  $mdToast.show($mdToast.simple()
-                      .content("Une erreur est survenue lors de la récupération du profile de l'utilisateur.")
-                      .position('top right')
-                      .hideDelay(3000)
-                  );
-                });
-              }
             }
           }
           else
@@ -70,8 +44,12 @@ angular.module('archCore')
 
         $scope.myAccount = function()
         {
-          var user = archAccountService.getCurrentUser();
-          $state.go('userEdit', {'id' : user._id});
+          console.log('myAccount');
+          archAccountService.getCurrentUser().then(function(user)
+          {
+            console.log(user);
+            //$state.go('userEdit', {'id' : user._id});
+          });
         };
 
         $scope.logout = function()
