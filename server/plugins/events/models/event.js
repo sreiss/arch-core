@@ -37,7 +37,7 @@ module.exports = function(Types) {
             [{
                 run: {type: Types.ObjectId, ref: 'Event'}
             }],
-            kidoikoiaki: {type: String }
+            kidoikoiaki: {type: String}
         },
         priority: 2
     };
