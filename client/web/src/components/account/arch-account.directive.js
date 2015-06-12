@@ -5,52 +5,43 @@ angular.module('archCore')
       restrict: 'E',
       templateUrl: 'components/account/arch-account.html',
       controller: function($scope, $cookieStore,$stateParams, $mdToast) {
-        var init = function()
-        {
+        var init = function() {
+          if($state.$current != "ical"){
           var token = archAccountService.getCurrentToken();
 
-          if(!token && $stateParams.token)
-          {
+          if (!token && $stateParams.token) {
             $cookieStore.put('token', JSON.parse(decodeURIComponent(atob($stateParams.token))));
             token = archAccountService.getCurrentToken();
           }
 
-          if(token)
-          {
+          if (token) {
             console.log('INIT : Already connected.');
 
-            archAccountService.getCurrentUser().then(function(user)
-            {
+            archAccountService.getCurrentUser().then(function (user) {
               $scope.user = user;
             })
-            .then(function()
-            {
-              if(token.user.signuptype.name != httpConstant.signupType.name && token.user.signuptype.isPublic === false)
-              {
-                console.log('INIT : Current signup type not public.');
+              .then(function () {
+                if (token.user.signuptype.name != httpConstant.signupType.name && token.user.signuptype.isPublic === false) {
+                  console.log('INIT : Current signup type not public.');
 
-                archAccountService.getLoginUrl().then(function(loginUrl)
-                {
-                  window.location = loginUrl;
-                });
-              }
-              else
-              {
-                $scope.alreadyLogged = true;
-              }
-            })
-            .catch(function()
-            {
-              $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-            });
+                  archAccountService.getLoginUrl().then(function (loginUrl) {
+                    window.location = loginUrl;
+                  });
+                }
+                else {
+                  $scope.alreadyLogged = true;
+                }
+              })
+              .catch(function () {
+                $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+              });
           }
-          else
-          {
-            archAccountService.getLoginUrl().then(function(loginUrl)
-            {
+          else {
+            archAccountService.getLoginUrl().then(function (loginUrl) {
               window.location = loginUrl;
             });
           }
+        }
         }();
 
         $scope.myAccount = function()
