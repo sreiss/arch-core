@@ -191,6 +191,7 @@ module.exports = function(eventService)
 
                 fs.writeFile('archtailor.ics', ical, function(err)
                 {
+                    res.header("Content-Type", "text/plain");
                     res.download('archtailor.ics', 'archtailor.ics');
                 });
 
