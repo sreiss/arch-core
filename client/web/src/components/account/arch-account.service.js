@@ -59,7 +59,7 @@ angular.module('archCore')
       checkRole: function(role)
       {
         var currentUser = this.getCurrentUser();
-        var currentRole = currentUser.profil.role || '';
+        var currentRole = currentUser.profile.role.name || '';
 
         if(role == currentRole)
         {
@@ -72,11 +72,6 @@ angular.module('archCore')
       isAdmin: function()
       {
         return this.checkRole('ADMIN');
-      },
-
-      isMember: function()
-      {
-        return this.checkRole('MEMBER');
       },
 
       getProfile: function(id)

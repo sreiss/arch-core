@@ -3,9 +3,9 @@
 <md-button ng-show="currentUser.profile.role == 'admin'" class="md-accent md-raised" ui-sref="userAdd">{{'USERS_ADD_USER' | translate}}</md-button>
 
 <div  class="table-list">
-  <p ng-hide="users.data.length">{{'USERS_NO_USERS' | translate}}</p>
+  <p ng-hide="users.length">{{'USERS_NO_USERS' | translate}}</p>
   <div>
-  <table class="" ng-show="users.data.length" datatable="ng" dt-options="dtOptions" dt-columns="dtColumn" dt-column-defs="dtColumnDefs" >
+  <table class="" ng-show="users.length" datatable="ng" dt-options="dtOptions" dt-columns="dtColumn" dt-column-defs="dtColumnDefs" >
     <thead>
     <tr>
       <th data-field="fname">{{'USERS_TABLE_NOM' | translate}}</th>
@@ -15,12 +15,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="user in users.data">
+    <tr ng-repeat="user in users">
       <td>{{user.lname}}</td>
       <td>{{user.fname}}</td>
       <td>{{user.email}}</td>
       <td class="text-right">
-        {{currentUser.isAdmin}}
         <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
         <a ng-show="currentUser.isAdmin" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
