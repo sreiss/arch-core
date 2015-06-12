@@ -74,7 +74,7 @@ angular.module('archCore')
 
               for(var role in _roles)
               {
-                assets[role] = _roles[role].indexOf(currentRoleName) > -1;
+                assets[role] = _roles[role].indexOf(currentUser.profile.role.name) > -1;
               };
 
               currentUser.profile.role._is = function(roleName)
