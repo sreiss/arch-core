@@ -19,19 +19,30 @@ angular.module('archCore')
           {
             console.log('INIT : Already connected.');
 
-            if(token.user.signuptype.name != httpConstant.signupType.name && token.user.signuptype.isPublic === false)
+            archAccountService.getCurrentUser().then(function(user)
             {
-              console.log('INIT : Current signup type not public.');
-
-              archAccountService.getLoginUrl().then(function(loginUrl)
+              $scope.user = user;
+            })
+            .then(function()
+            {
+              if(token.user.signuptype.name != httpConstant.signupType.name && token.user.signuptype.isPublic === false)
               {
-                window.location = loginUrl;
-              });
-            }
-            else
+                console.log('INIT : Current signup type not public.');
+
+                archAccountService.getLoginUrl().then(function(loginUrl)
+                {
+                  window.location = loginUrl;
+                });
+              }
+              else
+              {
+                $scope.alreadyLogged = true;
+              }
+            })
+            .catch(function()
             {
-              $scope.alreadyLogged = true;
-            }
+              $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+            });
           }
           else
           {
@@ -44,11 +55,9 @@ angular.module('archCore')
 
         $scope.myAccount = function()
         {
-          console.log('myAccount');
           archAccountService.getCurrentUser().then(function(user)
           {
-            console.log(user);
-            //$state.go('userEdit', {'id' : user._id});
+            $state.go('userEdit', {'id' : user._id});
           });
         };
 
