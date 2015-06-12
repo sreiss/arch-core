@@ -171,8 +171,6 @@ module.exports = function(Event)
                 {
                     for (var i =0; i < participants.length; i++)
                     {
-                        console.log(participants[i]);
-
                         if(participants[i].guest==eventData.participants.guest)
                         {
                             participants[i].status = eventData.participants.status;
@@ -316,7 +314,7 @@ module.exports = function(Event)
                 }
                 else if(!event)
                 {
-                    deferred.reject(new Error('No category matching [CREATOR] : ' + category + "."));
+                    deferred.reject(new Error('No creator matching [CREATOR] : ' + creator + "."));
                 }
                 else
                 {

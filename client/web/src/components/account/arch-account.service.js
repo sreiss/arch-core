@@ -3,6 +3,28 @@ angular.module('archCore')
   .factory('archAccountService', function(archHttpService, $q, httpConstant, $cookieStore, $base64) {
     var casUrl = httpConstant.casServerUrl + '/oauth';
 
+    var _roles = {
+      AUTHENTICATED: ['AUTHENTICATED'],
+      MEMBER: ['AUTHENTICATED', 'MEMBER'],
+      CARTOGRAPHER: ['CARTOGRAPHER'],
+      ADMIN: ['AUTHENTICATED', 'MEMBER', 'CARTOGRAPHER', 'ADMIN']
+    };
+
+    var _is = function(roleName)
+    {
+      var currentUser = this.getCurrentUser();
+      var role;
+
+      if(currentUser && currentUser.profile && (role = currentUser.profile.role))
+      {
+        return _roles[roleName].indexOf(role.name) > -1;
+      }
+      else
+      {
+        return false;
+      }
+    };
+
     return {
       saveClient: function()
       {
@@ -56,22 +78,20 @@ angular.module('archCore')
         return null;
       },
 
-      checkRole: function(role)
-      {
-        var currentUser = this.getCurrentUser();
-        var currentRole = currentUser.profile.role.name || '';
-
-        if(role == currentRole)
-        {
-          return true;
-        }
-
-        return false;
+      isCartographer: function() {
+        return _is('CARTOGRAPHER');
       },
 
-      isAdmin: function()
-      {
-        return this.checkRole('ADMIN');
+      isAuthenticated: function() {
+        return _is('AUTHENTICATED');
+      },
+
+      isMember: function() {
+        return _is('MEMBER');
+      },
+
+      isAdmin: function() {
+        return _is('ADMIN');
       },
 
       getProfile: function(id)
