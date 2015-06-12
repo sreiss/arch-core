@@ -89,13 +89,6 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "components/events/event/arch-event-view.html",
         controller: "archEventViewController"
 
-      })
-      .state('ical',
-      {
-        url:"/ical",
-        controller : "icalCalendarController",
-        template : "<h1>Mdr</h1>"
-
       });
 
     $urlRouterProvider
