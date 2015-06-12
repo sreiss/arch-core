@@ -3,7 +3,6 @@
 angular.module('archCore')
   .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state, archAccountService)
   {
-    $scope.currentUser = {};
     archAccountService.getCurrentUser().then(function(user)
     {
       $scope.event.creator = user._id;

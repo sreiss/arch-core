@@ -238,8 +238,6 @@ angular.module('archCore')
       $scope.event.dtstart = dateStart;
       $scope.event.dtend = dateEnd;
 
-      $scope.currentUser = {};
-
       archAccountService.getCurrentUser().then(function(user)
       {
         $scope.event.creator = user._id;
