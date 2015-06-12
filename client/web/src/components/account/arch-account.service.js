@@ -64,19 +64,13 @@ angular.module('archCore')
           {
             this.getProfile(currentUser._id).then(function(profile)
             {
-              if(profile)
-              {
-                currentUser.profile = profile;
-              }
-              else
-              {
-                currentUser.profile = {role : {}};
-              }
+              currentUser.profile = profile || {};
             })
             .then(function()
             {
-              var currentRoleName = currentUser.profile.role.name || '';
               var assets = {};
+              currentUser.profile.role = currentUser.profile.role || {};
+              currentUser.profile.role.name = currentUser.profile.role.name || '';
 
               for(var role in _roles)
               {
