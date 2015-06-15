@@ -122,7 +122,7 @@ angular.module('archCore')
       logout: function()
       {
         $cookieStore.remove('token');
-        window.location.reload();
+        window.location = httpConstant.coreClientUrl + '/#/';
       },
 
       getLoginUrl: function()
