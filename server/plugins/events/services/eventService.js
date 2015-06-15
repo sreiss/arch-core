@@ -258,7 +258,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({dtstart: date}).populate('trainings.training runs.run').exec(function (err, event)
+            Event.find({dtstart: date}).populate('trainings.training runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -282,7 +282,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({category: category}).populate('trainings.training runs.run').exec(function (err, event)
+            Event.find({category: category}).populate('trainings.training runs.run').exec(function (err, event)
             {
                 if(err)
                 {
@@ -306,7 +306,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOne({creator: creator}).populate('trainings.training runs.run').exec(function (err, event)
+            Event.find({creator: creator}).populate('trainings.training runs.run').exec(function (err, event)
             {
                 if(err)
                 {
