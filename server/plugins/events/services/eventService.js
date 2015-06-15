@@ -330,7 +330,7 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.find().populate('trainings.training runs.run').exec(function (err, events)
+            Event.find({dtstart: {$gte: moment().subtract(1, 'year')}}).populate('trainings.training runs.run').exec(function (err, events)
             {
                 if(err)
                 {
