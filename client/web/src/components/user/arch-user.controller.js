@@ -62,7 +62,14 @@ angular.module('archCore')
             .hideDelay(3000)
           );
 
-          $scope.users = archUserService.getUsers();
+          archUserService.getUsers().then(function(users)
+          {
+            $scope.users = users;
+          })
+          .catch(function()
+          {
+            $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération des membres.").position('top right').hideDelay(3000));
+          });
         })
         .catch(function(err)
         {
