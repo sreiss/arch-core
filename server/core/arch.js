@@ -3,7 +3,6 @@ var path = require('path'),
     config = require(path.join(__dirname, 'lib', 'config')),
     utils = require(path.join(__dirname, 'lib', 'utils')),
     expressApp = require(path.join(__dirname, 'lib', 'expressApp')),
-    oauth = require(path.join(__dirname, 'lib', 'oauth', 'oauth')),
     server = require(path.join(__dirname, 'lib', 'server')),
     controllersLoader = require(path.join(__dirname, 'lib', 'loaders', 'controllersLoader')),
     routesLoader = require(path.join(__dirname, 'lib', 'loaders', 'routesLoader')),
@@ -31,14 +30,12 @@ exports.attach = function(opts)
     app.use(types);
     app.use(pluginLoader);
     app.use(expressApp);
-    app.use(oauth);
     app.use(server);
     app.use(modelsLoader);
     app.use(servicesLoader);
     app.use(middlewaresLoader);
     app.use(controllersLoader);
     app.use(routesLoader);
-    //app.use(pluginsLoader);
 };
 
 exports.init = function(done)
@@ -48,7 +45,8 @@ exports.init = function(done)
     var config = app.arch.config;
     var port = config.get('http:port');
 
-    app.arch.server.listen(port, function() {
+    app.arch.server.listen(port, function()
+    {
         var address = app.arch.server.address();
         var port = address.port || '80';
         console.log('[' + (new Date()) + '] Listening to port ' + port);
