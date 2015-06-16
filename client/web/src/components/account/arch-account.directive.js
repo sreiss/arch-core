@@ -6,7 +6,6 @@ angular.module('archCore')
       templateUrl: 'components/account/arch-account.html',
       controller: function($scope, $cookieStore,$stateParams, $mdToast) {
         var init = function() {
-          if($state.$current != "ical"){
           var token = archAccountService.getCurrentToken();
 
           if (!token && $stateParams.token) {
@@ -41,7 +40,6 @@ angular.module('archCore')
               window.location = loginUrl;
             });
           }
-        }
         }();
 
         $scope.myAccount = function()

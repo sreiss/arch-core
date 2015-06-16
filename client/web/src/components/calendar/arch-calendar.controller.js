@@ -11,8 +11,8 @@ angular.module('archCore')
         dataEvents.data.forEach(function (item) {
           var event = {};
           event.title = item.summary;
-          event.start = item.dtstart;
-          event.end = item.dtend;
+          event.start = moment(item.dtstart);
+          event.end = moment(item.dtend);
           event.editable = false;
           event.id = item._id;
           switch (item.category) {

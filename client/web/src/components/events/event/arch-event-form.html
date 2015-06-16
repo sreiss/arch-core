@@ -1,4 +1,7 @@
-  <div layout="row">
+<div ng-messages="$error">
+  <div class="ng-message-error"ng-message="date">{{'ERROR_DATE' | translate}}</div>
+</div>
+<div layout="row">
     <md-icon class="fa fa-user"></md-icon>
     <md-input-container flex>
       <label>{{'EVENT_FORM_NAME' | translate}}</label>

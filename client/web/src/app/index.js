@@ -70,6 +70,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "components/events/arch-type-event.html",
         controller: "archEventController"
       })
+      .state('eventsList',
+      {
+        url: "/listEvents",
+        templateUrl: "components/events/arch-event.html",
+        controller: "archEventListController"
+      })
       .state('eventAdd',
       {
         url: "/event/add/:category",

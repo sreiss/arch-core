@@ -35,7 +35,7 @@ module.exports = function(eventService)
         updateEvent: function(req, res)
         {
             // Get posted event.
-            var event = req.body;
+            var event = req.body.event;
 
             // Updating event.
             eventService.updateEvent(event).then(function(event)
