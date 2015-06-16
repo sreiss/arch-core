@@ -120,7 +120,7 @@ angular.module('archCore')
     $scope.currentUser = {};
     archAccountService.getCurrentUser().then(function(user)
     {
-      $scope.event.creator = user._id;
+      $scope.currentUser = user._id;
     })
     .catch(function()
     {

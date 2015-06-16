@@ -109,7 +109,7 @@ angular.module('archCore')
 
         archHttpService.get(httpConstant.coreServerUrl + '/users/user/' + id).then(function(result)
         {
-          deferred.resolve(result);
+          deferred.resolve(result.data);
         })
         .catch(function(err)
         {
