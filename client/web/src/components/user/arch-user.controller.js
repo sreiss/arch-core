@@ -81,11 +81,6 @@ angular.module('archCore')
         });
       }
     };
-
-    $scope.editUser = function(id)
-    {
-      $state.go('userEdit', {'id' : id});
-    };
   })
   .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService)
   {
@@ -128,6 +123,14 @@ angular.module('archCore')
     archAccountService.getCurrentUser().then(function(user)
     {
       $scope.currentUser = user._id;
+      archAccountService.getProfile($scope.currentUser).then(function(profile) {
+        if(profile.role.name == 'ADMIN'){
+          archUserService.getRoles()
+            .then(function(roles) {
+              $scope.roles = roles;
+            });
+        }
+      });
     })
     .catch(function()
     {
@@ -149,6 +152,7 @@ angular.module('archCore')
         $scope.coreUser.role = coreUser.data.role  || '';
         $scope.coreUser.birthdate = new Date(coreUser.data.birthdate)  || '';
         $scope.coreUser.phone = coreUser.data.phone  || '';
+        $scope.coreUser.adress = coreUser.data.adress  || '';
         $scope.coreUser.licenceffa = coreUser.data.licenceffa  || '';
         $scope.coreUser.avatar = coreUser.data.avatar  || '';
 
@@ -249,4 +253,70 @@ angular.module('archCore')
         });
       }
     };
+  })
+  .controller('archUserViewController', function($scope,archAccountService,$mdToast,OAuthUser,CoreUser,CoreUsers,$state,$stateParams,OAuthUsers){
+    var id = $stateParams.id;
+
+    $scope.currentUser = {};
+    archAccountService.getCurrentUser().then(function(user)
+    {
+      $scope.currentUser = user._id;
+    })
+      .catch(function()
+      {
+        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+      });
+
+    OAuthUser.query({id:id}, function(oauthUser)
+      {
+        $scope.oauthUser = new OAuthUsers();
+        $scope.oauthUser.id = oauthUser.data._id;
+        $scope.oauthUser.fname = oauthUser.data.fname || '';
+        $scope.oauthUser.lname = oauthUser.data.lname  || '';
+        $scope.oauthUser.email = oauthUser.data.email  || '';
+        $scope.oauthUser.password = oauthUser.data.password  || '';
+
+        CoreUser.query({id:id}, function(coreUser)
+          {
+            $scope.coreUser = new CoreUsers();
+            $scope.coreUser.role = coreUser.data.role  || '';
+            console.log(coreUser.data.birthdate);
+            $scope.coreUser.birthdate = new Date(coreUser.data.birthdate)  || '';
+            $scope.coreUser.phone = coreUser.data.phone  || '';
+            $scope.coreUser.adress = coreUser.data.adress  || '';
+            $scope.coreUser.licenceffa = coreUser.data.licenceffa  || '';
+            $scope.coreUser.avatar = coreUser.data.avatar  || '';
+
+            if($scope.coreUser.avatar.length > 0)
+            {
+              previewAvatar($scope.coreUser.avatar);
+            }
+          },
+          function(err)
+          {
+            $mdToast.show($mdToast.simple()
+                .content("Une erreur est survenue lors de la récupération du membre.")
+                .position('top right')
+                .hideDelay(3000)
+            );
+
+            $state.go('users');
+          });
+      },
+      function(err)
+      {
+        $mdToast.show($mdToast.simple()
+            .content("Une erreur est survenue lors de la récupération du membre.")
+            .position('top right')
+            .hideDelay(3000)
+        );
+
+        $state.go('users');
+      });
+
+    function previewAvatar(base64)
+    {
+      var html = '<img class="thumb" src="' + base64 + '"/>';
+      document.getElementById('avatar_preview').innerHTML = html;
+    }
   });

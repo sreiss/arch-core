@@ -17,7 +17,7 @@ angular.module('archCore')
         {
           "name" : httpConstant.clientName,
           "redirect_uri" : httpConstant.clientRedirectUri
-        }
+        };
 
         var deferred = $q.defer();
 

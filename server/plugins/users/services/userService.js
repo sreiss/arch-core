@@ -45,6 +45,7 @@ module.exports = function(User)
                 role: userData.role,
                 birthdate: userData.birthdate,
                 phone: userData.phone,
+                adress : userData.adress,
                 licenceffa: userData.licenceffa,
                 avatar: userData.avatar,
                 firstconnexion: false

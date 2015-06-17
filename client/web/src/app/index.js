@@ -28,6 +28,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: 'components/user/arch-user.html',
         controller: 'archUserController'
       })
+      .state('userView',
+      {
+        url: '/users/view/:id',
+        templateUrl: 'components/user/arch-user-view.html',
+        controller: 'archUserViewController'
+      })
       .state('userAdd',
       {
         url: "/users/add",
@@ -95,6 +101,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "components/events/event/arch-event-view.html",
         controller: "archEventViewController"
 
+      })
+      .state('galleryAdd',
+      {
+        url: '/gallery/add/',
+        templateUrl: 'components/gallery/arch-gallery-add.html',
+        controller: 'archGalleryAddController'
       });
 
     $urlRouterProvider

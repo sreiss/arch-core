@@ -13,6 +13,7 @@ module.exports = function(Types) {
             role: {type: Types.ObjectId, required: true, ref: 'Role'},
             birthdate: {type: Date},
             phone: {type: String},
+            adress: {type: String},
             licenceffa: {type: String},
             avatar: {type: String},
             firstconnexion: {type: Boolean, default: true}

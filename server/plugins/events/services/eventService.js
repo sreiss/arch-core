@@ -44,7 +44,7 @@ module.exports = function(Event)
 
                 event.participants.push(guest);
             }
-            ;
+
 
             for (var j = 0; j < eventData.trainings.length; j++) {
                 var training = {
@@ -53,7 +53,7 @@ module.exports = function(Event)
 
                 event.trainings.push(training);
             }
-            ;
+
 
             for (var k = 0; k < eventData.runs.length; k++) {
                 var run = {
@@ -62,7 +62,7 @@ module.exports = function(Event)
 
                 event.runs.push(run);
             }
-            ;
+
 
             event.save(function (err) {
                 if (err)
@@ -73,7 +73,7 @@ module.exports = function(Event)
                 {
                     deferred.resolve(event);
                 }
-            })
+            });
 
             return deferred.promise;
         },
@@ -95,7 +95,7 @@ module.exports = function(Event)
                 };
 
                 participants.push(guest);
-            };
+            }
 
             for(var j=0; j<eventData.trainings.length; j++)
             {
@@ -104,7 +104,7 @@ module.exports = function(Event)
                 };
 
                 trainings.push(training);
-            };
+            }
 
             for(var k=0; k<eventData.runs.length; k++)
             {
@@ -113,7 +113,7 @@ module.exports = function(Event)
                 };
 
                 runs.push(run);
-            };
+            }
 
             Event.update({_id:eventData._id},
                 {
@@ -135,7 +135,7 @@ module.exports = function(Event)
                     runs: runs,
                     kidoikoiaki: eventData.kidoikoiaki
                 },
-                function(err, nbr, event)
+                function(err, event)
                 {
                     if(err)
                     {
@@ -192,7 +192,7 @@ module.exports = function(Event)
                     {
                         $set: {participants: participants}
                     },
-                    function (err, nbr, event) {
+                    function (err, event) {
                         if (err) {
                             deferred.reject(err);
                         }
