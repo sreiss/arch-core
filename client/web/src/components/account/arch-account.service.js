@@ -123,9 +123,9 @@ angular.module('archCore')
       {
         $cookieStore.remove('token');
 
-        this.getLogoutUrl().then(function(logoutUrl)
+        this.getLoginUrl().then(function(loginUrl)
         {
-          window.location.href = logoutUrl;
+          window.location.href = loginUrl + '&logout=true';
         })
       },
 
@@ -155,36 +155,6 @@ angular.module('archCore')
           console.log('INIT : Params found in cookies.');
 
           deferred.resolve(httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&return=' + $base64.encode(httpConstant.clientRedirectUri));
-        }
-
-        return deferred.promise;
-      },
-
-      getLogoutUrl: function()
-      {
-        var deferred = $q.defer();
-
-        var cookieClientHash = $cookieStore.get('CARTO_clientHash') || '';
-
-        // If no saved in cookies, save new client.
-        if(cookieClientHash.length == 0)
-        {
-          console.log('INIT : Params not found in cookies, save new client.');
-
-          this.saveClient().then(function(result)
-          {
-            console.log('INIT : Params saved in cookies.');
-
-            var clientHash = $base64.encode(result.data.clientId + ':' + result.data.clientSecret);
-            $cookieStore.put('ASCPA_clientHash', clientHash);
-
-            deferred.resolve(httpConstant.casClientUrl + '/#/?client=' + clientHash + '&logout=true&return=' + $base64.encode(httpConstant.clientRedirectUri));
-          });
-        }
-        else
-        {
-          console.log('INIT : Params found in cookies.');
-          deferred.resolve(httpConstant.casClientUrl + '/#/?client=' + cookieClientHash + '&logout=true&return=' + $base64.encode(httpConstant.clientRedirectUri));
         }
 
         return deferred.promise;
