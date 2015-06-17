@@ -94,7 +94,6 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: "/event/event/:id",
         templateUrl: "components/events/event/arch-event-view.html",
         controller: "archEventViewController"
-
       });
 
     $urlRouterProvider

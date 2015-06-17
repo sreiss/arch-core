@@ -22,10 +22,7 @@ angular.module('archCore')
               .then(function () {
                 if (token.user.signuptype.name != httpConstant.signupType.name && token.user.signuptype.isPublic === false) {
                   console.log('INIT : Current signup type not public.');
-
-                  archAccountService.getLoginUrl().then(function (loginUrl) {
-                    window.location = loginUrl;
-                  });
+                  window.location = '/403.html';
                 }
                 else {
                   $scope.alreadyLogged = true;
