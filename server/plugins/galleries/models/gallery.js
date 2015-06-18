@@ -11,9 +11,8 @@ module.exports = function(Types) {
     return {
         schema:
         {
-            name:  {type: String, required: true},
-            medias: [{media: {type: Types.ObjectId, ref: 'Media'}}]
+            name:  {type: String, required: true}
         },
-        priority: 4
+        priority: 3
     };
 };

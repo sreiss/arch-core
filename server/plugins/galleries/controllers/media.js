@@ -20,17 +20,17 @@ module.exports = function(mediaService)
                 files: req.files,
                 body: req.body
             })
-                .then(function(media)
-                {
-                    res.json({
-                        message: 'MEDIA_SAVED',
-                        value: media
-                    });
-                })
-                .catch(function(err)
-                {
-                    next(err);
+            .then(function(media)
+            {
+                res.json({
+                    message: 'MEDIA_SAVED',
+                    value: media
                 });
+            })
+            .catch(function(err)
+            {
+                next(err);
+            });
         }
     };
 

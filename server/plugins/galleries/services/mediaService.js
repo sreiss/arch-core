@@ -27,7 +27,7 @@ module.exports = function(Media)
     return {
         save: function(rawMedia)
         {
-            var deferred = Q.defer();
+            var deferred = q.defer();
 
             var fileName = moment().format('YYYYMMDDHHmmss') + '-' + rawMedia.body.name + path.extname(rawMedia.files.file.name);
             var filePath = path.join(mediasPath, fileName);

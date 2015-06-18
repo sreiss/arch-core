@@ -18,15 +18,6 @@ module.exports = function(Gallery)
             var gallery = new Gallery();
 
             gallery.name = galleryData.name;
-            gallery.medias = [];
-
-            for (var i = 0; i < galleryData.medias.length; i++) {
-                var m = {
-                    media: galleryData.medias[i].media
-                };
-
-                gallery.medias.push(m);
-            };
 
             gallery.save(function (err) {
                 if (err)
@@ -71,7 +62,7 @@ module.exports = function(Gallery)
         {
             var deferred = q.defer();
 
-            Gallery.findOne({_id: galleryId}).populate('medias.media').exec(function (err, gallery)
+            Gallery.findOne({_id: galleryId}).exec(function (err, gallery)
             {
                 if(err)
                 {
