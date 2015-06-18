@@ -16,12 +16,6 @@ module.exports = function(mediaService)
     return {
         save: function(req, res, next)
         {
-            mediaService.save({
-                files: req.files,
-                body: req.body
-            })
-
-            req.body.name = "test";
             mediaService.save({files: req.files, body: req.body})
 
             .then(function(media)
