@@ -6,7 +6,6 @@ angular.module('archCore')
     $scope.events = [];
 
     var dataEvents = Event.query(function () {
-      console.log(dataEvents.data);
       if (dataEvents.data != null) {
         dataEvents.data.forEach(function (item) {
           var event = {};

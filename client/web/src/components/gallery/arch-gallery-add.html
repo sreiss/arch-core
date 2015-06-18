@@ -1,4 +1,11 @@
-<form method="post" ng-submit="addGalley()">
-  Select images: <input type="file" name="img" multiple>
-  <input type="submit">
-</form>
+  <div ngf-drop ngf-select ng-model="files" class="drop-box"
+       ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+       accept="image/*">Drop pdfs or images here or click to upload</div>
+  <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+  Files:
+  <ul>
+    <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+  </ul>
+  Upload Log:
+  <pre>{{log}}</pre>
+

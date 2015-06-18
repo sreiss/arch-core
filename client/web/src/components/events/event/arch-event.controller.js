@@ -2,16 +2,8 @@
 
 angular.module('archCore')
   .controller('archEventController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
-    $scope.currentUser = {};
-
-    archAccountService.getCurrentUser().then(function (user) {
-      $scope.currentUser = user;
-    })
-      .catch(function () {
-        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-      });
   })
-  .controller('archEventEditController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService) {
+  .controller('archEventEditController', function ($scope, $stateParams, $location, $mdToast, $state, Event, archAccountService,archToastService) {
     $scope.currentUser = {};
     $scope.dtstart = {};
     $scope.dtend = {};
@@ -20,12 +12,11 @@ angular.module('archCore')
     archAccountService.getCurrentUser().then(function (user) {
       $scope.currentUser = user;
     })
-      .catch(function () {
-        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-      });
+    .catch(function () {
+      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+    });
 
     Event.get({id: $stateParams.id}, function (result) {
-      console.log(result.data);
       $scope.event = result.data;
       var dateParam = moment($scope.event.dtstart).format("YYYY-MM-DD");
       $scope.dtstart.date = new Date(dateParam);
@@ -43,39 +34,27 @@ angular.module('archCore')
       $scope.event.dtend = dateEnd;
       Event.update({event: $scope.event}, function (result) {
           if (result.count > 0) {
-            $mdToast.show($mdToast.simple()
-                .content("Evénement modifié avec succés.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('EVENT_EDIT_SUCCESS', 'success');
             $state.go('calendar');
           }
           else {
-            $mdToast.show($mdToast.simple()
-                .content("Une erreur est survenue lors de l'ajout de l'événement.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('EVENT_EDIT_ERROR', 'error');
           }
         },
         function (responseError) {
-          $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de l'ajout de l'événement.")
-              .position('top right')
-              .hideDelay(3000)
-          );
+          archToastService.showToast('EVENT_EDIT_ERROR', 'error');
         });
     }
   })
-  .controller('archEventViewController', function ($scope, $stateParams, $location, $mdDialog, $mdToast, $state, Event, archAccountService, httpConstant, EventGuest, archUserService) {
+  .controller('archEventViewController', function ($scope, $stateParams, $location, $mdDialog, $mdToast, $state, Event, archAccountService,archToastService, httpConstant, EventGuest, archUserService) {
     $scope.currentUser = {};
     $scope.event = {};
     archAccountService.getCurrentUser().then(function (user) {
       $scope.currentUser = user;
     })
-      .catch(function () {
-        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-      });
+    .catch(function () {
+      archToastService.showToast('GET_USER', 'error');
+    });
 
     Event.get({id: $stateParams.id}, function (result) {
       $scope.event = result.data;
@@ -104,19 +83,11 @@ angular.module('archCore')
       if (confirm('Souhaitez-vous réellement supprimer cet événement ?')) {
         Event.delete({id: id}).then(function (result) {
           if (result.count > 0) {
-            $mdToast.show($mdToast.simple()
-                .content('Evénement supprimée avec succés.')
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('EVENT_DELETE_SUCCESS', 'success');
             $state.go('calendar');
           }
           else {
-            $mdToast.show($mdToast.simple()
-                .content("Vous participez à l'événement")
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('EVENT_DELETE_ERROR', 'error');
           }
         });
       }
@@ -128,31 +99,19 @@ angular.module('archCore')
       guest.participants = {guest: $scope.currentUser._id, status: status};
       guest.$save(function (result) {
           if (result.count > 0) {
-            $mdToast.show($mdToast.simple()
-                .content("Votre statut à été mise jour.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('GUEST_UPDATE_SUCCESS', 'success');
             $state.go($state.current, {}, {reload: true});
           }
           else {
-            $mdToast.show($mdToast.simple()
-                .content("Une erreur est survenue lors de l'ajout de l'événement.")
-                .position('top right')
-                .hideDelay(3000)
-            );
+            archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
           }
         },
         function (responseError) {
-          $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de l'ajout de l'événement.")
-              .position('top right')
-              .hideDelay(3000)
-          );
+          archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
         });
     };
   })
-  .controller('archEventAddController', function ($scope, $stateParams, $location, $mdToast, $state, Event, $mdDialog, archAccountService, httpConstant, Events, Sheet) {
+  .controller('archEventAddController', function ($scope, $stateParams, $location, $mdToast, $state, Event, $mdDialog, archAccountService,archToastService, httpConstant, Events, Sheet) {
 
     $scope.event = new Event();
     $scope.event.transp = "false";
@@ -164,10 +123,8 @@ angular.module('archCore')
     $scope.event.runs = [];
     $scope.dtstart = {};
     $scope.dtend = {};
-    $scope.$error = {"date" : false};
-
-
     var currentUser = {};
+
 
     if ($stateParams.category) {
       $scope.event.category = $stateParams.category;
@@ -189,9 +146,9 @@ angular.module('archCore')
         console.log(result.data);
       });
     })
-      .catch(function () {
-        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-      });
+    .catch(function () {
+      archToastService.showToast('GEST_USER_ERROR', 'error');
+    });
 
     $scope.addEvent = function () {
       var timeStart = moment($scope.dtstart.time);
@@ -203,7 +160,6 @@ angular.module('archCore')
         $scope.event.dtend = dateEnd;
         $scope.event.creator = currentUser._id;
 
-        console.log($scope.event);
         var sheet = new Sheet();
         sheet.she_name = "ASCPA-" + $scope.event.summary;
         sheet.she_email = currentUser.email;
@@ -212,33 +168,35 @@ angular.module('archCore')
           if (result.count > 0) {
             $scope.event.kidoikoiaki = result.data.she_reference;
           }
-          $scope.event.$save(function (result) {
-              if (result.count > 0) {
-                $mdToast.show($mdToast.simple()
-                    .content("Evènement ajouté avec succés.")
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-                $state.go('calendar');
-              }
-              else {
-                $mdToast.show($mdToast.simple()
-                    .content("Une erreur est survenue lors de l'ajout de l'événement.")
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-              }
-            },
-            function (responseError) {
-              $mdToast.show($mdToast.simple()
-                  .content("Une erreur est survenue lors de l'ajout de l'événement.")
-                  .position('top right')
-                  .hideDelay(3000)
-              );
-            });
-        });
+            $scope.event.$save(function (result) {
+                if (result.count > 0) {
+                  archToastService.showToast('EVENT_ADD_SUCCESS', 'success');
+                  $state.go('calendar');
+                }
+                else {
+                  archToastService.showToast('EVENT_ADD_ERROR', 'error');
+                }
+              },
+              function (responseError) {
+                archToastService.showToast('EVENT_ADD_ERROR', 'error');
+              });
+        },
+      function (responseError) {
+        $scope.event.$save(function (result) {
+            if (result.count > 0) {
+              archToastService.showToast('EVENT_ADD_SUCCESS', 'success');
+              $state.go('calendar');
+            }
+            else {
+              archToastService.showToast('EVENT_ADD_ERROR', 'error');
+            }
+          },
+          function (responseError) {
+            archToastService.showToast('EVENT_ADD_ERROR', 'error');
+          });
+      });
       }else{
-        $scope.$error = {"date" : true};
+        archToastService.showToast('DATE_ERROR', 'error');
       }
     }
   })

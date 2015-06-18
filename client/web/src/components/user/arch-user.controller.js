@@ -243,8 +243,11 @@ angular.module('archCore')
           {
             $scope.coreUser = new CoreUsers();
             $scope.coreUser.role = coreUser.data.role  || '';
-            console.log(coreUser.data.birthdate);
-            $scope.coreUser.birthdate = new Date(coreUser.data.birthdate)  || '';
+            if(coreUser.data.birthdate){
+              $scope.coreUser.birthdate = new Date(coreUser.data.birthdate);
+            }else{
+              $scope.coreUser.birthdate = "";
+            }
             $scope.coreUser.phone = coreUser.data.phone  || '';
             $scope.coreUser.adress = coreUser.data.adress  || '';
             $scope.coreUser.licenceffa = coreUser.data.licenceffa  || '';

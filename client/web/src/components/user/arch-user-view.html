@@ -4,13 +4,13 @@
       <div layout="column" layout-padding>
         <h1 flex>{{oauthUser.lname}} {{oauthUser.fname}}</h1>
         <md-divider flex></md-divider>
-        <div flex>
+        <div layout="row" layout-wrap flex>
           <div id="avatar_preview"></div>
-          <p flex>{{'USER_FORM_EMAIL' | translate}} : <a href="mailto:{{oauthUser.email}}" target="_top">{{oauthUser.email}}</a></p>
-          <p flex ng-show="coreUser.phone">{{'USER_FORM_PHONE' | translate}} : <span>{{coreUser.phone}}</span></p>
-          <p flex ng-show="coreUser.adress">{{'USER_FORM_ADRESS' | translate}} : <span>{{coreUser.adress}}</span></p>
-          <p flex ng-show="coreUser.licenceffa">{{'USER_FORM_FFA' | translate}} : <span>{{coreUser.licenceffa}}</span></p>
-          <p flex ng-show="coreUser.birthdate">{{'USER_FORM_BIRTHDATE' | translate}} : <span>{{coreUser.birthdate | date:'dd/MM/yyyy' }}</span></p>
+          <p flex="50">{{'USER_FORM_EMAIL' | translate}} : <a href="mailto:{{oauthUser.email}}" target="_top">{{oauthUser.email}}</a></p>
+          <p flex="50" ng-show="coreUser.phone">{{'USER_FORM_PHONE' | translate}} : <span>{{coreUser.phone}}</span></p>
+          <p flex="50" ng-show="coreUser.adress">{{'USER_FORM_ADRESS' | translate}} : <span>{{coreUser.adress}}</span></p>
+          <p flex="50" ng-show="coreUser.licenceffa">{{'USER_FORM_FFA' | translate}} : <span>{{coreUser.licenceffa}}</span></p>
+          <p flex="50" ng-show="coreUser.birthdate">{{'USER_FORM_BIRTHDATE' | translate}} : <span>{{coreUser.birthdate | date:'dd/MM/yyyy' }}</span></p>
         </div>
       </div>
     </md-content>

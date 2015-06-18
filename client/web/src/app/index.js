@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial', 'ui.router', 'pascalprecht.translate', 'ui.bootstrap', 'ui.calendar', 'angular-md5', 'base64', 'datatables'])
+angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngMaterial', 'ui.router', 'pascalprecht.translate', 'ui.bootstrap', 'ui.calendar', 'angular-md5', 'base64', 'datatables','ngFileUpload'])
   .config(function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $translateProvider, i18nfrFRConstant, i18nenUSConstant) {
     $mdThemingProvider
       .theme('default')
@@ -100,6 +100,20 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: "/event/event/:id",
         templateUrl: "components/events/event/arch-event-view.html",
         controller: "archEventViewController"
+
+      })
+      .state('galleryAdd',
+      {
+        url: "/gallery/add/",
+        templateUrl: "components/gallery/arch-gallery-add.html",
+        controller: "archGalleryAddController"
+
+      })
+      .state('galleries',
+      {
+        url: "/galleries/",
+        templateUrl: "components/gallery/arch-galleries.html",
+        controller: "archGalleriesController"
 
       });
 
