@@ -70,9 +70,9 @@ module.exports = function(eventService)
             var id = req.params.eventid;
 
             // Deleting event.
-            eventService.deleteEvent(id).then(function(event)
+            eventService.deleteEvent(id).then(function(result)
             {
-                res.status(200).json({"count": (event ? 1 : 0), "data": event});
+                res.status(200).json({"count": (result ? 1 : 0), "data": result});
             })
             .catch(function(err)
             {
