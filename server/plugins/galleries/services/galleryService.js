@@ -79,6 +79,54 @@ module.exports = function(Gallery)
             });
 
             return deferred.promise;
+        },
+
+        /** Get all galleries's information. */
+        getGalleries: function()
+        {
+            var deferred = q.defer();
+
+            Gallery.find().exec(function (err, galleries)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else if(!galleries)
+                {
+                    deferred.reject(new Error('No galleries found.'));
+                }
+                else
+                {
+                    deferred.resolve(galleries);
+                }
+            });
+
+            return deferred.promise;
+        },
+
+        /** Get gallery's information by name. */
+        getGalleryByName: function(galleryName)
+        {
+            var deferred = q.defer();
+
+            Gallery.findOne({name: galleryName}).exec(function (err, gallery)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else if(!gallery)
+                {
+                    deferred.reject(new Error('No gallery matching [GALLERY_NAME] : ' + galleryName + "."));
+                }
+                else
+                {
+                    deferred.resolve(gallery);
+                }
+            });
+
+            return deferred.promise;
         }
     };
 };

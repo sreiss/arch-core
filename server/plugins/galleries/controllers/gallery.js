@@ -63,6 +63,37 @@ module.exports = function(galleryService)
             {
                 res.status(500).json({"error" : new ArchFindError(err.message)});
             });
+        },
+
+        /** Get gallery's informations. */
+        getGalleries: function(req, res)
+        {
+            // Get all galleries.
+            galleryService.getGalleries().then(function(galleries)
+            {
+                res.status(galleries.length > 0 ? 200 : 204).json({"count": galleries.length, "data": galleries});
+            })
+                .catch(function(err)
+                {
+                    res.status(500).json({"error" : new ArchFindError(err.message)});
+                });
+        },
+
+        /** Get gallery's informations by name. */
+        getGalleryByName: function(req, res)
+        {
+            // Get gallery name.
+            var name = req.params.galleryname;
+
+            // Get gallery.
+            galleryService.getGalleryByName(name).then(function(gallery)
+            {
+                res.status(gallery ? 200 : 204).json({"count": 1, "data": gallery});
+            })
+            .catch(function(err)
+            {
+                res.status(500).json({"error" : new ArchFindError(err.message)});
+            });
         }
     }
 };
