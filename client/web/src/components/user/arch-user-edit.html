@@ -38,9 +38,9 @@
         <input type="password" ng-model="oauthUser.confirmPassword">
       </md-input-container>
     </div>
-    <div layout="row">
+    <div layout="row" ng-show="roles">
       <md-icon class="fa fa-graduation-cap"></md-icon>
-      <arch-role-selector flex></arch-role-selector>
+      <arch-role-selector flex ></arch-role-selector>
     </div>
     <div layout="row">
       <md-icon class="fa fa-calendar"></md-icon>
@@ -54,6 +54,13 @@
       <md-input-container flex>
         <label>{{'USER_FORM_PHONE' | translate}}</label>
         <input type="text" ng-model="coreUser.phone">
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-icon class="fa fa-home"></md-icon>
+      <md-input-container flex>
+        <label>{{'USER_FORM_ADRESS' | translate}}</label>
+        <input type="text" ng-model="coreUser.adress">
       </md-input-container>
     </div>
     <div layout="row">
@@ -72,7 +79,7 @@
     </div>
     <div layout="row" class="avatar-space">
       <md-input-container flex>
-        <input id="input-avatar" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" />
+        <input id="input-avatar" onchange="angular.element(this).scope().file_changed(this)" type="file" accept="image/*" aria-label="avatar"/>
         <div layout="row">
           <div id="avatar_preview"></div>
         </div>

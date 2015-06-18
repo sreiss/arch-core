@@ -44,7 +44,7 @@ angular.module('archCore')
       Event.update({event: $scope.event}, function (result) {
           if (result.count > 0) {
             $mdToast.show($mdToast.simple()
-                .content("Evènement ajouté avec succés.")
+                .content("Evénement modifié avec succés.")
                 .position('top right')
                 .hideDelay(3000)
             );
@@ -113,7 +113,7 @@ angular.module('archCore')
           }
           else {
             $mdToast.show($mdToast.simple()
-                .content('Une erreur est survenue à la suppression de l\'événement.')
+                .content("Vous participez à l'événement")
                 .position('top right')
                 .hideDelay(3000)
             );
@@ -129,11 +129,11 @@ angular.module('archCore')
       guest.$save(function (result) {
           if (result.count > 0) {
             $mdToast.show($mdToast.simple()
-                .content("Evènement ajouté avec succés.")
+                .content("Votre statut à été mise jour.")
                 .position('top right')
                 .hideDelay(3000)
             );
-            $state.go('calendar');
+            $state.go($state.current, {}, {reload: true});
           }
           else {
             $mdToast.show($mdToast.simple()

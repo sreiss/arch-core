@@ -11,7 +11,7 @@ module.exports = function() {
     return {
         schema:
         {
-            name: {type: String, required: true},
+            name: {type: String},
             description: {type: String},
             url: {type: String, required: true}
         },

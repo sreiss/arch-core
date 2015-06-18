@@ -20,7 +20,8 @@
       <td>{{user.fname}}</td>
       <td>{{user.email}}</td>
       <td class="text-right">
-        <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-pencil-square-o" ng-click="editUser(user._id)"></md-icon></a>
+        <a href="#" ui-sref="userView({id : user._id})"><md-icon class="fa fa-file-text-o"></md-icon></a>
+        <a ng-show="currentUser.profile.role._is('ADMIN')" href="#" ui-sref="userEdit({id :user._id})"><md-icon class="fa fa-pencil-square-o"></md-icon></a>
         <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-trash" ng-hide="user._id == currentUser._id" ng-click="deleteUser(user._id)"></md-icon></a>
       </td>
     </tr>

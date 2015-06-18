@@ -1,10 +1,12 @@
 <md-toolbar class="md-default-theme" layout="row" ng-controller="archNavbarCtrl">
-  <div class="md-toolbar-tools">
-    <a href="/"><b>{{'CUSTOMER_NAME' | translate}}</b> - {{'CUSTOMER_DESC' | translate}}</a>
-
+  <div class="md-toolbar-tools" layout="row">
+    <button ng-click="openLeftMenu('left')" hide-gt-sm class="menuBtn">
+      <span class="visually-hidden">{{'NAVBAR_MENU' | translate}}</span>
+    </button>
+    <a href="#" ui-sref="home"><b>{{'CUSTOMER_NAME' | translate}}</b><span hide-sm> - {{'CUSTOMER_DESC' | translate}}</span></a>
     <span flex></span>
-    <ul class="main-menu">
-      <li><arch-account></arch-account></li>
-    </ul>
+    <div layout="row" class="main-menu">
+      <arch-account></arch-account>
+    </div>
   </div>
 </md-toolbar>
