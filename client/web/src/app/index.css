@@ -446,3 +446,13 @@ table.dataTable.no-footer {
   margin-bottom:10px;
   color:white;
 }
+
+.md-toast.arch-toast-error {
+  background: rgb(244,67,54);
+  color: #ffffff;
+}
+
+.md-toast.arch-toast-success {
+  background: rgb(77,175,81);
+  color: #ffffff;
+}
