@@ -22,7 +22,7 @@ catch(err)
     console.log('Medias directory already created.');
 }
 
-module.exports = function(Media)
+module.exports = function(Media, Gallery)
 {
     return {
         save: function(rawMedia)
@@ -51,10 +51,14 @@ module.exports = function(Media)
                         {
                             try
                             {
+                                var newGallery = new Gallery({
+                                    name: rawMedia.body.nameG
+                                });
                                 var media = new Media({
                                     name: rawMedia.body.name,
                                     description: rawMedia.body.description,
-                                    url: mediasUrl + fileName
+                                    url: mediasUrl + fileName,
+                                    gallery: newGallery._id
                                 });
                                 media.save(function (err, savedMedia)
                                 {
