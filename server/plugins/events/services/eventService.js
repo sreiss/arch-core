@@ -210,26 +210,26 @@ module.exports = function(Event)
         {
             var deferred = q.defer();
 
-            Event.findOneAndRemove({_id: eventId}, function(err, event)
+            Event.findOneAndRemove({_id: eventId}, function(err, result)
             {
                 if(err)
                 {
                     deferred.reject(err);
                 }
-                else if(!event)
+                else if(!result)
                 {
                     deferred.reject(new Error('No event matching [EVENT_ID] : ' + eventId + "."));
                 }
                 else
                 {
-                    deferred.resolve(event);
+                    deferred.resolve(result);
                 }
             });
 
             return deferred.promise;
         },
 
-        /** Get event's informations by eventId. */
+        /** Get event's information by eventId. */
         getEvent: function(eventId)
         {
             var deferred = q.defer();
@@ -253,7 +253,7 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Get event's informations by date. */
+        /** Get event's information by date. */
         getEventsByDate: function(date)
         {
             var deferred = q.defer();
@@ -277,7 +277,7 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Get event's informations by type. */
+        /** Get event's information by type. */
         getEventsByCategory: function(category)
         {
             var deferred = q.defer();
@@ -301,7 +301,7 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Get event's informations by creator. */
+        /** Get event's information by creator. */
         getEventsByCreator: function(creator)
         {
             var deferred = q.defer();
@@ -325,7 +325,7 @@ module.exports = function(Event)
             return deferred.promise;
         },
 
-        /** Get all events' informations. */
+        /** Get all events' information. */
         getEvents: function()
         {
             var deferred = q.defer();
