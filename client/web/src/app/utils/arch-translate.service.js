@@ -1,5 +1,5 @@
 'use strict';
-angular.module('archCarto')
+angular.module('archCore')
   .factory('archTranslateService', function($translate) {
 
     return function(toTranslate) {
