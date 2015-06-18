@@ -22,7 +22,7 @@ catch(err)
     console.log('Medias directory already created.');
 }
 
-module.exports = function(Media, Gallery)
+module.exports = function(Media, galleryService)
 {
     return {
         save: function(rawMedia)
@@ -49,29 +49,25 @@ module.exports = function(Media, Gallery)
                         }
                         else
                         {
-                            try
-                            {
-                                var newGallery = new Gallery({
-                                    name: rawMedia.body.nameG
-                                });
-                                var media = new Media({
-                                    name: rawMedia.body.name,
-                                    description: rawMedia.body.description,
-                                    url: mediasUrl + fileName,
-                                    gallery: newGallery._id
-                                });
-                                media.save(function (err, savedMedia)
-                                {
-                                    if (err)
-                                    {
-                                        fs.unlinkSync(filePath);
-                                        deferred.reject(err);
-                                    }
-                                    else
-                                    {
-                                        deferred.resolve(savedMedia);
-                                    }
-                                });
+                            try {
+                                galleryService.saveGallery(rawMedia.body.nameG)
+                                .then(function (gallery){
+                                    var media = new Media({
+                                        name: rawMedia.body.name,
+                                        description: rawMedia.body.description,
+                                        url: mediasUrl + fileName,
+                                        gallery: gallery._id
+                                    });
+                                    media.save(function (err, savedMedia) {
+                                        if (err) {
+                                            fs.unlinkSync(filePath);
+                                            deferred.reject(err);
+                                        }
+                                        else {
+                                            deferred.resolve(savedMedia);
+                                        }
+                                    });
+                                })
                             }
                             catch(err)
                             {
