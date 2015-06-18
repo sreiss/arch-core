@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-.controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService,DTOptionsBuilder, DTColumnDefBuilder)
+.controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService, archToastService, DTOptionsBuilder, DTColumnDefBuilder)
   {
     $scope.users = new Array();
     $scope.currentUser = {};
@@ -12,7 +12,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
     });
 
     archUserService.getUsers().then(function(users)
@@ -21,7 +21,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération des membres.").position('top right').hideDelay(3000));
+      archToastService.showToast("Une erreur est survenue lors de la récupération des membres.", 'error');
     });
 
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
@@ -56,11 +56,7 @@ angular.module('archCore')
       {
         archUserService.deleteUser(id).then(function(result)
         {
-          $mdToast.show($mdToast.simple()
-            .content("Membre supprimé avec succés.")
-            .position('top right')
-            .hideDelay(3000)
-          );
+          archToastService.showToast("Membre supprimé avec succès.", 'success');
 
           archUserService.getUsers().then(function(users)
           {
@@ -68,21 +64,17 @@ angular.module('archCore')
           })
           .catch(function()
           {
-            $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération des membres.").position('top right').hideDelay(3000));
+            archToastService.showToast("Une erreur est survenue lors de la récupération des membres.", 'error');
           });
         })
         .catch(function(err)
         {
-          $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de la suppression du membre.")
-            .position('top right')
-            .hideDelay(3000)
-          );
+          archToastService.showToast("Une erreur est survenue lors de la suppression du membre.", 'error');
         });
       }
     };
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService)
+  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService, archToastService)
   {
     $scope.oauthUser = new OAuthUsers();
     $scope.coreUser = new CoreUsers();
@@ -97,25 +89,23 @@ angular.module('archCore')
     {
       archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
       {
-        $mdToast.show($mdToast.simple()
-          .content("Membre ajouté avec succés.")
-          .position('top right')
-          .hideDelay(3000)
-        );
-
+        archToastService.showToast("Membre ajouté avec succès.", 'success');
         $state.go('users');
       })
       .catch(function(err)
       {
-        $mdToast.show($mdToast.simple()
-          .content("Une erreur est survenue lors de l'ajout du membre.")
-          .position('top right')
-          .hideDelay(3000)
-        );
+        if(err.message = 'EMAIL_ALREADY_EXISTS')
+        {
+          archToastService.showToast("L'adresse e-mail renseignée est déjà associée à un autre compte.", 'error');
+        }
+        else
+        {
+          archToastService.showToast("Une erreur est survenue lors de l'ajout du membre.", 'error');
+        }
       });
     }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5, archToastService)
   {
     var id = $stateParams.id;
 
@@ -134,7 +124,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
     });
 
     OAuthUser.query({id:id}, function(oauthUser)
@@ -163,23 +153,13 @@ angular.module('archCore')
       },
       function(err)
       {
-        $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de la récupération du membre.")
-            .position('top right')
-            .hideDelay(3000)
-        );
-
+        archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
         $state.go('users');
       });
     },
     function(err)
     {
-      $mdToast.show($mdToast.simple()
-          .content("Une erreur est survenue lors de la récupération du membre.")
-          .position('top right')
-          .hideDelay(3000)
-      );
-
+      archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
       $state.go('users');
     });
 
@@ -190,11 +170,7 @@ angular.module('archCore')
 
       if(!avatar.type.match('image.*'))
       {
-        $mdToast.show($mdToast.simple()
-            .content("L'avatar du membre doit être une image.")
-            .position('top right')
-            .hideDelay(3000)
-        );
+        archToastService.showToast("L'avatar du membre doit être une image.", 'error');
         return false;
       }
 
@@ -220,11 +196,7 @@ angular.module('archCore')
     {
       if($scope.oauthUser.newPassword && $scope.oauthUser.confirmPassword && ($scope.oauthUser.newPassword != $scope.oauthUser.confirmPassword))
       {
-        $mdToast.show($mdToast.simple()
-            .content("Les deux mots de passes ne sont pas identiques.")
-            .position('top right')
-            .hideDelay(3000)
-        );
+        archToastService.showToast("Les deux mots de passes ne sont pas identiques.", 'error');
       }
       else
       {
@@ -235,21 +207,12 @@ angular.module('archCore')
         console.log($scope.coreUser.birthdate );
         archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
-          $mdToast.show($mdToast.simple()
-              .content("Membre modifié avec succés.")
-              .position('top right')
-              .hideDelay(3000)
-          );
-
+          archToastService.showToast("Membre modifié avec succès.", 'success');
           $state.go('users');
         })
         .catch(function(err)
         {
-          $mdToast.show($mdToast.simple()
-              .content("Une erreur est survenue lors de la modification du membre.")
-              .position('top right')
-              .hideDelay(3000)
-          );
+          archToastService.showToast("Une erreur est survenue lors de la modification du membre.", 'success');
         });
       }
     };
