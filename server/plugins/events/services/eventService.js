@@ -278,7 +278,7 @@ module.exports = function(Event)
         },
 
         /** Get event's information by type. */
-        getEventsByCategory: function(scategory)
+        getEventsByCategory: function(category)
         {
             var deferred = q.defer();
 
