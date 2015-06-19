@@ -121,8 +121,8 @@ angular.module('archCore')
     $scope.currentUser = {};
     archAccountService.getCurrentUser().then(function(user)
     {
-      $scope.currentUser = user._id;
-      archAccountService.getProfile($scope.currentUser).then(function(profile) {
+      $scope.currentUser = user;
+      archAccountService.getProfile(user._id).then(function(profile) {
         if(profile.role.name == 'ADMIN'){
           archUserService.getRoles()
             .then(function(roles) {

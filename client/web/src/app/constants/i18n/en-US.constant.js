@@ -26,9 +26,12 @@ angular.module('archCore')
 
     'USERS_ADD_TITLE': "Add member",
     'USERS_EDIT_TITLE': "Edit member",
+    'USERS_VIEW_TITLE': "View membre",
     'USERS_PROFILE' : "My profile",
     'USER_FORM_BACK' : "Back",
     'USER_FORM_SUBMIT': "Save",
+    'USER_FORM_EDIT' : "Edit",
+    'USER_MAIL_TO_ALL' : "Group mail",
     'USER_FORM_FNAME': "Firstname",
     'USER_FORM_LNAME': "Lastname",
     'USER_FORM_EMAIL': "Mail addres",
@@ -37,6 +40,7 @@ angular.module('archCore')
     'USER_FORM_BIRTHDATE': "Birthdate",
     'USER_FORM_NOTICE_RANDOM_PASSWORD': "A random password will be generated and send by mail after the creation of the member.",
     'USER_FORM_PHONE' : "Phone number",
+    'USER_FORM_ADRESS' : "Address",
     'USER_FORM_AVATAR' : "Avatar",
     'USER_FORM_FFA' : "FFA licence",
     'USER_FORM_CHOOSE' : "Choose ...",
@@ -45,6 +49,7 @@ angular.module('archCore')
     'USER_FORM_ROLE_MEMBER': "Member",
     'USER_FORM_ROLE_ADMIN': "Administrator",
     'USER_FORM_ROLE_CARTOGRAPHER': "Cartographer",
+    'USER_FORM_NC' : "Not disclosed",
 
     'EVENTS_TITLE' : "Events",
     'DISCOVERIES_TITLE' : "Discoveries",

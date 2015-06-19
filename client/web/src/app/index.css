@@ -461,3 +461,21 @@ table.dataTable.no-footer {
 .dragover {
   border: 5px dashed blue;
 }
+
+.userViewContent
+{
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.userPreviewAvatar
+{
+  position:absolute;
+  top:40px;
+  right:20px;
+}
+
+.userPreviewAvatar > .thumb
+{
+  width:250px;
+}

@@ -1,17 +1,25 @@
+<h1 flex>{{'USERS_VIEW_TITLE' | translate}}</h1>
+
 <md-button class="md-raised no-margin-w" ui-sref="users">{{'USER_FORM_BACK' | translate}}</md-button>
-<md-whiteframe class="md-whiteframe-z2" layout layout-align="left left">
-    <md-content layout-fill>
-      <div layout="column" layout-padding>
-        <h1 flex>{{oauthUser.lname}} {{oauthUser.fname}}</h1>
-        <md-divider flex></md-divider>
-        <div layout="row" layout-wrap flex>
-          <div id="avatar_preview"></div>
-          <p flex="50">{{'USER_FORM_EMAIL' | translate}} : <a href="mailto:{{oauthUser.email}}" target="_top">{{oauthUser.email}}</a></p>
-          <p flex="50" ng-show="coreUser.phone">{{'USER_FORM_PHONE' | translate}} : <span>{{coreUser.phone}}</span></p>
-          <p flex="50" ng-show="coreUser.adress">{{'USER_FORM_ADRESS' | translate}} : <span>{{coreUser.adress}}</span></p>
-          <p flex="50" ng-show="coreUser.licenceffa">{{'USER_FORM_FFA' | translate}} : <span>{{coreUser.licenceffa}}</span></p>
-          <p flex="50" ng-show="coreUser.birthdate">{{'USER_FORM_BIRTHDATE' | translate}} : <span>{{coreUser.birthdate | date:'dd/MM/yyyy' }}</span></p>
-        </div>
+
+<md-whiteframe class="md-whiteframe-z2 userViewContent" layout layout-align="left left">
+  <md-content layout-fill>
+    <div layout="column" layout-padding>
+      <h1 flex>{{oauthUser.fname}} {{oauthUser.lname}}</h1>
+
+      <div layout="row" layout-wrap flex>
+        <div id="avatar_preview" class="userPreviewAvatar"></div>
+
+        <p flex="70">{{'USER_FORM_EMAIL' | translate}} : <a href="mailto:{{oauthUser.email}}" target="_top">{{oauthUser.email}}</a></p>
+        <p flex="70">{{'USER_FORM_BIRTHDATE' | translate}} : <span>{{coreUser.birthdate | date:'dd/MM/yyyy' }}</span><span ng-show="!coreUser.licenceffa">{{'USER_FORM_NC' | translate}}</span></p>
+        <p flex="70">{{'USER_FORM_PHONE' | translate}} : <span>{{coreUser.phone}}</span><span ng-show="!coreUser.licenceffa">{{'USER_FORM_NC' | translate}}</span></p>
+        <p flex="70">{{'USER_FORM_ADRESS' | translate}} : <span>{{coreUser.adress}}</span><span ng-show="!coreUser.licenceffa">{{'USER_FORM_NC' | translate}}</span></p>
+        <p flex="70">{{'USER_FORM_FFA' | translate}} : <span>{{coreUser.licenceffa}}</span><span ng-show="!coreUser.licenceffa">{{'USER_FORM_NC' | translate}}</span></p>
       </div>
-    </md-content>
-  </md-whiteframe>
+    </div>
+  </md-content>
+</md-whiteframe>
+
+<div class="md-actions" layout="row">
+  <md-button class="md-raised md-accent no-margin-w" ui-sref="userView({id : oauthUser._id})">{{'USER_FORM_EDIT' | translate}}</md-button>
+</div>
