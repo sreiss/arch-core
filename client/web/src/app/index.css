@@ -461,3 +461,31 @@ table.dataTable.no-footer {
 .dragover {
   border: 5px dashed blue;
 }
+
+.userViewContent
+{
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.userPreviewAvatar
+{
+  position:absolute;
+  top:40px;
+  right:20px;
+}
+
+.userPreviewAvatar > .thumb
+{
+  width:250px;
+}
+
+.md-toast.arch-toast-error {
+  background: rgb(244,67,54);
+  color: #ffffff;
+}
+
+.md-toast.arch-toast-success {
+  background: rgb(77,175,81);
+  color: #ffffff;
+}

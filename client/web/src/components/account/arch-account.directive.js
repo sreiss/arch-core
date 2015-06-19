@@ -4,7 +4,7 @@ angular.module('archCore')
     return {
       restrict: 'E',
       templateUrl: 'components/account/arch-account.html',
-      controller: function($scope, $cookieStore,$stateParams, $mdToast) {
+      controller: function($scope, $cookieStore,$stateParams, archToastService) {
         var init = function() {
           var token = archAccountService.getCurrentToken();
 
@@ -29,7 +29,7 @@ angular.module('archCore')
                 }
               })
               .catch(function () {
-                $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+                archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
               });
           }
           else {

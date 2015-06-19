@@ -8,7 +8,8 @@ angular.module('archCore').constant('httpConstant',
   coreClientUrl: 'http://localhost:3011',
   coreServerUrl: 'http://localhost:3021',
   kidClientUrl: 'http://localhost:3014',
-  kidServerUrl: 'http://localhost:3024', */
+  kidServerUrl: 'http://localhost:3024',
+  clientRedirectUri : 'http://localhost:3011' */
 
   /* PROD */
   casClientUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
@@ -17,7 +18,7 @@ angular.module('archCore').constant('httpConstant',
   coreServerUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
   kidServerUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3024',
   kidClientUrl: 'http://acrobatt-vm11.psi.ad.unistra.fr:3024',
-
+  clientRedirectUri : 'http://acrobatt-vm11.psi.ad.unistra.fr:3021',
 
   signupType: {
     name: 'ASCPA',
@@ -25,8 +26,5 @@ angular.module('archCore').constant('httpConstant',
     isPublic: 'true'
   },
 
-  clientName: 'ARCH-ASCPA',
-
-  clientRedirectUri : 'http://acrobatt-vm11.psi.ad.unistra.fr:3021'
-  //clientRedirectUri : 'http://localhost:3011'
+  clientName: 'ARCH-ASCPA'
 });

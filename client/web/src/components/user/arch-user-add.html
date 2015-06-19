@@ -1,7 +1,7 @@
 <h1>{{'USERS_ADD_TITLE' | translate}}</h1>
 
 <form name="userForm" role="form" ng-submit="addUser()">
-  <md-button class="md-raised" ui-sref="users">{{'USER_FORM_BACK' | translate}}</md-button>
+  <md-button class="md-raised no-margin-w" ui-sref="users">{{'USER_FORM_BACK' | translate}}</md-button>
 
   <div layout="column">
     <div layout="row">
@@ -34,6 +34,6 @@
   <div class="ng-message-notice">{{'USER_FORM_NOTICE_RANDOM_PASSWORD' | translate}}</div>
 
   <div class="md-actions" layout="row">
-    <md-button class="md-raised md-accent" type="submit" ng-disabled="userForm.$invalid">{{'USER_FORM_SUBMIT' | translate}}</md-button>
+    <md-button class="md-raised md-accent no-margin-w" type="submit" ng-disabled="userForm.$invalid">{{'USER_FORM_SUBMIT' | translate}}</md-button>
   </div>
 </form>

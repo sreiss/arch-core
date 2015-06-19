@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-.controller('archUserController', function($scope, $stateParams, $location, $mdToast, $state, httpConstant, archUserService, archAccountService, archToastService, DTOptionsBuilder, DTColumnDefBuilder)
+.controller('archUserController', function($scope, $stateParams, $location, $state, httpConstant, archUserService, archAccountService, archToastService, DTOptionsBuilder, DTColumnDefBuilder)
   {
     $scope.users = new Array();
     $scope.currentUser = {};
@@ -82,7 +82,7 @@ angular.module('archCore')
     })
     }
   })
-  .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService, archToastService)
+  .controller('archUserAddController', function($scope, $stateParams, $location, httpConstant, $state, OAuthUsers, CoreUsers, archUserService, archToastService)
   {
     $scope.oauthUser = new OAuthUsers();
     $scope.coreUser = new CoreUsers();
@@ -113,15 +113,15 @@ angular.module('archCore')
       });
     }
   })
-  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, $mdToast, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5, archToastService)
+  .controller('archUserEditController', function($scope, $filter, $stateParams, $location, httpConstant, $state, archUserService, archAccountService, OAuthUser, OAuthUsers, CoreUser, CoreUsers, md5, archToastService)
   {
     var id = $stateParams.id;
 
     $scope.currentUser = {};
     archAccountService.getCurrentUser().then(function(user)
     {
-      $scope.currentUser = user._id;
-      archAccountService.getProfile($scope.currentUser).then(function(profile) {
+      $scope.currentUser = user;
+      archAccountService.getProfile(user._id).then(function(profile) {
         if(profile.role.name == 'ADMIN'){
           archUserService.getRoles()
             .then(function(roles) {
@@ -225,7 +225,7 @@ angular.module('archCore')
       }
     };
   })
-  .controller('archUserViewController', function($scope,archAccountService,$mdToast,OAuthUser,CoreUser,CoreUsers,$state,$stateParams,OAuthUsers){
+  .controller('archUserViewController', function($scope,archAccountService,OAuthUser,CoreUser,CoreUsers,$state,$stateParams,OAuthUsers, archToastService){
     var id = $stateParams.id;
 
     $scope.currentUser = {};
@@ -233,10 +233,10 @@ angular.module('archCore')
     {
       $scope.currentUser = user._id;
     })
-      .catch(function()
-      {
-        $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
-      });
+    .catch(function()
+    {
+      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+    });
 
     OAuthUser.query({id:id}, function(oauthUser)
       {
@@ -268,23 +268,13 @@ angular.module('archCore')
           },
           function(err)
           {
-            $mdToast.show($mdToast.simple()
-                .content("Une erreur est survenue lors de la récupération du membre.")
-                .position('top right')
-                .hideDelay(3000)
-            );
-
+            archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
             $state.go('users');
           });
       },
       function(err)
       {
-        $mdToast.show($mdToast.simple()
-            .content("Une erreur est survenue lors de la récupération du membre.")
-            .position('top right')
-            .hideDelay(3000)
-        );
-
+        archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
         $state.go('users');
       });
 

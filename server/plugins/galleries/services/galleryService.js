@@ -116,10 +116,6 @@ module.exports = function(Gallery)
                 {
                     deferred.reject(err);
                 }
-                else if(!gallery)
-                {
-                    deferred.reject(new Error('No gallery matching [GALLERY_NAME] : ' + galleryName + "."));
-                }
                 else
                 {
                     deferred.resolve(gallery);
