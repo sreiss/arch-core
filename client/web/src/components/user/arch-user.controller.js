@@ -79,7 +79,6 @@ angular.module('archCore')
     function mailToAll(users){
       users.forEach(function (user) {
         $scope.mailAll += user.email + ";";
-      console.log($scope.mailAll);
     })
     }
   })
