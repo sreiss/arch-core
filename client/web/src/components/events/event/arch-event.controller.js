@@ -50,11 +50,13 @@ angular.module('archCore')
       });
     }
   })
-  .controller('archEventViewController', function ($scope, $stateParams, $location, $mdDialog, $mdToast, $state, Event, archAccountService,archToastService, httpConstant, EventGuest, archUserService) {
+  .controller('archEventViewController', function ($scope,Sheet, $stateParams,Participant, $location, $mdDialog, $mdToast, $state, Event, archAccountService,archToastService, httpConstant, EventGuest, archUserService) {
     $scope.currentUser = {};
     $scope.event = {};
     archAccountService.getCurrentUser().then(function (user) {
       $scope.currentUser = user;
+      console.log(user);
+
     })
     .catch(function () {
       archToastService.showToast('GET_USER_ERROR', 'error');
@@ -105,8 +107,33 @@ angular.module('archCore')
         });
       }
     };
-
     $scope.statusEvent = function (id, status) {
+      if($scope.event.kidoikoiaki && status == 'yes') {
+      Sheet.get({id: $scope.event.kidoikoiaki}, function(result) {
+          if(result.count > 0)
+          {
+            var participant = new Participant();
+            participant.prt_email = $scope.currentUser.email;
+            participant.prt_fname = $scope.currentUser.fname;
+            participant.prt_lname = $scope.currentUser.lname;
+            participant.prt_notified = true;
+            participant.prt_share = 1;
+            participant.prt_sheet = result.data._id;
+            participant.$save(function() {
+                archToastService.showToast('ADD_PARTICIPANT_SUCCESS', 'success');
+            },
+            function() {
+              archToastService.showToast('ADD_PARTICIPANT_EROOR', 'error');
+            })
+          } else {
+            archToastService.showToast('GET_KID_EROOR', 'error');
+          }
+        },
+        function(responseError)
+        {
+          archToastService.showToast('GET_KID_EROOR', 'error');
+        });
+      }
       var guest = new EventGuest();
       guest._id = id;
       guest.participants = {guest: $scope.currentUser._id, status: status};
