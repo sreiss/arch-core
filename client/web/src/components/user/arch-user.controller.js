@@ -5,6 +5,7 @@ angular.module('archCore')
   {
     $scope.users = new Array();
     $scope.currentUser = {};
+    $scope.mailAll = '';
 
     archAccountService.getCurrentUser().then(function(user)
     {
@@ -12,16 +13,17 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+      archToastService.showToast('GET_USER_ERROR', 'error');
     });
 
     archUserService.getUsers().then(function(users)
     {
       $scope.users = users;
+      mailToAll(users);
     })
     .catch(function()
     {
-      archToastService.showToast("Une erreur est survenue lors de la récupération des membres.", 'error');
+      archToastService.showToast("GET_USERS_ERROR", 'error');
     });
 
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
@@ -73,6 +75,13 @@ angular.module('archCore')
         });
       }
     };
+
+    function mailToAll(users){
+      users.forEach(function (user) {
+        $scope.mailAll += user.email + ";";
+      console.log($scope.mailAll);
+    })
+    }
   })
   .controller('archUserAddController', function($scope, $stateParams, $location, $mdToast, httpConstant, $state, OAuthUsers, CoreUsers, archUserService, archToastService)
   {

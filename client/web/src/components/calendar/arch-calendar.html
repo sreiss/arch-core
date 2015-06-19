@@ -1,3 +1,7 @@
 <h1>{{'CALENDAR_TITLE' | translate}}</h1>
 
 <div ui-calendar="uiConfig.calendar" class="calendar" ng-model="eventSources"></div>
+<div>
+  <p>{{'HOW_TO_ICAL' | translate}}</p>
+  <p>ICAL : <span>{{urlServer}}/events/event/ical</span></p>
+</div>

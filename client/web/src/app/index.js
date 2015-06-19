@@ -78,7 +78,7 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       })
       .state('eventsList',
       {
-        url: "/listEvents",
+        url: "/events/list",
         templateUrl: "components/events/arch-event.html",
         controller: "archEventListController"
       })
@@ -104,7 +104,7 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
       })
       .state('galleryAdd',
       {
-        url: "/gallery/add/",
+        url: "/gallery/add",
         templateUrl: "components/gallery/arch-gallery-add.html",
         controller: "archGalleryAddController"
 

@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archCalendarController', function ($scope, $mdDialog, Event, $state) {
+  .controller('archCalendarController', function ($scope, $mdDialog, Event, $state,archToastService,httpConstant) {
     var selectedDate = null;
     $scope.events = [];
+    $scope.urlServer = httpConstant.coreServerUrl;
 
     var dataEvents = Event.query(function () {
       if (dataEvents.data != null) {
@@ -33,6 +34,9 @@ angular.module('archCore')
           $scope.events.push(event);
         });
       }
+    },
+    function (responseError) {
+      archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
     });
 
     /* event source that contains custom events on the scope */

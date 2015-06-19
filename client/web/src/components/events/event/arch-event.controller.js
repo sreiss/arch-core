@@ -13,7 +13,7 @@ angular.module('archCore')
       $scope.currentUser = user;
     })
     .catch(function () {
-      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+      archToastService.showToast('GET_USER_ERROR', 'error');
     });
 
     Event.get({id: $stateParams.id}, function (result) {
@@ -23,7 +23,11 @@ angular.module('archCore')
       $scope.dtstart.time = new Date(dateParam);
       $scope.dtend.date = new Date($scope.event.dtend);
       $scope.dtend.time = new Date($scope.event.dtend);
+    },
+    function (responseError) {
+      archToastService.showToast('GET_EVENT_ERROR', 'error');
     });
+
     $scope.editEvent = function () {
       var timeStart = moment($scope.dtstart.time);
       var dateStart = moment($scope.dtstart.date).hour(timeStart.hour()).minute(timeStart.minute());
@@ -33,17 +37,17 @@ angular.module('archCore')
       $scope.event.dtstart = dateStart;
       $scope.event.dtend = dateEnd;
       Event.update({event: $scope.event}, function (result) {
-          if (result.count > 0) {
-            archToastService.showToast('EVENT_EDIT_SUCCESS', 'success');
-            $state.go('calendar');
-          }
-          else {
-            archToastService.showToast('EVENT_EDIT_ERROR', 'error');
-          }
-        },
-        function (responseError) {
+        if (result.count > 0) {
+          archToastService.showToast('EVENT_EDIT_SUCCESS', 'success');
+          $state.go('calendar');
+        }
+        else {
           archToastService.showToast('EVENT_EDIT_ERROR', 'error');
-        });
+        }
+      },
+      function (responseError) {
+        archToastService.showToast('EVENT_EDIT_ERROR', 'error');
+      });
     }
   })
   .controller('archEventViewController', function ($scope, $stateParams, $location, $mdDialog, $mdToast, $state, Event, archAccountService,archToastService, httpConstant, EventGuest, archUserService) {
@@ -53,12 +57,15 @@ angular.module('archCore')
       $scope.currentUser = user;
     })
     .catch(function () {
-      archToastService.showToast('GET_USER', 'error');
+      archToastService.showToast('GET_USER_ERROR', 'error');
     });
 
     Event.get({id: $stateParams.id}, function (result) {
       $scope.event = result.data;
       $scope.kid = httpConstant.kidClientUrl + "/#/sheet/" + $scope.event.kidoikoiaki + "/";
+    },
+    function (responseError) {
+      archToastService.showToast('GET_EVENT_ERROR', 'error');
     });
 
     $scope.users = archUserService.getUsers();
@@ -77,6 +84,9 @@ angular.module('archCore')
         })
       });
       $scope.listGuest = temp;
+    })
+    .catch(function () {
+      archToastService.showToast('GET_USER_ERROR', 'error');
     });
 
     $scope.deleteEvent = function (id) {
@@ -89,6 +99,9 @@ angular.module('archCore')
           else {
             archToastService.showToast('EVENT_DELETE_ERROR', 'error');
           }
+        },
+        function (responseError) {
+          archToastService.showToast('DELETE_EVENT_ERROR', 'error');
         });
       }
     };
@@ -98,17 +111,17 @@ angular.module('archCore')
       guest._id = id;
       guest.participants = {guest: $scope.currentUser._id, status: status};
       guest.$save(function (result) {
-          if (result.count > 0) {
-            archToastService.showToast('GUEST_UPDATE_SUCCESS', 'success');
-            $state.go($state.current, {}, {reload: true});
-          }
-          else {
-            archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
-          }
-        },
-        function (responseError) {
+        if (result.count > 0) {
+          archToastService.showToast('GUEST_UPDATE_SUCCESS', 'success');
+          $state.go($state.current, {}, {reload: true});
+        }
+        else {
           archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
-        });
+        }
+      },
+      function (responseError) {
+        archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
+      });
     };
   })
   .controller('archEventAddController', function ($scope, $stateParams, $location, $mdToast, $state, Event, $mdDialog, archAccountService,archToastService, httpConstant, Events, Sheet) {
@@ -167,21 +180,20 @@ angular.module('archCore')
         sheet.$save(function (result) {
           if (result.count > 0) {
             $scope.event.kidoikoiaki = result.data.she_reference;
+          }else{
+            archToastService.showToast('KID_CREATE_ERROR', 'error');
           }
-            $scope.event.$save(function (result) {
-                if (result.count > 0) {
-                  archToastService.showToast('EVENT_ADD_SUCCESS', 'success');
-                  $state.go('calendar');
-                }
-                else {
-                  archToastService.showToast('EVENT_ADD_ERROR', 'error');
-                }
-              },
-              function (responseError) {
-                archToastService.showToast('EVENT_ADD_ERROR', 'error');
-              });
+          saveEvent();
         },
-      function (responseError) {
+        function (responseError) {
+          archToastService.showToast('KID_CREATE_ERROR', 'error');
+          saveEvent();
+        });
+      }else{
+        archToastService.showToast('DATE_ERROR', 'error');
+      }
+
+      function saveEvent() {
         $scope.event.$save(function (result) {
             if (result.count > 0) {
               archToastService.showToast('EVENT_ADD_SUCCESS', 'success');
@@ -194,16 +206,16 @@ angular.module('archCore')
           function (responseError) {
             archToastService.showToast('EVENT_ADD_ERROR', 'error');
           });
-      });
-      }else{
-        archToastService.showToast('DATE_ERROR', 'error');
       }
     }
   })
-  .controller('archEventListController', function($scope,$stateParams, Event,DTOptionsBuilder){
+  .controller('archEventListController', function($scope,$stateParams, Event,DTOptionsBuilder,archToastService){
     $scope.events = new Array();
     Event.query(function(result){
       $scope.events = result.data;
+    },
+    function (responseError) {
+      archToastService.showToast('GET_EVENT_ERROR', 'error');
     });
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
       {

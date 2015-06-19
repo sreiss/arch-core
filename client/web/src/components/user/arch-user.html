@@ -1,6 +1,7 @@
 <h1>{{'USERS_TITLE' | translate}}</h1>
 
 <md-button ng-show="currentUser.profile.role._is('ADMIN')" class="md-accent md-raised" ui-sref="userAdd">{{'USERS_ADD_USER' | translate}}</md-button>
+<md-button class="md-accent" href="mailto:{{mailAll}}">{{'MAIL_TO_ALL' | translate}}</md-button>
 
 <div  class="table-list">
   <p ng-hide="users.length">{{'USERS_NO_USERS' | translate}}</p>
