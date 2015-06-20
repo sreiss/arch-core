@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-  .factory('archHttpService', function($http, $q)
+  .factory('archHttpService', function($http, $q, $cookieStore)
   {
     return {
       get: function(url, config)
