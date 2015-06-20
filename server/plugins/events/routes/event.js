@@ -5,15 +5,17 @@
  * @copyright ArchTailors 2015
  */
 
-module.exports = function(eventController, eventRouter, eventMiddleware)
+module.exports = function(eventController, eventRouter, eventMiddleware, authMiddleware)
 {
     eventRouter.route('/')
-        //.post(eventMiddleware.checkEvent)
+        .post(authMiddleware.authenticate)
         .post(eventController.saveEvent)
+        .put(authMiddleware.authenticate)
         .put(eventController.updateEvent)
         .get(eventController.getEvents);
 
     eventRouter.route('/updateGuest')
+        .post(authMiddleware.authenticate)
         .post(eventController.updateGuest);
 
     eventRouter.route('/ical')
@@ -21,6 +23,7 @@ module.exports = function(eventController, eventRouter, eventMiddleware)
 
     eventRouter.route('/:eventid')
         .all(eventMiddleware.checkEventId)
+        .delete(authMiddleware.authenticate)
         .delete(eventController.deleteEvent)
         .get(eventController.getEvent);
 
