@@ -85,6 +85,25 @@ module.exports = function(User)
             return deferred.promise;
         },
 
+        getUserByToken: function(token)
+        {
+            var deferred = Q.defer();
+
+            User.findOne({oauth: token.user._id}).exec(function(err, result)
+            {
+                if(err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(result);
+                }
+            });
+
+            return deferred.promise;
+        },
+
         /** Get users. */
         deleteUser: function(oauthUserId)
         {
