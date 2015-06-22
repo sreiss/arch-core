@@ -1,9 +1,0 @@
-.disabled:read-only {
-	background-color: lightgrey;
-}
-
-.center {
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
