@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state, archAccountService)
+  .controller('archTrackController', function($scope, $stateParams, $location, $mdToast, $state, archAccountService, archToastService)
   {
     archAccountService.getCurrentUser().then(function(user)
     {
@@ -9,7 +9,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      $mdToast.show($mdToast.simple().content("Une erreur est survenue lors de la récupération de l'utilisateur courant.").position('top right').hideDelay(3000));
+      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
     });
 
     $scope.tracks = [];
