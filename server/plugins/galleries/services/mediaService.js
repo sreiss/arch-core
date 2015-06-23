@@ -29,7 +29,7 @@ module.exports = function(Media, galleryService)
         {
             var deferred = q.defer();
 
-            var fileName = moment().format('YYYYMMDDHHmmss') + '-' + rawMedia.files.file.name + path.extname(rawMedia.files.file.name);
+            var fileName = moment().format('YYYYMMDDHHmmss') + '-' + rawMedia.files.file.name;
             var filePath = path.join(mediasPath, fileName);
 
             fs.readFile(rawMedia.files.file.path, function(err, data)
@@ -103,7 +103,7 @@ module.exports = function(Media, galleryService)
         {
             var deferred = q.defer();
 
-            Media.find().exec(function (err, medias)
+            Media.find().populate('gallery').exec(function (err, medias)
             {
                 if(err)
                 {

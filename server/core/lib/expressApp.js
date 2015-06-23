@@ -4,6 +4,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     http = require('http');
+    qt = require('quickthumb');
+
 
 exports.name = 'arch-http';
 
@@ -20,6 +22,8 @@ exports.attach = function(opts)
     expressApp.use(bodyParser.json());
     expressApp.use(bodyParser.urlencoded({extended: false}));
     expressApp.use(cookieParser());
+
+    expressApp.use('/uploads/', qt.static(path.join(__dirname, '..', '..', 'uploads')));
     //expressApp.use(express.static(path.join(__dirname, '..', 'public')));
     expressApp.use('/', express.static(path.join(__dirname, '..', '..', 'public')));
 

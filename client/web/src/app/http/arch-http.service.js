@@ -270,4 +270,34 @@ angular.module('archCore')
         headers: archHttpService.getFactoryHeader()
       }
     });
+  })
+  .factory("Gallery", function ($resource,httpConstant, archHttpService) {
+    return $resource(httpConstant.coreServerUrl + '/galleries/gallery/', {},
+      {
+        save:
+        {
+          method: 'POST',
+          headers: archHttpService.getFactoryHeader()
+        },
+        update:
+        {
+          method: 'PUT',
+          headers: archHttpService.getFactoryHeader()
+        }
+      });
+  })
+  .factory("Media", function ($resource,httpConstant, archHttpService) {
+    return $resource(httpConstant.coreServerUrl + '/galleries/media', {},
+      {
+        save:
+        {
+          method: 'POST',
+          headers: archHttpService.getFactoryHeader()
+        },
+        update:
+        {
+          method: 'PUT',
+          headers: archHttpService.getFactoryHeader()
+        }
+      });
   });
