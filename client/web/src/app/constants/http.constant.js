@@ -9,7 +9,7 @@ angular.module('archCore').constant('httpConstant',
   coreServerUrl: 'http://localhost:3021',
   kidClientUrl: 'http://localhost:3014',
   kidServerUrl: 'http://localhost:3024',
-  clientRedirectUri : 'http://localhost:3011' */
+  clientRedirectUri : 'http://localhost:3011', */
 
   /* PROD */
   casClientUrl: 'http://acrobatt-vm12.psi.ad.unistra.fr:3020',
