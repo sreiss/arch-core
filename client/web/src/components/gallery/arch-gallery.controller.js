@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('archCore')
-  .controller('archGalleryAddController', function($scope, $stateParams, $mdToast, $state, httpConstant, Upload)
+  .controller('archGalleryAddController', function($scope, $stateParams, $mdToast, $state, httpConstant, Upload,archToastService)
   {
     $scope.$watch('files', function () {
       $scope.upload($scope.files);
@@ -10,21 +10,19 @@ angular.module('archCore')
     var metas = {};
     metas.nameG = $scope.nameG;
       $scope.upload = function (files) {
-        metas.nameG = $scope.nameG;
-        if (files && files.length) {
-          for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            Upload.upload({
-              url: httpConstant.coreServerUrl + '/galleries/media',
-              file: file,
-              fields: metas
-            }).progress(function (evt) {
-              var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-              $scope.log = 'progress: ' + progressPercentage + '% ' +
-              evt.config.file.name + '\n' + $scope.log;
-            }).success(function (data, status, headers, config) {
-              $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-            });
+        if($scope.nameG) {
+          metas.nameG = $scope.nameG;
+          if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+              var file = files[i];
+              Upload.upload({
+                url: httpConstant.coreServerUrl + '/galleries/media',
+                file: file,
+                fields: metas
+              }).success(function (data, status, headers, config) {
+                $scope.log = $scope.log + ' ' + data.value.name  ;
+              });
+            }
           }
         }
       }
@@ -41,26 +39,25 @@ angular.module('archCore')
 
             return x + 'x' + y;
           };
-          console.log(result.data);
           for (var i =0; i < data.length; i++){
             //$scope.images[i].thumb = httpConstant.coreServerUrl + $scope.images[i].url +'?dim=150x150';
             //$scope.images[i].url = httpConstant.coreServerUrl + $scope.images[i].url;
             $scope.images.push({
               src: httpConstant.coreServerUrl + '/' + data[i].url,
               safeSrc: httpConstant.coreServerUrl + '/' +data[i].url,
-              thumb: httpConstant.coreServerUrl + '/' +data[i].url + '?dim=150x150',
+              thumb: httpConstant.coreServerUrl + '/' +data[i].url,
               caption: data[i].gallery.name,
               size: screenSize(),
               type: 'image'
             });
           }
         } else {
-          archToastService.showToast('GET_KID_EROOR', 'error');
+          archToastService.showToast('LOADING_ERROR', 'error');
         }
       },
       function(responseError)
       {
-        archToastService.showToast('GET_KID_EROOR', 'error');
+        archToastService.showToast('LOADING_ERROR', 'error');
       });
 
   });

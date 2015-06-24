@@ -489,3 +489,7 @@ table.dataTable.no-footer {
   background: rgb(77,175,81);
   color: #ffffff;
 }
+
+.photoswipe-gallery {
+  padding-top: 20px;
+}

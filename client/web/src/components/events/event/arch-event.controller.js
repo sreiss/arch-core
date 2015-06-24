@@ -13,7 +13,7 @@ angular.module('archCore')
       $scope.currentUser = user;
     })
     .catch(function () {
-      archToastService.showToast('GET_USER_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     Event.get({id: $stateParams.id}, function (result) {
@@ -25,7 +25,7 @@ angular.module('archCore')
       $scope.dtend.time = new Date($scope.event.dtend);
     },
     function (responseError) {
-      archToastService.showToast('GET_EVENT_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     $scope.editEvent = function () {
@@ -38,15 +38,15 @@ angular.module('archCore')
       $scope.event.dtend = dateEnd;
       Event.update({event: $scope.event}, function (result) {
         if (result.count > 0) {
-          archToastService.showToast('EVENT_EDIT_SUCCESS', 'success');
+          archToastService.showToast('EDIT_SUCCESS', 'success');
           $state.go('calendar');
         }
         else {
-          archToastService.showToast('EVENT_EDIT_ERROR', 'error');
+          archToastService.showToast('SENDING_ERROR', 'error');
         }
       },
       function (responseError) {
-        archToastService.showToast('EVENT_EDIT_ERROR', 'error');
+        archToastService.showToast('SENDING_ERROR', 'error');
       });
     }
   })
@@ -59,7 +59,7 @@ angular.module('archCore')
 
     })
     .catch(function () {
-      archToastService.showToast('GET_USER_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     Event.get({id: $stateParams.id}, function (result) {
@@ -67,7 +67,7 @@ angular.module('archCore')
       $scope.kid = httpConstant.kidClientUrl + "/#/sheet/" + $scope.event.kidoikoiaki + "/";
     },
     function (responseError) {
-      archToastService.showToast('GET_EVENT_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     $scope.users = archUserService.getUsers();
@@ -88,22 +88,22 @@ angular.module('archCore')
       $scope.listGuest = temp;
     })
     .catch(function () {
-      archToastService.showToast('GET_USER_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     $scope.deleteEvent = function (id) {
       if (confirm('Souhaitez-vous réellement supprimer cet événement ?')) {
         Event.delete({id: id}).then(function (result) {
           if (result.count > 0) {
-            archToastService.showToast('EVENT_DELETE_SUCCESS', 'success');
+            archToastService.showToast('DELETE_SUCCESS', 'success');
             $state.go('calendar');
           }
           else {
-            archToastService.showToast('EVENT_DELETE_ERROR', 'error');
+            archToastService.showToast('SENDING_ERROR', 'error');
           }
         },
         function (responseError) {
-          archToastService.showToast('DELETE_EVENT_ERROR', 'error');
+          archToastService.showToast('SENDING_ERROR', 'error');
         });
       }
     };
@@ -123,15 +123,15 @@ angular.module('archCore')
                 archToastService.showToast('ADD_PARTICIPANT_SUCCESS', 'success');
             },
             function() {
-              archToastService.showToast('ADD_PARTICIPANT_EROOR', 'error');
+              archToastService.showToast('KID_ERROR', 'error');
             })
           } else {
-            archToastService.showToast('GET_KID_EROOR', 'error');
+            archToastService.showToast('KID_EROOR', 'error');
           }
         },
         function(responseError)
         {
-          archToastService.showToast('GET_KID_EROOR', 'error');
+          archToastService.showToast('KID_EROOR', 'error');
         });
       }
       var guest = new EventGuest();
@@ -143,11 +143,11 @@ angular.module('archCore')
           $state.go($state.current, {}, {reload: true});
         }
         else {
-          archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
+          archToastService.showToast('SENDING_ERROR', 'error');
         }
       },
       function (responseError) {
-        archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
+        archToastService.showToast('SENDING_ERROR', 'error');
       });
     };
   })
@@ -187,7 +187,7 @@ angular.module('archCore')
       });
     })
     .catch(function () {
-      archToastService.showToast('GEST_USER_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     $scope.addEvent = function () {
@@ -208,12 +208,12 @@ angular.module('archCore')
           if (result.count > 0) {
             $scope.event.kidoikoiaki = result.data.she_reference;
           }else{
-            archToastService.showToast('KID_CREATE_ERROR', 'error');
+            archToastService.showToast('KID_ERROR', 'error');
           }
           saveEvent();
         },
         function (responseError) {
-          archToastService.showToast('KID_CREATE_ERROR', 'error');
+          archToastService.showToast('KID_ERROR', 'error');
           saveEvent();
         });
       }else{
@@ -227,11 +227,11 @@ angular.module('archCore')
               $state.go('calendar');
             }
             else {
-              archToastService.showToast('EVENT_ADD_ERROR', 'error');
+              archToastService.showToast('SENDING_ERROR', 'error');
             }
           },
           function (responseError) {
-            archToastService.showToast('EVENT_ADD_ERROR', 'error');
+            archToastService.showToast('SENDING_ERROR', 'error');
           });
       }
     }
@@ -242,7 +242,7 @@ angular.module('archCore')
       $scope.events = result.data;
     },
     function (responseError) {
-      archToastService.showToast('GET_EVENT_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
       {

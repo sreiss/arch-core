@@ -36,7 +36,7 @@ angular.module('archCore')
       }
     },
     function (responseError) {
-      archToastService.showToast('GUEST_UPDATE_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     /* event source that contains custom events on the scope */
@@ -104,11 +104,4 @@ angular.module('archCore')
     $scope.uiConfig.calendar.dayNamesShort = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     /* event sources array*/
     $scope.eventSources = [$scope.events];
-  })
-  .controller('icalCalendarController', function ($http){
-    $http.get("http://localhost:3021/events/event/ical")
-      .success(function(response){
-        console.log(response);
-        window.open( "data:text/calendar;charset=utf8," + escape(response));
-      });
   });

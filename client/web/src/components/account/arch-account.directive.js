@@ -29,7 +29,7 @@ angular.module('archCore')
                 }
               })
               .catch(function () {
-                archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+                archToastService.showToast('LOADING_ERROR', 'error');
               });
           }
           else {

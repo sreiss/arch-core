@@ -96,5 +96,22 @@ angular.module('archCore')
     'TRACKS_ADD_TITLE': "Add track",
     'TRACKS_EDIT_TITLE': "Edit track",
 
-    'CALENDAR_TITLE' : "Calendar"
+    'CALENDAR_TITLE' : "Calendar",
+
+    'SIDEBAR_GALLERIES' : "Photos",
+    'GALLERY_TITLE' : "Photos",
+    'GALLERY_ADD' : "Ajouter des photos",
+    'GALLERY_ADD_TITLE' : "Ajouter une gallerie de photo",
+    'GALLERY_NAME' : "Nom de la gallerie",
+    'DROP_IMAGES' : "Glisser/déposer ou cliquer ici pour ajouter des photos",
+    'LIST_FILES' : "Liste des fichiers",
+    'LOADING_ERROR' : 'Une erreur est servenue au chargement des données',
+    'EDIT_SUCCESS' : "Modifications enregistrées",
+    'ADD_PARTICIPANT_SUCCESS' : "Participant ajouté au kidoikoiaki",
+    'KID_ERROR' : "Une erreur de communication avec l'application Kidoikoiaki est survenue",
+    'GUEST_UPDATE_SUCCESS' : "Votre statut à été mit à jour",
+    'SENDING_ERROR' : "Une erreur est servenue à l'envoi des données",
+    'EVENT_ADD_SUCCESS' : "Evénement sauvegardé",
+    'DATE_ERROR' : "La date de fin doit être après la date de début",
+    'HOW_TO_ICAL' : "Pour vous abonner au calendrier, il suffit de vous abonner au lien ci-dessous dans votre calendrier"
   });
