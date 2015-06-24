@@ -24,7 +24,6 @@ angular.module('archCore')
               evt.config.file.name + '\n' + $scope.log;
             }).success(function (data, status, headers, config) {
               $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-              $scope.$apply();
             });
           }
         }
@@ -44,12 +43,12 @@ angular.module('archCore')
           };
           console.log(result.data);
           for (var i =0; i < data.length; i++){
-            //$scope.images[i].thumb = httpConstant.coreServerUrl + $scope.images[i].url +'?dim=200x100';
+            //$scope.images[i].thumb = httpConstant.coreServerUrl + $scope.images[i].url +'?dim=150x150';
             //$scope.images[i].url = httpConstant.coreServerUrl + $scope.images[i].url;
             $scope.images.push({
               src: httpConstant.coreServerUrl + '/' + data[i].url,
               safeSrc: httpConstant.coreServerUrl + '/' +data[i].url,
-              thumb: httpConstant.coreServerUrl + '/' +data[i].url,
+              thumb: httpConstant.coreServerUrl + '/' +data[i].url + '?dim=150x150',
               caption: data[i].gallery.name,
               size: screenSize(),
               type: 'image'
