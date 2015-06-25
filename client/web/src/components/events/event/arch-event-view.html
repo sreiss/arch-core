@@ -12,7 +12,7 @@
         <p>{{'EVENT_FORM_START' | translate}} : {{event.dtstart | date:'dd/MM/yyyy - HH:mm' }}</p>
         <p>{{'EVENT_FORM_END' | translate}} : {{event.dtend | date:'dd/MM/yyyy - HH:mm' }}</p>
         <p>{{'EVENT_FORM_LOCATION' | translate}} : {{event.location}}</p>
-        <p ng-show="event.website">{{'EVENT_FORM_SITE' | translate}} : {{event.website}}</p>
+        <p ng-show="event.website">{{'EVENT_FORM_SITE' | translate}} : <a href="event.website">{{event.website}}</a></p>
         <p ng-show="event.information">{{'EVENT_FORM_INFORMATION' | translate}} : {{event.information}}</p>
         <p ng-show="event.kidoikoiaki">
 

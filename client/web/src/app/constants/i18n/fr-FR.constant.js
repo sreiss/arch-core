@@ -125,6 +125,7 @@ angular.module('archCore')
     'EVENT_GUEST' : "Participants",
     'EVENT_YES' : "Participe",
     'EVENT_NO' : "Ne participe pas",
-    'PARTICIPANT_STATUS' : "Statut"
+    'PARTICIPANT_STATUS' : "Statut",
+    'EVENT_FORM_SITE' : "Site internet"
 
   });
