@@ -65,31 +65,31 @@ angular.module('archCore')
     Event.get({id: $stateParams.id}, function (result) {
       $scope.event = result.data;
       $scope.kid = httpConstant.kidClientUrl + "/#/sheet/" + $scope.event.kidoikoiaki + "/";
+      var temp = [];
+      archUserService.getUsers().then(function (item) {
+        item.forEach(function (user) {
+          $scope.event.participants.forEach(function (guest) {
+            var userTemp = {};
+            if (user._id == guest.guest) {
+              userTemp.fname = user.fname;
+              userTemp.lname = user.lname;
+              userTemp.username = user.username;
+              userTemp.status = guest.status;
+              temp.push(userTemp);
+            }
+          })
+        });
+        $scope.listGuest = temp;
+      })
+      .catch(function () {
+        archToastService.showToast('LOADING_ERROR', 'error');
+      });
     },
     function (responseError) {
       archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     $scope.users = archUserService.getUsers();
-    var temp = [];
-    archUserService.getUsers().then(function (item) {
-      item.forEach(function (user) {
-        $scope.event.participants.forEach(function (guest) {
-          var userTemp = {};
-          if (user._id == guest.guest) {
-            userTemp.fname = user.fname;
-            userTemp.lname = user.lname;
-            userTemp.username = user.username;
-            userTemp.status = guest.status;
-            temp.push(userTemp);
-          }
-        })
-      });
-      $scope.listGuest = temp;
-    })
-    .catch(function () {
-      archToastService.showToast('LOADING_ERROR', 'error');
-    });
 
     $scope.deleteEvent = function (id) {
       if (confirm('Souhaitez-vous réellement supprimer cet événement ?')) {
