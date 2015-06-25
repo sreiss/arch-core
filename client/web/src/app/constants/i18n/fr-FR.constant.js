@@ -139,7 +139,8 @@ angular.module('archCore')
     'EMAIL_ERROR': "L'adresse e-mail renseignée est déjà associée à un autre compte.",
     'IMAGE_AVATAR' : "L'avatar du membre doit être une image.",
     'BACK' : "Retour",
-    'NO_GALLERIES' : "Vous n'avez à ce jour ajouté aucune gallerie"
+    'NO_GALLERIES' : "Vous n'avez à ce jour ajouté aucune gallerie",
+    'DELETE_SUCCESS' : "Suppression effectué "
 
 
 

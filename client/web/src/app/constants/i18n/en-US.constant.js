@@ -138,5 +138,7 @@ angular.module('archCore')
     'EMAIL_ERROR': "The entered email address is already associated with another account",
     'IMAGE_AVATAR' : "The avatar must be a member of an image",
     'BACK' : "Back",
-    'NO_GALLERIES' : "You have to date no gallery added"
+    'NO_GALLERIES' : "You have to date no gallery added",
+    'DELETE_SUCCESS' : "Suppression performed "
+
   });
