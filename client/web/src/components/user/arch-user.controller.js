@@ -98,7 +98,7 @@ angular.module('archCore')
       archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
       {
         archToastService.showToast("USER_ADD_SUCCESS", 'success');
-        $state.go('users');
+        $state.go('users', {}, { reload: true });
       })
       .catch(function(err)
       {
@@ -162,13 +162,13 @@ angular.module('archCore')
       function(err)
       {
         archToastService.showToast("SENDING_ERROR", 'error');
-        $state.go('users');
+        $state.go('users', {}, { reload: true });
       });
     },
     function(err)
     {
       archToastService.showToast("LOADING_ERROR", 'error');
-      $state.go('users');
+      $state.go('users', {}, { reload: true });
     });
 
     $scope.file_changed = function(element)
@@ -216,7 +216,7 @@ angular.module('archCore')
         archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
           archToastService.showToast("EDIT_SUCCESS", 'success');
-          $state.go('users');
+          $state.go('users', {}, { reload: true });
         })
         .catch(function(err)
         {
@@ -269,13 +269,13 @@ angular.module('archCore')
           function(err)
           {
             archToastService.showToast("LOADING_ERROR", 'error');
-            $state.go('users');
+            $state.go('users', {}, { reload: true });
           });
       },
       function(err)
       {
         archToastService.showToast("LOADING_ERROR", 'error');
-        $state.go('users');
+        $state.go('users', {}, { reload: true });
       });
 
     function previewAvatar(base64)

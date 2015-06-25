@@ -39,7 +39,7 @@ angular.module('archCore')
       Event.update({event: $scope.event}, function (result) {
         if (result.count > 0) {
           archToastService.showToast('EDIT_SUCCESS', 'success');
-          $state.go('calendar');
+          $state.go('calendar', {}, { reload: true });
         }
         else {
           archToastService.showToast('SENDING_ERROR', 'error');
@@ -96,7 +96,7 @@ angular.module('archCore')
         Event.delete({id: id},function (result) {
           if (result.count > 0) {
             archToastService.showToast('DELETE_SUCCESS', 'success');
-            $state.go('calendar');
+            $state.go('calendar', {}, { reload: true });
           }
           else {
             archToastService.showToast('SENDING_ERROR', 'error');
