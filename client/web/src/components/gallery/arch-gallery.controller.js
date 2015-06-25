@@ -48,7 +48,7 @@ angular.module('archCore')
         Gallery.delete({id: id},function (result) {
             if (result.count > 0) {
               archToastService.showToast('DELETE_SUCCESS', 'success');
-              $state.go('galleries');
+              $state.go($state.current, {}, {reload: true});
             }
             else {
               archToastService.showToast('SENDING_ERROR', 'error');
