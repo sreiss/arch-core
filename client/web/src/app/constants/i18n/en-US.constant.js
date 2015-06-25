@@ -9,6 +9,7 @@ angular.module('archCore')
     'SIDEBAR_CALENDAR' : "Calendrier",
     'SIDEBAR_TRACKS' : "Tracks",
     'SIDEBAR_ACCOUNT' : "My Account",
+    'SIDEBAR_BACK_KEYSTONE' : "Back to website",
     'SIDEBAR_LOGOUT' : "Log out",
 
     'HOME_TITLE' : "Home",
