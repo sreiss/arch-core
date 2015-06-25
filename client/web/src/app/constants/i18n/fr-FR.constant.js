@@ -88,7 +88,7 @@ angular.module('archCore')
     'EVENT_TAKE_PART' : "Participer",
     'EVENT_MAYBE' : "Peut-être",
     'EVENT_LIST_GUEST' : "Liste des participants",
-    'EVENT_EDIT' : "Editer",
+    'EVENT_EDIT' : "Modifer",
     'EVENT_DELETE' : "Supprimer",
 
 
@@ -115,5 +115,16 @@ angular.module('archCore')
     'SENDING_ERROR' : "Une erreur est servenue à l'envoi des données",
     'EVENT_ADD_SUCCESS' : "Evénement sauvegardé",
     'DATE_ERROR' : "La date de fin doit être après la date de début",
-    'HOW_TO_ICAL' : "Pour vous abonner au calendrier, il suffit de vous abonner au lien ci-dessous dans votre calendrier"
+    'HOW_TO_ICAL' : "Pour vous abonner au calendrier, il suffit de vous abonner au lien ci-dessous dans votre calendrier",
+    'EVENT_FORM_START_DATE' : "Date de début",
+    'EVENT_FORM_END_DATE' : "Date de fin",
+    'EVENT_FORM_START_TIME' : "Heure de début",
+    'EVENT_FORM_END_TIME' : "Heure de fin",
+    'CANCEL' : "Annuler",
+    'EVENT_DETAILS' : "Détails",
+    'EVENT_GUEST' : "Participant",
+    'EVENT_YES' : "Participe",
+    'EVENT_NO' : "Ne participe pas",
+    'PARTICIPANT_STATUS' : "Statut"
+
   });

@@ -272,7 +272,7 @@ angular.module('archCore')
     });
   })
   .factory("Gallery", function ($resource,httpConstant, archHttpService) {
-    return $resource(httpConstant.coreServerUrl + '/galleries/gallery/', {},
+    return $resource(httpConstant.coreServerUrl + '/galleries/gallery/:id', {},
       {
         save:
         {
@@ -298,6 +298,10 @@ angular.module('archCore')
         {
           method: 'PUT',
           headers: archHttpService.getFactoryHeader()
+        },
+        getByGallery:
+        {
+          url : httpConstant.coreServerUrl + '/galleries/media/gallery/:id'
         }
       });
   });

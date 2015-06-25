@@ -115,6 +115,12 @@ angular.module('archCore', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "components/gallery/arch-galleries.html",
         controller: "archGalleriesController"
 
+      })
+      .state('galleryView',
+      {
+        url: "/gallery/:id",
+        templateUrl : "components/gallery/arch-gallery-view.html",
+        controller: "archGalleryViewController"
       });
 
     $urlRouterProvider
