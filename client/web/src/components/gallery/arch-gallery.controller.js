@@ -27,17 +27,20 @@ angular.module('archCore')
         }
       }
   })
-  .controller('archGalleriesController', function($scope,DTOptionsBuilder, $stateParams, $mdToast, $state, httpConstant,archToastService, Media, Gallery,$window) {
-      Gallery.get({}, function(result) {
-              if(result.count > 0) {
-                $scope.galleries = result.data;
-                for (var i =0; i < result.data.length; i++){
-                    Media.getByGallery({id:result.data[i]._id},function(result){
-                      console.log(result.data.count);
-                    })
-                }
-              }
-      })
+  .controller('archGalleriesController', function(archAccountService,$scope,DTOptionsBuilder, $stateParams, $mdToast, $state, httpConstant,archToastService, Media, Gallery,$window) {
+    $scope.galleries = [];
+    $scope.currentUser = {};
+    archAccountService.getCurrentUser().then(function (user) {
+      $scope.currentUser = user;
+    })
+    .catch(function () {
+      archToastService.showToast('LOADING_ERROR', 'error');
+    });
+    Gallery.get({}, function(result) {
+        if(result.count > 0) {
+          $scope.galleries = result.data;
+        }
+      });
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
       {
         "sProcessing":     "Traitement en cours...",

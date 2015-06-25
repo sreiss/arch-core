@@ -137,7 +137,10 @@ angular.module('archCore')
     'EVENT_FORM_SITE' : "Site internet",
     'EVENT_FORM_PROGRAM' : "Programme",
     'EMAIL_ERROR': "L'adresse e-mail renseignée est déjà associée à un autre compte.",
-    'IMAGE_AVATAR' : "L'avatar du membre doit être une image."
+    'IMAGE_AVATAR' : "L'avatar du membre doit être une image.",
+    'BACK' : "Retour",
+    'NO_GALLERIES' : "Vous n'avez à ce jour ajouté aucune gallerie"
+
 
 
   });
