@@ -203,7 +203,8 @@ angular.module('archCore')
         var sheet = new Sheet();
         sheet.she_name = "ASCPA-" + $scope.event.summary;
         sheet.she_email = currentUser.email;
-        sheet.she_reference = "";
+        sheet.she_path= httpConstant.coreServerUrl;
+        sheet.she_reference_private = "";
         sheet.$save(function (result) {
           if (result.count > 0) {
             $scope.event.kidoikoiaki = result.data.she_reference;
