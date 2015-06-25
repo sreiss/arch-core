@@ -114,7 +114,7 @@ angular.module('archCore')
     'GALLERY_NAME' : "Nom de la gallerie",
     'DROP_IMAGES' : "Glisser/déposer ou cliquer ici pour ajouter des photos",
     'LIST_FILES' : "Liste des fichiers",
-    'LOADING_ERROR' : 'Une erreur est servenue au chargement des données',
+    'LOADING_ERROR' : 'Une erreur est survenue au chargement des données',
     'EDIT_SUCCESS' : "Modifications enregistrées",
     'ADD_PARTICIPANT_SUCCESS' : "Participant ajouté au kidoikoiaki",
     'KID_ERROR' : "Une erreur de communication avec l'application Kidoikoiaki est survenue",

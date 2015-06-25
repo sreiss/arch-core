@@ -24,6 +24,7 @@ angular.module('archCore')
               });
             }
           }
+          $state.go('galleries');
         }
       }
   })
