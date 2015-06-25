@@ -8,6 +8,7 @@ angular.module('archCore')
     'SIDEBAR_EVENTS' : "Evènements",
     'SIDEBAR_CALENDAR' : "Calendrier",
     'SIDEBAR_TRACKS' : "Parcours",
+    'SIDEBAR_BACK_KEYSTONE' : "Retour au site",
     'SIDEBAR_ACCOUNT' : "Mon compte",
     'SIDEBAR_LOGOUT' : "Déconnexion",
 
