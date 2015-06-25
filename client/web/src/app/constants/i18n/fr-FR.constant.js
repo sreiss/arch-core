@@ -122,7 +122,7 @@ angular.module('archCore')
     'EVENT_FORM_END_TIME' : "Heure de fin",
     'CANCEL' : "Annuler",
     'EVENT_DETAILS' : "Détails",
-    'EVENT_GUEST' : "Participant",
+    'EVENT_GUEST' : "Participants",
     'EVENT_YES' : "Participe",
     'EVENT_NO' : "Ne participe pas",
     'PARTICIPANT_STATUS' : "Statut"
