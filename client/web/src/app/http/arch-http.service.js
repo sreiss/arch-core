@@ -246,13 +246,11 @@ angular.module('archCore')
     {
       save:
       {
-        method: 'POST',
-        headers: archHttpService.getFactoryHeader()
+        method: 'POST'
       },
       update:
       {
-        method: 'PUT',
-        headers: archHttpService.getFactoryHeader()
+        method: 'PUT'
       }
     });
   })
@@ -261,13 +259,11 @@ angular.module('archCore')
     {
       save:
       {
-        method: 'POST',
-        headers: archHttpService.getFactoryHeader()
+        method: 'POST'
       },
       update:
       {
-        method: 'PUT',
-        headers: archHttpService.getFactoryHeader()
+        method: 'PUT'
       }
     });
   })
