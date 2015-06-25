@@ -93,7 +93,7 @@ angular.module('archCore')
 
     $scope.deleteEvent = function (id) {
       if (confirm('Souhaitez-vous réellement supprimer cet événement ?')) {
-        Event.delete({id: id}).then(function (result) {
+        Event.delete({id: id},function (result) {
           if (result.count > 0) {
             archToastService.showToast('DELETE_SUCCESS', 'success');
             $state.go('calendar');
