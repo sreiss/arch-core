@@ -504,3 +504,15 @@ md-toolbar
 {
   min-height:50px;
 }
+
+#footer {
+  background-color:#FFFFFF;
+  padding-right:16px;
+  font-size:14px;
+}
+
+#footer a
+{
+  color:#009688;
+  text-decoration: none;
+}
