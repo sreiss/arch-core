@@ -38,7 +38,7 @@
               <td>{{guest.lname}}</td>
               <td>{{guest.fname}}</td>
               <td>{{guest.username}}</td>
-              <td><span if="guest.status == yes">{{'EVENT_YES' | translate}}</span></td>
+              <td><span if="guest.status == 'yes'">{{'EVENT_YES' | translate}}</span><span if="guest.status == 'no'">{{'EVENT_NO' | translate}}</span></td>
             </tr>
             </tbody>
           </table>
