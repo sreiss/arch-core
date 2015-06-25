@@ -139,6 +139,7 @@ angular.module('archCore')
     'IMAGE_AVATAR' : "The avatar must be a member of an image",
     'BACK' : "Back",
     'NO_GALLERIES' : "You have to date no gallery added",
-    'DELETE_SUCCESS' : "Suppression performed "
+    'DELETE_SUCCESS' : "Suppression performed ",
+    'GALLERY_SUCCESS' : "Gallery created"
 
   });

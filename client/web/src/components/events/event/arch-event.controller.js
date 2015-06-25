@@ -182,9 +182,9 @@ angular.module('archCore')
 
     archAccountService.getCurrentUser().then(function (user) {
       currentUser = user;
-      Events.get({id: currentUser._id}, function (result) {
-        console.log(result.data);
-      });
+      //Events.get({id: currentUser._id}, function (result) {
+      //  console.log(result.data);
+      //});
     })
     .catch(function () {
       archToastService.showToast('LOADING_ERROR', 'error');
@@ -225,7 +225,7 @@ angular.module('archCore')
         $scope.event.$save(function (result) {
             if (result.count > 0) {
               archToastService.showToast('EVENT_ADD_SUCCESS', 'success');
-              $state.go('calendar');
+              $state.go('calendar', {}, { reload: true });
             }
             else {
               archToastService.showToast('SENDING_ERROR', 'error');

@@ -140,7 +140,8 @@ angular.module('archCore')
     'IMAGE_AVATAR' : "L'avatar du membre doit être une image.",
     'BACK' : "Retour",
     'NO_GALLERIES' : "Vous n'avez à ce jour ajouté aucune gallerie",
-    'DELETE_SUCCESS' : "Suppression effectué "
+    'DELETE_SUCCESS' : "Suppression effectué ",
+    'GALLERY_SUCCESS' : "Gallerie créée"
 
 
 

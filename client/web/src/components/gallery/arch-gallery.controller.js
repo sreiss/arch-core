@@ -24,7 +24,8 @@ angular.module('archCore')
               });
             }
           }
-          $state.go('galleries');
+          archToastService.showToast('GALLERY_SUCCESS', 'success');
+          $state.go('galleries', {}, { reload: true });
         }
       }
   })
