@@ -27,51 +27,40 @@ angular.module('archCore')
         }
       }
   })
-  //.controller('archGalleriesController', function($scope, $stateParams, $mdToast, $state, httpConstant,archToastService, Media,$window){
-  //  $scope.images = [];
-  //    Media.get({}, function(result) {
-  //      if(result.count > 0)
-  //      {
-  //        var data = result.data;
-  //        var screenSize = function (width, height) {
-  //          var x = width ? width : $window.innerWidth;
-  //          var y = height ? height : $window.innerHeight;
-  //
-  //          return x + 'x' + y;
-  //        };
-  //        for (var i =0; i < data.length; i++){
-  //          //$scope.images[i].thumb = httpConstant.coreServerUrl + $scope.images[i].url +'?dim=150x150';
-  //          //$scope.images[i].url = httpConstant.coreServerUrl + $scope.images[i].url;
-  //          $scope.images.push({
-  //            src: httpConstant.coreServerUrl + '/' + data[i].url,
-  //            safeSrc: httpConstant.coreServerUrl + '/' +data[i].url,
-  //            thumb: httpConstant.coreServerUrl + '/' +data[i].url,
-  //            caption: data[i].gallery.name,
-  //            size: screenSize(),
-  //            type: 'image'
-  //          });
-  //        }
-  //      } else {
-  //        archToastService.showToast('LOADING_ERROR', 'error');
-  //      }
-  //    },
-  //    function(responseError)
-  //    {
-  //      archToastService.showToast('LOADING_ERROR', 'error');
-  //    });
-  //
-  //})
-  .controller('archGalleriesController', function($scope, $stateParams, $mdToast, $state, httpConstant,archToastService, Media, Gallery,$window) {
+  .controller('archGalleriesController', function($scope,DTOptionsBuilder, $stateParams, $mdToast, $state, httpConstant,archToastService, Media, Gallery,$window) {
       Gallery.get({}, function(result) {
               if(result.count > 0) {
                 $scope.galleries = result.data;
                 for (var i =0; i < result.data.length; i++){
                     Media.getByGallery({id:result.data[i]._id},function(result){
-                      console.log(result.data);
+                      console.log(result.data.count);
                     })
                 }
               }
       })
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
+      {
+        "sProcessing":     "Traitement en cours...",
+        "sSearch":         "Rechercher&nbsp;:",
+        "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+        "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+        "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+        "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+        "sInfoPostFix":    "",
+        "sLoadingRecords": "Chargement en cours...",
+        "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+        "oPaginate": {
+          "sFirst":      "Premier",
+          "sPrevious":   "Pr&eacute;c&eacute;dent",
+          "sNext":       "Suivant",
+          "sLast":       "Dernier"
+        },
+        "oAria": {
+          "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+          "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+        }
+      });
   })
   .controller('archGalleryViewController', function($scope, $stateParams, $mdToast, $state, httpConstant,archToastService, Media, Gallery,$window) {
       var idGallery = '';

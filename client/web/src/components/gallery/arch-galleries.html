@@ -8,3 +8,27 @@
     <md-button class="md-accent md-primary" ui-sref="galleryView({id:gallery._id})" >{{gallery.name}}</md-button>
   </div>
 </div>
+<div  class="table-list">
+  <p ng-hide="users.length">{{'USERS_NO_USERS' | translate}}</p>
+  <div>
+    <table class="" ng-show="users.length" datatable="ng" dt-options="dtOptions" dt-columns="dtColumn" dt-column-defs="dtColumnDefs" >
+      <thead>
+      <tr>
+        <th data-field="galleryName">{{'GALLERY_NAME' | translate}}</th>
+        <th data-field="count">{{'GALLERY_NUMBER' | translate}}</th>
+        <th data-field="actions>"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="gallery in galleries">
+        <td>{{gallery.name}}</td>
+        <td>{{gallery.count}}</td>
+        <td class="text-right">
+          <a href="#" ui-sref="galleryView({id:gallery._id})"><md-icon class="fa fa-file-text-o"></md-icon></a>
+          <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-trash" ng-click="deleteGallery(gallery._id)"></md-icon></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
