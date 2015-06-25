@@ -114,6 +114,7 @@ angular.module('archCore')
     'GUEST_UPDATE_SUCCESS' : "Votre statut à été mit à jour",
     'SENDING_ERROR' : "Une erreur est servenue à l'envoi des données",
     'EVENT_ADD_SUCCESS' : "Evénement sauvegardé",
+    'USER_ADD_SUCCESS' : "Membre sauvegardé",
     'DATE_ERROR' : "La date de fin doit être après la date de début",
     'HOW_TO_ICAL' : "Pour vous abonner au calendrier, il suffit de vous abonner au lien ci-dessous dans votre calendrier",
     'EVENT_FORM_START_DATE' : "Date de début",
@@ -126,6 +127,10 @@ angular.module('archCore')
     'EVENT_YES' : "Participe",
     'EVENT_NO' : "Ne participe pas",
     'PARTICIPANT_STATUS' : "Statut",
-    'EVENT_FORM_SITE' : "Site internet"
+    'EVENT_FORM_SITE' : "Site internet",
+    'EVENT_FORM_PROGRAM' : "Programme",
+    'EMAIL_ERROR': "L'adresse e-mail renseignée est déjà associée à un autre compte.",
+    'IMAGE_AVATAR' : "L'avatar du membre doit être une image."
+
 
   });

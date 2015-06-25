@@ -13,7 +13,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      archToastService.showToast('GET_USER_ERROR', 'error');
+      archToastService.showToast('LOADING_ERROR', 'error');
     });
 
     archUserService.getUsers().then(function(users)
@@ -23,7 +23,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      archToastService.showToast("GET_USERS_ERROR", 'error');
+      archToastService.showToast("LOADING_ERROR", 'error');
     });
 
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
@@ -66,12 +66,12 @@ angular.module('archCore')
           })
           .catch(function()
           {
-            archToastService.showToast("Une erreur est survenue lors de la récupération des membres.", 'error');
+            archToastService.showToast("LOADING_ERROR", 'error');
           });
         })
         .catch(function(err)
         {
-          archToastService.showToast("Une erreur est survenue lors de la suppression du membre.", 'error');
+          archToastService.showToast("SENDING_ERROR", 'error');
         });
       }
     };
@@ -97,18 +97,18 @@ angular.module('archCore')
     {
       archUserService.addUser($scope.oauthUser, $scope.coreUser).then(function(result)
       {
-        archToastService.showToast("Membre ajouté avec succès.", 'success');
+        archToastService.showToast("USER_ADD_SUCCESS", 'success');
         $state.go('users');
       })
       .catch(function(err)
       {
         if(err.message = 'EMAIL_ALREADY_EXISTS')
         {
-          archToastService.showToast("L'adresse e-mail renseignée est déjà associée à un autre compte.", 'error');
+          archToastService.showToast("EMAIL_ERROR", 'error');
         }
         else
         {
-          archToastService.showToast("Une erreur est survenue lors de l'ajout du membre.", 'error');
+          archToastService.showToast("SENDING_ERROR", 'error');
         }
       });
     }
@@ -132,7 +132,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+      archToastService.showToast("LOADING_ERROR", 'error');
     });
 
     OAuthUser.query({id:id}, function(oauthUser)
@@ -161,13 +161,13 @@ angular.module('archCore')
       },
       function(err)
       {
-        archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
+        archToastService.showToast("SENDING_ERROR", 'error');
         $state.go('users');
       });
     },
     function(err)
     {
-      archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
+      archToastService.showToast("LOADING_ERROR", 'error');
       $state.go('users');
     });
 
@@ -178,7 +178,7 @@ angular.module('archCore')
 
       if(!avatar.type.match('image.*'))
       {
-        archToastService.showToast("L'avatar du membre doit être une image.", 'error');
+        archToastService.showToast("IMAGE_AVATAR", 'error');
         return false;
       }
 
@@ -215,12 +215,12 @@ angular.module('archCore')
         console.log($scope.coreUser.birthdate );
         archUserService.editUser($scope.oauthUser, $scope.coreUser).then(function(result)
         {
-          archToastService.showToast("Membre modifié avec succès.", 'success');
+          archToastService.showToast("EDIT_SUCCESS", 'success');
           $state.go('users');
         })
         .catch(function(err)
         {
-          archToastService.showToast("Une erreur est survenue lors de la modification du membre.", 'success');
+          archToastService.showToast("SENDING_ERROR", 'success');
         });
       }
     };
@@ -235,7 +235,7 @@ angular.module('archCore')
     })
     .catch(function()
     {
-      archToastService.showToast("Une erreur est survenue lors de la récupération de l'utilisateur courant.", 'error');
+      archToastService.showToast("LOADING_ERROR", 'error');
     });
 
     OAuthUser.query({id:id}, function(oauthUser)
@@ -268,13 +268,13 @@ angular.module('archCore')
           },
           function(err)
           {
-            archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
+            archToastService.showToast("LOADING_ERROR", 'error');
             $state.go('users');
           });
       },
       function(err)
       {
-        archToastService.showToast("Une erreur est survenue lors de la récupération du membre.", 'error');
+        archToastService.showToast("LOADING_ERROR", 'error');
         $state.go('users');
       });
 
