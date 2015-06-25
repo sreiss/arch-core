@@ -99,7 +99,7 @@ angular.module('archCore')
                       src: httpConstant.coreServerUrl + '/' + data[i].url,
                       safeSrc: httpConstant.coreServerUrl + '/' +data[i].url,
                       thumb: httpConstant.coreServerUrl + '/' +data[i].url,
-                      caption: data[i].gallery.name,
+                      caption: '',
                       size: screenSize(),
                       type: 'image'
                     });

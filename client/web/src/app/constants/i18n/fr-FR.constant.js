@@ -107,6 +107,7 @@ angular.module('archCore')
     'CALENDAR_TITLE' : "Calendrier",
 
     'SIDEBAR_GALLERIES' : "Photos",
+    'GALLERIES' : "Photos",
     'GALLERY_TITLE' : "Photos",
     'GALLERY_ADD' : "Ajouter des photos",
     'GALLERY_ADD_TITLE' : "Ajouter une gallerie de photo",
