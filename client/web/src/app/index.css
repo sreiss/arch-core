@@ -493,3 +493,14 @@ table.dataTable.no-footer {
 .photoswipe-gallery {
   padding-top: 20px;
 }
+
+.md-toolbar-tools
+{
+  height:50px;
+  max-height:50px;
+}
+
+md-toolbar
+{
+  min-height:50px;
+}
