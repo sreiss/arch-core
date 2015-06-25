@@ -4,5 +4,7 @@
 
 <md-divider></md-divider>
 <div ng-repeat="gallery in galleries">
-<md-button ui-sref="galleryView({id:gallery._id})" >{{gallery.name}}</md-button>
+  <div layout="row">
+    <md-button class="md-accent md-primary" ui-sref="galleryView({id:gallery._id})" >{{gallery.name}}</md-button>
+  </div>
 </div>
