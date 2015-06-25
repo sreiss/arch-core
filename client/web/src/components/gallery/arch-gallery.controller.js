@@ -42,6 +42,23 @@ angular.module('archCore')
           $scope.galleries = result.data;
         }
       });
+
+    $scope.deleteGallery = function (id) {
+      if (confirm('Souhaitez-vous réellement supprimer cette gallerie ?')) {
+        Gallery.delete({id: id},function (result) {
+            if (result.count > 0) {
+              archToastService.showToast('DELETE_SUCCESS', 'success');
+              $state.go('galleries');
+            }
+            else {
+              archToastService.showToast('SENDING_ERROR', 'error');
+            }
+          },
+          function (responseError) {
+            archToastService.showToast('SENDING_ERROR', 'error');
+          });
+      }
+    };
     $scope.dtOptions = DTOptionsBuilder.newOptions().withLanguage(
       {
         "sProcessing":     "Traitement en cours...",

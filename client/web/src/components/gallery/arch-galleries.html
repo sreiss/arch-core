@@ -18,7 +18,7 @@
         <td>{{gallery.name}}</td>
         <td class="text-right">
           <a href="#" ui-sref="galleryView({id : gallery._id})"><md-icon class="fa fa-folder-open"></md-icon></a>
-          <a ng-show="currentUser.profile.role._is('ADMIN')" href="#"><md-icon class="fa fa-trash"></md-icon></a>
+          <a ng-show="currentUser.profile.role._is('ADMIN')" href="#" ng-click="deleteGallery(gallery._id)"><md-icon class="fa fa-trash"></md-icon></a>
         </td>
       </tr>
       </tbody>
