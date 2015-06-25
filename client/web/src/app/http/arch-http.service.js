@@ -279,6 +279,11 @@ angular.module('archCore')
         {
           method: 'PUT',
           headers: archHttpService.getFactoryHeader()
+        },
+        delete:
+        {
+          method: 'DELETE',
+          headers: archHttpService.getFactoryHeader()
         }
       });
   })
