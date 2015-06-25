@@ -118,7 +118,7 @@ angular.module('archCore')
     'EDIT_SUCCESS' : "Modifications enregistrées",
     'ADD_PARTICIPANT_SUCCESS' : "Participant ajouté au kidoikoiaki",
     'KID_ERROR' : "Une erreur de communication avec l'application Kidoikoiaki est survenue",
-    'GUEST_UPDATE_SUCCESS' : "Votre statut à été mit à jour",
+    'GUEST_UPDATE_SUCCESS' : "Votre statut a été mis à jour",
     'SENDING_ERROR' : "Une erreur est servenue à l'envoi des données",
     'EVENT_ADD_SUCCESS' : "Evénement sauvegardé",
     'USER_ADD_SUCCESS' : "Membre sauvegardé",
