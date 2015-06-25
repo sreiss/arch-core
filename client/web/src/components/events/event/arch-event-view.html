@@ -6,7 +6,13 @@
   <md-tabs md-dynamic-height md-border-bottom class="width-100-PC">
     <md-tab label="{{'EVENT_DETAILS' | translate}}">
       <md-content class="md-padding">
-        <p>{{'EVENT_FORM_TYPE' | translate}} : {{event.category}}</p>
+        <p>{{'EVENT_FORM_TYPE' | translate}} :
+          <span ng-show="event.category == 'event'">{{'EVENT' | translate}}</span>
+          <span ng-show="event.category == 'discovery'">{{'DISCOVERY' | translate}}</span>
+          <span ng-show="event.category == 'officialRun'">{{'OFFICIAL_RUN' | translate}}</span>
+          <span ng-show="event.category == 'personalTraining'">{{'PERSONAL_TRAINING' | translate}}</span>
+          <span ng-show="event.category == 'training'">{{'TRAINING' | translate}}</span>
+        </p>
         <p ng-show="event.program">{{'EVENT_FORM_PROGRAM' | translate}} : {{event.program}}</p>
         <p>{{'EVENT_FORM_DESCRIPTION' | translate}} : {{event.description}}</p>
         <p>{{'EVENT_FORM_START' | translate}} : {{event.dtstart | date:'dd/MM/yyyy - HH:mm' }}</p>

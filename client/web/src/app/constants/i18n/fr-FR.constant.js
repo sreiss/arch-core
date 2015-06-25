@@ -59,6 +59,12 @@ angular.module('archCore')
     'PERSONAL_TRAININGS_TITLE' : "Entraînements personnelles",
     'TRAININGS_TITLE' : "Entraînements",
 
+    'EVENT' : "Evènement",
+    'DISCOVERY' : "Sortie découverte",
+    'OFFICIAL_RUN' : "Course officielle",
+    'PERSONAL_TRAINING' : "Entraînement personnel",
+    'TRAINING' : "Entraînement",
+
     'EVENT_TITLE_ADD' : "Nouvel évènement",
     'DISCOVERY_TITLE_ADD' : "Nouvelle sortie découverte",
     'OFFICIAL_RUN_TITLE_ADD' : "Nouvelle course officielle",
