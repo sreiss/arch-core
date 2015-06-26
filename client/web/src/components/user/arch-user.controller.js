@@ -220,7 +220,7 @@ angular.module('archCore')
         })
         .catch(function(err)
         {
-          archToastService.showToast("SENDING_ERROR", 'success');
+          archToastService.showToast("SENDING_ERROR", 'error');
         });
       }
     };
